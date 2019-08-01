@@ -1,0 +1,77 @@
+.slide.r10 {
+    height: 10rem;
+    background-image: linear-gradient(rgba(0,0,0,0.79), rgba(0,0,0,0.7)), url(../img/slide.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+    width: 100%;
+}
+.slide .logo
+{
+    background-image: linear-gradient(rgba(255,255,255,1), rgba(255, 255, 255, 0));
+    height: 10rem;
+    width: 100%;
+    position: absolute;
+    text-align: center;
+}
+.logo img
+{
+    height: 90px;
+    text-align: center;
+    margin: 0.6rem;
+}
+.menu
+{
+    height: 5rem;
+    width: 100%;
+    background-color: #841E19;
+    color: #FFF8F0;
+    padding: 1%;
+    text-align: center;
+    
+}
+.menu nav .btn-menu
+{
+    background-color: #841E19;
+    color: #FFF8F0;
+}
+.menu nav .btn-menu:hover
+{
+    background-color: #9A4642;
+    border-color: #9A4642;
+}
+
+.menu-l
+{
+    border-right: 1px solid black;
+    text-align:center;
+    background-color: #f2f2f2;
+    
+}
+
+.menu-l .sidenav---sidenav---_2tBP,
+div.user .sidenav---sidenav---_2tBP
+{
+    background-color: #841E19;
+}
+.menu-l label
+{
+    font-weight: bold;
+}
+
+.rodape
+{
+
+    width: 100%;
+    background-color: #841E19;  
+    color: #000000;
+    padding: 2%;
+    color: #FFF;
+
+
+}
+.rodape nav
+{
+    text-align: center;
+}

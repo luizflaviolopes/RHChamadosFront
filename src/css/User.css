@@ -1,0 +1,41 @@
+.user {
+  padding-left: 64px;
+  text-align: center;
+}
+.headAtendente {
+  padding: 0.5rem;
+  background-color: #841e19;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+div.headAtendente div.ttl {
+  color: white;
+}
+.headAtendente div.ttl,
+.bodyAtendente .nameUser {
+  font-size: initial;
+  color: black;
+  margin: 0 0 4px 0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  -webkit-line-clamp: 1;
+  line-height: 1.6rem;
+}
+.bodyAtendente {
+  border-left: 0.5px solid #841e19;
+  border-right: 0.5px solid #841e19;
+  border-bottom: 0.5px solid #841e19;
+  padding: 5px;
+  background-color: #ffeae9;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+.bodyAtendente .table td {
+  padding: 0.25rem;
+}
+.bodyAtendente .table td button {
+  padding: 0.2rem;
+}

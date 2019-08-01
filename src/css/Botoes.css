@@ -1,0 +1,48 @@
+.btn-l-menu {
+  background-color: #f2f2f2;
+  border-color: #f2f2f2;
+  border-radius: 0;
+  color: #841e19;
+  text-align: right;
+  margin: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.btn-l-menu:hover {
+  font-weight: bold;
+  color: #841e19;
+  animation-duration: 0.5s;
+  animation-name: animation-menu;
+  width: 110%;
+}
+.btn-menu {
+  background-color: #841e19;
+  color: #fff8f0;
+  border-color: #841e19;
+}
+
+.logout {
+  float: right;
+}
+
+.btn-menu:hover {
+  background-color: #9a4642;
+  border-color: #9a4642;
+}
+.menu-l .btn-block + .btn-block {
+  margin-top: 0;
+}
+@keyframes animation-menu {
+  from {
+    width: 100%;
+  }
+
+  to {
+    margin-left: 0%;
+    width: 110%;
+  }
+}
+
+button {
+  margin-left: 4px;
+}

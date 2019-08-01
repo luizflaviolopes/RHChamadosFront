@@ -1,0 +1,9 @@
+table.cabecalho
+{
+    table-layout: fixed;
+}
+
+table.cabecalho thead th
+{
+    vertical-align: top;
+}

@@ -1,0 +1,70 @@
+.padding-zero {
+  padding: 0;
+}
+
+.background-logon {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.88), rgba(0, 0, 0, 0.86)),
+    url(/static/media/slide.ac90dabb.jpg);
+  min-height: 100vh;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  position: relative;
+}
+
+.formLogin {
+  position: relative;
+}
+.apresentacao {
+  max-width: 60vw;
+  min-height: 100vh;
+  min-width: 60vw;
+  position: absolute;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.textApresentacao {
+  padding: 15px;
+  text-align: center;
+}
+.textApresentacao span {
+  font-size: 7rem;
+  color: white;
+  font-weight: bold;
+}
+
+.login {
+  max-width: 40vw;
+  min-height: 100vh;
+  background-color: rgba(255, 255, 255, 0.8);
+  margin: auto;
+  min-width: 35vw;
+  position: absolute;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.lg {
+  text-align: center;
+  padding-top: 1rem;
+}
+.lg .logoForm {
+  height: 120px;
+}
+
+.ttl {
+  font-size: 25px;
+  text-align: center;
+  font-weight: bold;
+}
+.form-group label {
+  font-weight: bold;
+}
+
+.link:hover {
+  cursor: pointer;
+  color: #0055b1 !important;
+}

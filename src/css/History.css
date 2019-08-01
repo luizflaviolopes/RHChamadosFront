@@ -1,0 +1,19 @@
+.historicoChamado {
+  background-color: #e8e8e8;
+}
+.form-group span {
+  font-weight: bold;
+  color: black;
+}
+.answerArea {
+  color: black;
+  border-color: brown;
+  background-color: #ffefef;
+}
+.HistoyrTransfer {
+  padding: 0%;
+  width: 80%;
+  margin: auto;
+  margin-top: 10px;
+  font-size: small;
+}

@@ -1,0 +1,139 @@
+import React, { Component } from "react";
+import "../css/bootstrap.css";
+import "../css/Botoes.css";
+import { Button, Row, Col, Table } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import api from "../APIs/DataApi";
+
+export class Atendentes extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      Id: props.id,
+      Masp: props.masp,
+      Nome: props.nome,
+      WinUser: props.winUser,
+      Politicas: props.politicas
+    };
+    this.handleDesativarAtendente = this.handleDesativarAtendente.bind(this);
+  }
+
+  handleDesativarAtendente(id) {
+    api("http://localhost:5000/api/Atendente?id=" + id, {
+      method: "delete"
+    }).then();
+  }
+
+  render() {
+    const _this = this;
+    return (
+      <div className="atendente" idSetor={this.props.id}>
+        <div className="headAtendente">
+          <div className="ttl">{this.props.text}</div>
+        </div>
+        <div className="bodyAtendente">
+          <Table>
+            <tbody>
+              {this.props.obj.atendentes.map(function(a, b) {
+                return (
+                  <tr>
+                    <td className="nameUser">{a.nome}</td>
+                    <td>
+                      <Button
+                        variant="warning"
+                        //onClick={() => this.props.openShowModal("editUser", this.state)}
+                        disabled={!a.ativo}
+                      >
+                        <FontAwesomeIcon icon="user-edit" color="white" />
+                      </Button>
+                    </td>
+                    <td>
+                      {a.ativo === true ? (
+                        <Button
+                          variant="danger"
+                          onClick={() => _this.handleDesativarAtendente(a.id)}
+                        >
+                          <FontAwesomeIcon icon="times" color="white" />
+                        </Button>
+                      ) : (
+                        <Button
+                          variant="success"
+                          onClick={() => _this.handleDesativarAtendente(a.id)}
+                        >
+                          <FontAwesomeIcon icon="check" color="white" />
+                        </Button>
+                      )}
+                    </td>
+                  </tr>
+
+                  // <Row>
+                  //   <Col sm="6" className="nameUser"> {a.nome}</Col>
+                  //   <Col sm="3">
+                  //     <Button
+                  //       variant="warning"
+                  //       //onClick={() => this.props.openShowModal("editUser", this.state)}
+                  //       disabled={!a.ativo}
+                  //     >
+                  //       <FontAwesomeIcon icon="user-edit" color="white" />
+                  //     </Button>
+                  //   </Col>
+                  //   <Col sm="3">
+                  //     {a.ativo === true ? (
+                  //       <Button
+                  //         variant="danger"
+                  //         onClick={() => this.handleDesativarAtendente(a.id)}
+                  //       >
+                  //         <FontAwesomeIcon icon="times" color="white" />
+                  //       </Button>
+                  //     ) : (
+                  //         <Button
+                  //           variant="success"
+                  //           onClick={() => this.handleDesativarAtendente(a.id)}
+                  //         >
+                  //           <FontAwesomeIcon icon="check" color="white" />
+                  //         </Button>)}
+                  //   </Col>
+                  // </Row>
+                );
+              })}
+            </tbody>
+          </Table>
+        </div>
+      </div>
+
+      // <tr>
+      //   <td>{this.state.Nome}</td>
+      //   <td>{this.state.Masp}</td>
+      //   <td>{this.state.WinUser}</td>
+      //   <td>{this.state.Ativo === true ? ("Ativo") : ("Inativo")}</td>
+      //   <td>{this.state.WinUser}</td>
+      //   <td>
+      //     <Button
+      //       variant="outline-secondary"
+      //       onClick={() => this.props.openShowModal("editUser", this.state)}
+      //       disabled={!this.state.Ativo}
+      //     >
+      //       Editar
+      //     </Button>
+      //     <Link to="/User">
+      //       {this.state.Ativo === true ? (<Button
+      //         variant="outline-danger"
+      //         onClick={() => this.handleDesativarAtendente(this.state.Id)}
+      //       >
+      //         Desativar
+      //     </Button>) : (<Button
+      //           variant="outline-success"
+      //           onClick={() => this.handleDesativarAtendente(this.state.Id)}
+      //         >
+      //           Ativar
+      //     </Button>)}
+
+      //     </Link>
+      //   </td>
+      // </tr>
+    );
+  }
+}
+
+export default Atendentes;
