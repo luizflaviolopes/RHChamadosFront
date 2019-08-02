@@ -5,6 +5,7 @@ import "../css/Setores.css";
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "../APIs/DataApi";
+import { Can } from "../APIs/Can";
 
 export class Unidades extends Component {
   constructor(props) {
@@ -43,20 +44,23 @@ export class Unidades extends Component {
                         <FontAwesomeIcon icon="minus-circle" />
                         Desativar
                     </Button> */}
-          <Button
-            variant="success"
-            size="sm"
-            onClick={() => this.props.obj.add(this.props.obj)}
-          >
-            <FontAwesomeIcon icon="plus-circle" />
-          </Button>
-          <Button
-            variant="danger"
-            size="sm"
-            onClick={this.handleDesativarUnidade}
-          >
-            <FontAwesomeIcon icon="minus-circle" />
-          </Button>
+          <Can politica="Gerir Setor">
+            <Button
+              variant="success"
+              size="sm"
+              onClick={() => this.props.obj.add(this.props.obj)}
+            >
+              <FontAwesomeIcon icon="plus-circle" />
+            </Button>
+
+            <Button
+              variant="danger"
+              size="sm"
+              onClick={this.handleDesativarUnidade}
+            >
+              <FontAwesomeIcon icon="minus-circle" />
+            </Button>
+          </Can>
         </div>
       </div>
     );

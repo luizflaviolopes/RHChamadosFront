@@ -9,6 +9,7 @@ import { ModalTransferir } from "./ModalTransferir";
 import ModalHistorico from "./ModalHistorico.js";
 import { Anexo } from "./Anexos";
 import api from "../APIs/DataApi";
+import { Can } from "../APIs/Can";
 export class PageChamado extends Component {
   constructor(props) {
     super(props);
@@ -229,17 +230,20 @@ export class PageChamado extends Component {
                   </Button>
                 </Link>
               </Col>
+
               <Col sm={3}>
-                <Button
-                  variant="primary"
-                  onClick={() =>
-                    this.setState({
-                      transferModal: true
-                    })
-                  }
-                >
-                  <FontAwesomeIcon icon="exchange-alt" /> Redirecionar
-                </Button>
+                <Can politica="Encaminhar Chamado">
+                  <Button
+                    variant="primary"
+                    onClick={() =>
+                      this.setState({
+                        transferModal: true
+                      })
+                    }
+                  >
+                    <FontAwesomeIcon icon="exchange-alt" /> Redirecionar
+                  </Button>
+                </Can>
 
                 <ModalTransferir
                   show={this.state.transferModal}
@@ -249,17 +253,21 @@ export class PageChamado extends Component {
                 />
               </Col>
               <Col sm={3}>
-                <Button variant="success" onClick={this.handleAnswer}>
-                  <FontAwesomeIcon icon="file-alt" /> Responder
-                </Button>
+                <Can politica="Responder Chamado">
+                  <Button variant="success" onClick={this.handleAnswer}>
+                    <FontAwesomeIcon icon="file-alt" /> Responder
+                  </Button>
+                </Can>
               </Col>
               <Col sm={3}>
-                <Button
-                  variant="secondary"
-                  onClick={() => this.setState({ historyModal: true })}
-                >
-                  <FontAwesomeIcon icon="history" /> Histórico
-                </Button>
+                <Can politica="Visualizar Relatorios">
+                  <Button
+                    variant="secondary"
+                    onClick={() => this.setState({ historyModal: true })}
+                  >
+                    <FontAwesomeIcon icon="history" /> Histórico
+                  </Button>
+                </Can>
 
                 <ModalHistorico
                   show={this.state.historyModal}
@@ -280,20 +288,24 @@ export class PageChamado extends Component {
                 </Link>
               </Col>
               <Col sm={4}>
-                <Button
-                  variant="warning"
-                  onClick={() => this.chamadoReaberto(this.state.numChamado)}
-                >
-                  <FontAwesomeIcon icon="envelope-open-text" /> Reabrir
-                </Button>
+                <Can politica="Reabrir Chamado">
+                  <Button
+                    variant="warning"
+                    onClick={() => this.chamadoReaberto(this.state.numChamado)}
+                  >
+                    <FontAwesomeIcon icon="envelope-open-text" /> Reabrir
+                  </Button>
+                </Can>
               </Col>
               <Col sm={4}>
-                <Button
-                  variant="secondary"
-                  onClick={() => this.setState({ historyModal: true })}
-                >
-                  <FontAwesomeIcon icon="history" /> Histórico
-                </Button>
+                <Can politica="Visualizar Relatorios">
+                  <Button
+                    variant="secondary"
+                    onClick={() => this.setState({ historyModal: true })}
+                  >
+                    <FontAwesomeIcon icon="history" /> Histórico
+                  </Button>
+                </Can>
 
                 <ModalHistorico
                   show={this.state.historyModal}

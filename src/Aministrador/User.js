@@ -30,17 +30,14 @@ export class User extends Component {
       .then(response => response.json())
       .then(data =>
         this.setState({
-          listaSetoresAtendentes:
-            data.setores.map(
-              function (a) {
-                return {
-                  sigla: a.setor,
-                  id: a.id,
-                  pai: a.hierarquia,
-                  atendentes: a.atendente
-                }
-              }
-            ),
+          listaSetoresAtendentes: data.setores.map(function(a) {
+            return {
+              sigla: a.setor,
+              id: a.id,
+              pai: a.hierarquia,
+              atendentes: a.atendente
+            };
+          }),
 
           listaPoliticas: data.politicas
         })
@@ -73,8 +70,11 @@ export class User extends Component {
     else
       return (
         <div className="user">
-
-          <HierarchyDraw data={this.state.listaSetoresAtendentes} el={Atendentes} lineColor={"black"} />
+          <HierarchyDraw
+            data={this.state.listaSetoresAtendentes}
+            el={Atendentes}
+            lineColor={"black"}
+          />
           {/* <MenuUser AttListAtdnt={this.handlAttAtendentes} />
 
           <Table>

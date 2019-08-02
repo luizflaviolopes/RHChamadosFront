@@ -17,6 +17,7 @@ import "./css/App.css";
 import "./css/bootstrap.css";
 import "./css/Botoes.css";
 import api from "./APIs/DataApi.js";
+import { Can } from "./APIs/Can.jsx";
 
 library.add(fas);
 
@@ -69,22 +70,28 @@ class App extends Component {
                 Início
               </Button>
             </Link>
-            <Link to="/User">
-              <Button className="btn-menu" onClick={this.OnclickHande}>
-                Atendentes
+            <Can politica="Gerir Usuario">
+              <Link to="/User">
+                <Button className="btn-menu" onClick={this.OnclickHande}>
+                  Atendentes
+                </Button>
+              </Link>
+            </Can>
+            <Can politica="Gerir Setor">
+              <Link to="/ConfiguracaoDeSetores">
+                <Button className="btn-menu" onClick={this.OnclickHande}>
+                  Setores
+                </Button>
+              </Link>
+            </Can>
+            <Can politica="Gerir Setor">
+              <Button
+                className="btn-menu"
+                onClick={() => this.setState({ newCallModal: true })}
+              >
+                Novo Chamado
               </Button>
-            </Link>
-            <Link to="/ConfiguracaoDeSetores">
-              <Button className="btn-menu" onClick={this.OnclickHande}>
-                Setores
-              </Button>
-            </Link>
-            <Button
-              className="btn-menu"
-              onClick={() => this.setState({ newCallModal: true })}
-            >
-              Novo Chamado
-            </Button>
+            </Can>
 
             <Formulario
               show={this.state.newCallModal}
@@ -92,20 +99,23 @@ class App extends Component {
               close={this.handleCloseModal}
             />
 
-            <Button
-              className="btn-menu"
-              onClick={() => this.setState({ answerModal: true })}
-            >
-              Respostas Padrão
-            </Button>
-            <Button className="btn-menu logout" onClick={this.handleLogout}>
-              Olá, ! Sair.
-            </Button>
+            <Can politica="Gerir Resposta">
+              <Button
+                className="btn-menu"
+                onClick={() => this.setState({ answerModal: true })}
+              >
+                Respostas Padrão
+              </Button>
+            </Can>
             <ModalAnswer
               show={this.state.answerModal}
               modalName="answerModal"
               close={this.handleCloseModal}
             />
+
+            <Button className="btn-menu logout" onClick={this.handleLogout}>
+              Olá, ! Sair.
+            </Button>
           </Menu>
           <Container fluid={true} className="position-relative">
             <div className="allScreen">

@@ -5,6 +5,7 @@ import { Button, Row, Col, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "../APIs/DataApi";
+import { Can } from "../APIs/Can";
 
 export class Atendentes extends Component {
   constructor(props) {
@@ -39,31 +40,37 @@ export class Atendentes extends Component {
                 return (
                   <tr>
                     <td className="nameUser">{a.nome}</td>
+
                     <td>
-                      <Button
-                        variant="warning"
-                        //onClick={() => this.props.openShowModal("editUser", this.state)}
-                        disabled={!a.ativo}
-                      >
-                        <FontAwesomeIcon icon="user-edit" color="white" />
-                      </Button>
+                      <Can politica="Gerir Usuario">
+                        <Button
+                          variant="warning"
+                          //onClick={() => this.props.openShowModal("editUser", this.state)}
+                          disabled={!a.ativo}
+                        >
+                          <FontAwesomeIcon icon="user-edit" color="white" />
+                        </Button>
+                      </Can>
                     </td>
+
                     <td>
-                      {a.ativo === true ? (
-                        <Button
-                          variant="danger"
-                          onClick={() => _this.handleDesativarAtendente(a.id)}
-                        >
-                          <FontAwesomeIcon icon="times" color="white" />
-                        </Button>
-                      ) : (
-                        <Button
-                          variant="success"
-                          onClick={() => _this.handleDesativarAtendente(a.id)}
-                        >
-                          <FontAwesomeIcon icon="check" color="white" />
-                        </Button>
-                      )}
+                      <Can politica="Gerir Usuario">
+                        {a.ativo === true ? (
+                          <Button
+                            variant="danger"
+                            onClick={() => _this.handleDesativarAtendente(a.id)}
+                          >
+                            <FontAwesomeIcon icon="times" color="white" />
+                          </Button>
+                        ) : (
+                          <Button
+                            variant="success"
+                            onClick={() => _this.handleDesativarAtendente(a.id)}
+                          >
+                            <FontAwesomeIcon icon="check" color="white" />
+                          </Button>
+                        )}
+                      </Can>
                     </td>
                   </tr>
 
