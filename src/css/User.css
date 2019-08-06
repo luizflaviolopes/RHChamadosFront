@@ -10,6 +10,7 @@
 }
 div.headAtendente div.ttl {
   color: white;
+  display: inline;
 }
 .headAtendente div.ttl,
 .bodyAtendente .nameUser {
@@ -38,4 +39,11 @@ div.headAtendente div.ttl {
 }
 .bodyAtendente .table td button {
   padding: 0.2rem;
+}
+
+.addUser {
+  margin-left: 10px;
+  color: white;
+  cursor: pointer;
+  float: right;
 }

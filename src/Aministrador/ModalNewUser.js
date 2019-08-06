@@ -36,6 +36,14 @@ export class NewUser extends Component {
   }
 
   handleNovoAtendente() {
+
+    this.setState({
+      newAtendente: {
+        ...this.state.newAtendente,
+        idSetores: this.props.idSetor
+      }
+    })
+
     api("http://localhost:5000/api/Atendente", {
       method: "post",
       headers: { "Content-Type": "application/json;" },
@@ -43,8 +51,8 @@ export class NewUser extends Component {
     })
       .then(Response => Response.json())
       .then(data => {
-        this.props.AttListAtdnt(data.atendente);
-        this.props.close(this.state.modalName);
+        this.props.attAtendente(data);
+        this.props.close();
       });
   }
   render() {
@@ -98,7 +106,7 @@ export class NewUser extends Component {
               </Col>
               <Col sm="6">
                 <Form.Group>
-                  <Form.Label>Login</Form.Label>
+                  <Form.Label>E-mail</Form.Label>
                   <Form.Control
                     type="text"
                     placeholder="Login do Atendente"
@@ -106,7 +114,7 @@ export class NewUser extends Component {
                       this.setState({
                         newAtendente: {
                           ...this.state.newAtendente,
-                          WinUser: evt.target.value
+                          Email: evt.target.value
                         }
                       })
                     }

@@ -10,27 +10,23 @@ export class ModalEditarAntende extends Component {
     this.state = {
       show: props.show,
       modalName: props.modalName,
-      listaPol: [],
+      listaPol: props.listaPol,
       listSetores: [],
-      Politicas: [],
+      polit: props.params.politicas,
       updateAtendente: {}
     };
     this.handleEditarAtendente = this.handleEditarAtendente.bind(this);
-    this.handleCloseModal = this.handleCloseModal.bind(this);
+
   }
 
-  componentDidUpdate(newProps) {
-    if (this.props.show !== this.state.show) {
-      this.setState({ show: this.props.show, ...this.props.params });
-    }
-  }
-  componentDidMount() {
-    api("http://localhost:5000/api/atendente", {})
-      .then(response => response.json())
-      .then(data =>
-        this.setState({ listaPol: data.politicas, listSetores: data.Setores })
-      );
-  }
+
+  // componentDidMount() {
+  //   api("http://localhost:5000/api/atendente", {})
+  //     .then(response => response.json())
+  //     .then(data =>
+  //       this.setState({ listaPol: data.politicas, listSetores: data.Setores })
+  //     );
+  // }
 
   handleEditarAtendente() {
     let updateAtendente = {
@@ -44,18 +40,10 @@ export class ModalEditarAntende extends Component {
     })
       .then(Response => Response.json())
       .then(data => {
-        this.props.params.Nome = updateAtendente.Nome;
-        this.props.params.WinUser = updateAtendente.WinUser;
-        this.props.params.Masp = updateAtendente.Masp;
-        this.props.params.Politicas = updateAtendente.Politicas;
-        this.props.params.Ativo = updateAtendente.Ativo;
+        this.props.attAtendente(data)
       });
 
-    this.props.close(this.state.modalName);
-  }
-
-  handleCloseModal(modal) {
-    this.setState({ [modal]: false });
+    this.props.close();
   }
 
   render() {
@@ -65,7 +53,7 @@ export class ModalEditarAntende extends Component {
       <Modal
         size="lg"
         show={this.state.show}
-        onHide={() => this.props.close(this.state.modalName)}
+        onHide={() => this.props.close()}
         aria-labelledby="editUser"
       >
         <Modal.Header closeButton>
@@ -73,14 +61,14 @@ export class ModalEditarAntende extends Component {
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <Form.Control type="text" value={this.state.Id} readOnly hidden />
+            <Form.Control type="text" value={this.props.params.Id} readOnly hidden />
             <Form.Row>
               <Col sm="6">
                 <Form.Group>
                   <Form.Label>Nome</Form.Label>
                   <Form.Control
                     type="text"
-                    value={this.state.Nome}
+                    value={this.props.params.nome}
                     placeholder="Nome do Usuário"
                     onChange={evt => this.setState({ Nome: evt.target.value })}
                   />
@@ -92,7 +80,7 @@ export class ModalEditarAntende extends Component {
                   <Form.Label>Masp</Form.Label>
                   <Form.Control
                     type="text"
-                    value={this.state.Masp}
+                    value={this.props.params.masp}
                     placeholder="Masp do Usuário"
                     onChange={evt => this.setState({ Masp: evt.target.value })}
                   />
@@ -100,43 +88,33 @@ export class ModalEditarAntende extends Component {
               </Col>
               <Col sm="6">
                 <Form.Group>
-                  <Form.Label>Login</Form.Label>
+                  <Form.Label>E-mail</Form.Label>
                   <Form.Control
                     type="text"
-                    value={this.state.WinUser}
-                    placeholder="Login do Usuário"
+                    value=''
+                    placeholder="E-mail"
+                    title="Email para login"
                     onChange={evt =>
-                      this.setState({ WinUser: evt.target.value })
+                      this.setState({ Email: evt.target.value })
                     }
                   />
                 </Form.Group>
               </Col>
-              <Col sm="6">
-                <Form.Group>
-                  <Form.Label>Setor</Form.Label>
-                  <Form.Control
-                    as="select"
-                    type="text"
-                    value={this.state.setor}
-                    placeholder="Login do Usuário"
-                    onChange={evt => this.setState({ setor: evt.target.value })}
-                  />
-                </Form.Group>
-              </Col>
+
               <Col sm="12">
                 <Form.Group>
                   <Form.Label>Permissões</Form.Label>
-                  {this.state.listaPol.map(function(a, i) {
+                  {this.state.listaPol.map(function (a, i) {
                     return (
                       <Politicas
                         namePol={a.nome}
                         onChange={evt => {
-                          let politicas = _this.Politicas;
+                          let politicas = _this.polit;
 
                           if (politicas == null) {
                             politicas = [];
                           }
-                          let exist = politicas.find(function(j, h) {
+                          let exist = politicas.find(function (j, h) {
                             return j.id === a.id;
                           });
                           if (exist) {
@@ -150,7 +128,7 @@ export class ModalEditarAntende extends Component {
                           }
 
                           __this.setState({
-                            Politicas: politicas,
+                            polit: politicas,
                             updateAtendente: {
                               ..._this.updateAtendente,
                               politicas: politicas
@@ -158,7 +136,7 @@ export class ModalEditarAntende extends Component {
                           });
                         }}
                         check={
-                          _this.Politicas.some(t => {
+                          __this.props.params.politicas.some(t => {
                             return t.id === a.id;
                           })
                             ? "checked"
