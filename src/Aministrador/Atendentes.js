@@ -32,11 +32,14 @@ export class Atendentes extends Component {
       <div className="atendente" idSetor={this.props.id}>
         <div className="headAtendente">
           <div className="ttl">{this.props.text}</div>
+          <div className="addUser" onClick={() => this.props.obj.add(this.props.id)}>
+            <FontAwesomeIcon icon="user-plus" />
+          </div>
         </div>
         <div className="bodyAtendente">
           <Table>
             <tbody>
-              {this.props.obj.atendentes.map(function(a, b) {
+              {this.props.obj.atendentes.map(function (a, b) {
                 return (
                   <tr>
                     <td className="nameUser">{a.nome}</td>
@@ -45,7 +48,7 @@ export class Atendentes extends Component {
                       <Can politica="Gerir Usuario">
                         <Button
                           variant="warning"
-                          //onClick={() => this.props.openShowModal("editUser", this.state)}
+                          onClick={() => _this.props.obj.edit(a, _this.props.id)}
                           disabled={!a.ativo}
                         >
                           <FontAwesomeIcon icon="user-edit" color="white" />
@@ -63,13 +66,13 @@ export class Atendentes extends Component {
                             <FontAwesomeIcon icon="times" color="white" />
                           </Button>
                         ) : (
-                          <Button
-                            variant="success"
-                            onClick={() => _this.handleDesativarAtendente(a.id)}
-                          >
-                            <FontAwesomeIcon icon="check" color="white" />
-                          </Button>
-                        )}
+                            <Button
+                              variant="success"
+                              onClick={() => _this.handleDesativarAtendente(a.id)}
+                            >
+                              <FontAwesomeIcon icon="check" color="white" />
+                            </Button>
+                          )}
                       </Can>
                     </td>
                   </tr>
