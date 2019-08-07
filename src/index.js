@@ -1,7 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
+
 import App from "./App";
+import AppRastreio from "./AppRastreio";
 import { Login } from "./Login/Login.js";
 import * as serviceWorker from "./serviceWorker";
 import "./css/logon.css";
@@ -23,7 +25,7 @@ api("http://localhost:5000/api/auth/authenticate")
   .then(data => {
     if (data) {
       localStorage.setItem("Politica", data);
-      ReactDOM.render(<App logado={teste} />, document.getElementById("root"));
+      ReactDOM.render(<AppRastreio logado={teste} />, document.getElementById("root"));
     }
   })
   .catch(err => console.log(err));

@@ -20,13 +20,13 @@ export class ModalEditarAntende extends Component {
   }
 
 
-  // componentDidMount() {
-  //   api("http://localhost:5000/api/atendente", {})
-  //     .then(response => response.json())
-  //     .then(data =>
-  //       this.setState({ listaPol: data.politicas, listSetores: data.Setores })
-  //     );
-  // }
+  componentDidMount() {
+    api("http://localhost:5000/api/atendente", {})
+      .then(response => response.json())
+      .then(data =>
+        this.setState({ listSetores: data.listaSetores })
+      );
+  }
 
   handleEditarAtendente() {
     let updateAtendente = {
@@ -98,6 +98,25 @@ export class ModalEditarAntende extends Component {
                       this.setState({ Email: evt.target.value })
                     }
                   />
+                </Form.Group>
+              </Col>
+              <Col sm="6">
+                <Form.Group>
+                  <Form.Label>Setor</Form.Label>
+                  <Form.Control
+                    as="select"
+                    value={this.props.params.idSetor}
+                    onChange={evt =>
+                      this.setState({ Email: evt.target.value })
+                    }
+                  >
+                    <option>Selecione um Setor</option>
+                    {this.state.listSetores.map(function (a, i) {
+                      return (
+                        <option value={a.id}>{a.setor}</option>
+                      )
+                    })}
+                  </Form.Control>
                 </Form.Group>
               </Col>
 

@@ -17,7 +17,7 @@ export class User extends Component {
     this.state = {
       editUser: false,
       addUser: false,
-      editUserParams: null,
+      editUserParams: {},
       listaSetoresAtendentes: [],
       listaPoliticas: [],
       IdSetor: null,
@@ -56,12 +56,12 @@ export class User extends Component {
     this.setState({ addUser: true, IdSetor: a });
   }
 
-  handleOpenModalEdit(at, id) {
+  handleOpenModalEdit(at) {
     this.setState({
       editUser: true,
-      editUserParams: at
+      editUserParams: at,
     });
-    //this.state.editUserParams.push("idSetor", id)
+
   }
 
   handlAttAtendentes(attAtendente) {

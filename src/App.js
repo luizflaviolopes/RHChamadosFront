@@ -65,9 +65,9 @@ class App extends Component {
         <BrowserRouter>
           <Cabecalho />
           <Menu>
-            <Link to="/">
+            <Link to="/chamados">
               <Button className="btn-menu" onClick={this.OnclickHande}>
-                Início
+                Chamados
               </Button>
             </Link>
             <Can politica="Gerir Usuario">
@@ -121,12 +121,12 @@ class App extends Component {
             <div className="allScreen">
               <div className="menu-l">
                 <Switch>
-                  <Route path="/" exact={true} component={SideMenuIndex} />
+                  <Route path="/chamados" exact={true} component={SideMenuIndex} />
                   <Route path="/Chamados" component={SideMenuIndex} />
                 </Switch>
               </div>
               <Switch>
-                <Route path="/" exact={true} component={TabelaIndex} />
+                <Route path="/chamados" exact={true} component={TabelaIndex} />
                 <Route path="/Chamados/:tipo" component={TabelaIndex} />
                 <Route path="/DetalhamentoChamado" component={PageChamado} />
                 <Route path="/User" component={User} />

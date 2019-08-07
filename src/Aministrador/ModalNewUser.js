@@ -109,7 +109,7 @@ export class NewUser extends Component {
                   <Form.Label>E-mail</Form.Label>
                   <Form.Control
                     type="text"
-                    placeholder="Login do Atendente"
+                    placeholder="E-Mail do Atendente"
                     onChange={evt =>
                       this.setState({
                         newAtendente: {
