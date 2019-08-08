@@ -14,8 +14,8 @@ export class NewUser extends Component {
       show: props.show,
       modalName: props.modalName,
       listaPol: [],
-
-      newAtendente: {}
+      newAtendente: {},
+      IdSetores: this.props.IdSetor
     };
     this.handleNovoAtendente = this.handleNovoAtendente.bind(this);
   }
@@ -25,7 +25,7 @@ export class NewUser extends Component {
       this.setState({ show: this.props.show });
   }
   componentDidMount() {
-    api("http://localhost:5000/api/atendente", {})
+    api("http://localhost:5000/api/auth", {})
       .then(response => response.json())
       .then(data =>
         this.setState({
@@ -39,21 +39,25 @@ export class NewUser extends Component {
 
     this.setState({
       newAtendente: {
-        ...this.state.newAtendente,
-        idSetores: this.props.idSetor
+        Usuario: this.state.newAtendente.Usuario,
+        Email: this.state.newAtendente.Email,
+        Masp: this.state.newAtendente.Masp,
+        Politicas: this.state.newAtendente.Politicas,
+        IdSetor: this.props.IdSetor
       }
+    }, () => {
+      console.log(this.state.newAtendente)
+      api("http://localhost:5000/api/auth/nova-conta", {
+        method: "post",
+        headers: { "Content-Type": "application/json;" },
+        body: JSON.stringify(this.state.newAtendente)
+      })
+        .then(Response => Response.json())
+        .then(data => {
+          this.props.attAtendente(data);
+          this.props.close();
+        });
     })
-
-    api("http://localhost:5000/api/Atendente", {
-      method: "post",
-      headers: { "Content-Type": "application/json;" },
-      body: JSON.stringify(this.state.newAtendente)
-    })
-      .then(Response => Response.json())
-      .then(data => {
-        this.props.attAtendente(data);
-        this.props.close();
-      });
   }
   render() {
     let __this = this;
@@ -80,7 +84,7 @@ export class NewUser extends Component {
                       this.setState({
                         newAtendente: {
                           ...this.state.newAtendente,
-                          Nome: evt.target.value
+                          Usuario: evt.target.value
                         }
                       })
                     }

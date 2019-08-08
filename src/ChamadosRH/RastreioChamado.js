@@ -4,30 +4,30 @@ import { Link } from "react-router-dom";
 import { Button, Col, Row, Alert } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export class RastreioChamado extends React.Component{
+export class RastreioChamado extends React.Component {
 
-    constructor(props){
-        super(props);
-        this.state = {
-            tag: this.props.match.params.tag,
-            
-        };
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      tag: this.props.match.params.tag,
 
-    componentDidMount() {
-        fetch(
-          "http://localhost:5000/api/auth/pesquisa-chamado?tag=" + this.state.tag
-        )
-          .then(rastreio => rastreio.json())
-          .then(rastreio => this.setState({ ...rastreio }));
-    
-      }
+    };
+  }
 
-    render(){
-       return ( 
-    <div className="PageChamados">
+  componentDidMount() {
+    fetch(
+      "http://localhost:5000/api/auth/pesquisa-chamado?tag=" + this.state.tag
+    )
+      .then(rastreio => rastreio.json())
+      .then(rastreio => this.setState({ ...rastreio }));
+
+  }
+
+  render() {
+    return (
+      <div className="PageChamados">
         <div className="form-group chamado">
-        <div className="form-group">
+          <div className="form-group">
             <Row>
               <Col sm={6}>
                 <label>
@@ -83,14 +83,14 @@ export class RastreioChamado extends React.Component{
             </label>
             <p>{this.state.descricao}</p>
           </div>
-        
+
 
         </div>
-    </div>
+      </div>
 
-       )
-    
-        
-    };
+    )
+
+
+  };
 }
 export default RastreioChamado;

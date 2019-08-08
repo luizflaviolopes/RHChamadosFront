@@ -13,7 +13,7 @@ export class ModalEditarAntende extends Component {
       listaPol: props.listaPol,
       listSetores: [],
       polit: props.params.politicas,
-      updateAtendente: {}
+      updateAtendente: props.params
     };
     this.handleEditarAtendente = this.handleEditarAtendente.bind(this);
 
@@ -21,7 +21,7 @@ export class ModalEditarAntende extends Component {
 
 
   componentDidMount() {
-    api("http://localhost:5000/api/atendente", {})
+    api("http://localhost:5000/api/auth", {})
       .then(response => response.json())
       .then(data =>
         this.setState({ listSetores: data.listaSetores })
@@ -29,14 +29,12 @@ export class ModalEditarAntende extends Component {
   }
 
   handleEditarAtendente() {
-    let updateAtendente = {
-      ...this.state
-    };
 
-    api("http://localhost:5000/api/Atendente", {
+
+    api("http://localhost:5000/api/auth/AtualizarAtendente", {
       method: "put",
       headers: { "Content-Type": "application/json;" },
-      body: JSON.stringify(updateAtendente)
+      body: JSON.stringify(this.state.updateAtendente)
     })
       .then(Response => Response.json())
       .then(data => {
@@ -68,9 +66,16 @@ export class ModalEditarAntende extends Component {
                   <Form.Label>Nome</Form.Label>
                   <Form.Control
                     type="text"
-                    value={this.props.params.nome}
+                    value={this.state.updateAtendente.nome}
                     placeholder="Nome do Usuário"
-                    onChange={evt => this.setState({ Nome: evt.target.value })}
+                    onChange={evt =>
+                      this.setState({
+                        updateAtendente: {
+                          ...this.state.updateAtendente,
+                          nome: evt.target.value
+                        }
+                      }
+                      )}
                   />
                 </Form.Group>
               </Col>
@@ -80,9 +85,15 @@ export class ModalEditarAntende extends Component {
                   <Form.Label>Masp</Form.Label>
                   <Form.Control
                     type="text"
-                    value={this.props.params.masp}
+                    value={this.state.updateAtendente.masp}
                     placeholder="Masp do Usuário"
-                    onChange={evt => this.setState({ Masp: evt.target.value })}
+                    onChange={evt => this.setState({
+                      updateAtendente: {
+                        ...this.state.updateAtendente,
+                        masp: evt.target.value
+                      }
+                    }
+                    )}
                   />
                 </Form.Group>
               </Col>
@@ -91,11 +102,17 @@ export class ModalEditarAntende extends Component {
                   <Form.Label>E-mail</Form.Label>
                   <Form.Control
                     type="text"
-                    value=''
+                    // value={this.state.updateAtendente.email}
                     placeholder="E-mail"
+                    value={this.state.updateAtendente.email}
                     title="Email para login"
                     onChange={evt =>
-                      this.setState({ Email: evt.target.value })
+                      this.setState({
+                        updateAtendente: {
+                          ...this.state.updateAtendente,
+                          email: evt.target.value
+                        }
+                      })
                     }
                   />
                 </Form.Group>
@@ -105,9 +122,14 @@ export class ModalEditarAntende extends Component {
                   <Form.Label>Setor</Form.Label>
                   <Form.Control
                     as="select"
-                    value={this.props.params.idSetor}
+                    value={this.state.updateAtendente.idSetor}
                     onChange={evt =>
-                      this.setState({ Email: evt.target.value })
+                      this.setState({
+                        updateAtendente: {
+                          ...this.state.updateAtendente,
+                          setor: evt.target.value
+                        }
+                      })
                     }
                   >
                     <option>Selecione um Setor</option>

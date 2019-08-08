@@ -32,7 +32,7 @@ export class User extends Component {
 
   componentDidMount() {
     let _this = this;
-    api("http://localhost:5000/api/Atendente", {})
+    api("http://localhost:5000/api/auth", {})
       .then(response => response.json())
       .then(data =>
         this.setState({
@@ -89,14 +89,16 @@ export class User extends Component {
     let modalEdit;
 
     if (this.state.addUser) {
-      modalAdd = (
-        <NewUser
-          show={true}
-          modalName="newUser"
-          close={this.handleCloseModal}
-          attAtendente={this.handlAttAtendentes}
-          IdSetor={this.state.IdSetor}
-        />)
+      if (this.state.IdSetor !== null) {
+        modalAdd = (
+          <NewUser
+            show={true}
+            modalName="newUser"
+            close={this.handleCloseModal}
+            attAtendente={this.handlAttAtendentes}
+            IdSetor={this.state.IdSetor}
+          />)
+      }
     }
 
     if (this.state.editUser) {

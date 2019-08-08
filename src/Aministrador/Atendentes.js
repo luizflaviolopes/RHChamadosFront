@@ -21,7 +21,7 @@ export class Atendentes extends Component {
   }
 
   handleDesativarAtendente(id) {
-    api("http://localhost:5000/api/Atendente?id=" + id, {
+    api("http://localhost:5000/api/auth/ExcluirAtendente?id=" + id, {
       method: "delete"
     }).then();
   }

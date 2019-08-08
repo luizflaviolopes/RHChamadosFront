@@ -9,7 +9,7 @@ import * as serviceWorker from "./serviceWorker";
 import "./css/logon.css";
 import api from "./APIs/DataApi";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-const teste = "";
+
 
 api("http://localhost:5000/api/auth/authenticate")
   .then(resp => {
@@ -17,7 +17,7 @@ api("http://localhost:5000/api/auth/authenticate")
       return resp.json();
     } else {
       ReactDOM.render(
-        <Login logado={teste} />,
+        <Login />,
         document.getElementById("root")
       );
     }
@@ -25,7 +25,7 @@ api("http://localhost:5000/api/auth/authenticate")
   .then(data => {
     if (data) {
       localStorage.setItem("Politica", data);
-      ReactDOM.render(<AppRastreio logado={teste} />, document.getElementById("root"));
+      ReactDOM.render(<App />, document.getElementById("root"));
     }
   })
   .catch(err => console.log(err));
