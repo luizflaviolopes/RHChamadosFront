@@ -84,7 +84,7 @@ export class User extends Component {
     this.setState({ editUser: false, addUser: false });
   }
   render() {
-    let _this = this;
+
     let modalAdd;
     let modalEdit;
 

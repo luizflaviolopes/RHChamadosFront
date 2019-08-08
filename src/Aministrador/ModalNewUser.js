@@ -46,7 +46,7 @@ export class NewUser extends Component {
         IdSetor: this.props.IdSetor
       }
     }, () => {
-      console.log(this.state.newAtendente)
+
       api("http://localhost:5000/api/auth/nova-conta", {
         method: "post",
         headers: { "Content-Type": "application/json;" },

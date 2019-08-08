@@ -74,7 +74,7 @@ export class Login extends Component {
                     }
                   />
                   <Form.Text className="text-primary link">
-                    Esqueci Minha Senha
+                    <a href="http://localhost:3000/EsqueciSenha">Esqueci Minha Senha</a>
                   </Form.Text>
                 </Form.Group>
                 <Button className="btn-menu" onClick={this.handleLogin}>

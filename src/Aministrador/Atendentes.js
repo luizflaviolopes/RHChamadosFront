@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import "../css/bootstrap.css";
 import "../css/Botoes.css";
-import { Button, Row, Col, Table } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Button, Table } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "../APIs/DataApi";
 import { Can } from "../APIs/Can";

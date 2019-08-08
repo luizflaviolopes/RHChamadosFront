@@ -1,6 +1,9 @@
-.carregando
-{
-    font-size: 7rem;
-    text-align: center;
-    color: #a5a5a5;
+.carregando {
+  font-size: 7rem;
+  text-align: center;
+  color: #a5a5a5;
+}
+.notFind {
+  text-align: center;
+  color: red;
 }
