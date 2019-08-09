@@ -75,18 +75,13 @@ export class Formulario extends Component {
 
     this.setState({
       listFile: [...this.state.listFile, ...acceptedFiles]
-      //newChamado: { ...this.state.newChamado, ...this.state.listFile }
     });
-    //console.log(this.state.newChamado);
     console.log(this.state.listFile);
   };
 
   handleRemoveFile(file) {
     var list = [...this.state.listFile];
     var index;
-    //console.log(index);
-    //var test = list.find(file);
-    // console.log(test);
 
     for (var i = 0; i < list.length; i++) {
       if (list[i].name === file) {
@@ -231,18 +226,6 @@ export class Formulario extends Component {
                 }
               />
               <div className="form-group">
-                {/* <label for="anexo">
-                 <span>
-                    Anexar Arquivos <FontAwesomeIcon icon="paperclip" />{" "}
-                  </span>
-                </label> 
-                <Form.Control
-                  type="file"
-                  id="anexo"
-                  style={{ display: "block" }}
-                  onChange={() => this.handleFile}
-
-                />*/}
                 <Dropzone onDrop={this.onDrop}>
                   {({ getRootProps, getInputProps }) => (
                     <div {...getRootProps()}>
@@ -266,7 +249,7 @@ export class Formulario extends Component {
                 </div>
               </div>
             </Form.Group>
-            <Link to="/">
+            <Link to="/Chamados">
               <Button className="btn-menu" onClick={this.handleNovoChamado}>
                 Criar
               </Button>
