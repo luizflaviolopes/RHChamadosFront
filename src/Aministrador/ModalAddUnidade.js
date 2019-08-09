@@ -38,19 +38,6 @@ export class ModalAddUnidade extends Component {
       });
   }
 
-  /*  handleNovaUnidade() {
-    api("http://localhost:5000/api/Setores", {
-      method: "post",
-      headers: { "Content-Type": "application/json;" },
-      body: JSON.stringify(this.state.newSet)
-    })
-      .then(Response => Response.json())
-      .then(data => {
-        this.props.AttListUndd(data);
-        console.log(data);
-        this.props.close();
-      });
-  } */
   render() {
     return (
       <Modal size="lg" show={this.state.show} onHide={() => this.props.close()}>
@@ -58,7 +45,12 @@ export class ModalAddUnidade extends Component {
           <Modal.Title id="newUnidade">Novo Atendente</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form
+            onSubmit={event => {
+              event.preventDefault();
+              this.handleNovaUnidade();
+            }}
+          >
             <Form.Group>
               <Form.Label>Nome da Unidade</Form.Label>
               <Form.Control
@@ -75,7 +67,7 @@ export class ModalAddUnidade extends Component {
               />
             </Form.Group>
             <Form.Group>
-              <Button variant="primary" onClick={this.handleNovaUnidade}>
+              <Button variant="primary" type="submit">
                 Enviar
               </Button>
             </Form.Group>

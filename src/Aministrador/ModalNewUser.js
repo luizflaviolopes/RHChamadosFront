@@ -25,39 +25,40 @@ export class NewUser extends Component {
       this.setState({ show: this.props.show });
   }
   componentDidMount() {
-    api("http://localhost:5000/api/auth", {})
+    api("http://localhost:5000/api/Atendente", {})
       .then(response => response.json())
       .then(data =>
         this.setState({
           listaPol: data.politicas
-
         })
       );
   }
 
   handleNovoAtendente() {
-
-    this.setState({
-      newAtendente: {
-        Usuario: this.state.newAtendente.Usuario,
-        Email: this.state.newAtendente.Email,
-        Masp: this.state.newAtendente.Masp,
-        Politicas: this.state.newAtendente.Politicas,
-        IdSetor: this.props.IdSetor
+    this.setState(
+      {
+        newAtendente: {
+          Usuario: this.state.newAtendente.Usuario,
+          Email: this.state.newAtendente.Email,
+          Masp: this.state.newAtendente.Masp,
+          Politicas: this.state.newAtendente.politicas,
+          IdSetor: this.props.IdSetor
+        }
+      },
+      () => {
+        api("http://localhost:5000/api/Auth/nova-conta", {
+          method: "post",
+          headers: { "Content-Type": "application/json;" },
+          body: JSON.stringify(this.state.newAtendente)
+        })
+          .then(Response => Response.json())
+          .then(data => {
+            this.props.attAtendente(data.setores);
+            console.log(data.setores, "dataN");
+            this.props.close();
+          });
       }
-    }, () => {
-
-      api("http://localhost:5000/api/auth/nova-conta", {
-        method: "post",
-        headers: { "Content-Type": "application/json;" },
-        body: JSON.stringify(this.state.newAtendente)
-      })
-        .then(Response => Response.json())
-        .then(data => {
-          this.props.attAtendente(data);
-          this.props.close();
-        });
-    })
+    );
   }
   render() {
     let __this = this;
@@ -72,7 +73,12 @@ export class NewUser extends Component {
           <Modal.Title id="newUser">Novo Atendente</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form
+            onSubmit={event => {
+              event.preventDefault();
+              this.handleNovoAtendente();
+            }}
+          >
             <Form.Row>
               <Col sm="6">
                 <Form.Group>
@@ -127,7 +133,7 @@ export class NewUser extends Component {
               </Col>
               <Col sm="12">
                 <Form.Group>
-                  {this.state.listaPol.map(function (a, i) {
+                  {this.state.listaPol.map(function(a, i) {
                     return (
                       <Politicas
                         namePol={a.nome}
@@ -137,7 +143,7 @@ export class NewUser extends Component {
                           if (politicas == null) {
                             politicas = [];
                           }
-                          let exist = politicas.find(function (j, h) {
+                          let exist = politicas.find(function(j, h) {
                             return j.id === a.id;
                           });
                           if (exist) {
@@ -162,7 +168,7 @@ export class NewUser extends Component {
                   })}
                 </Form.Group>
                 <Link to="/User">
-                  <Button variant="primary" onClick={this.handleNovoAtendente}>
+                  <Button variant="primary" type="submit">
                     Enviar
                   </Button>
                 </Link>

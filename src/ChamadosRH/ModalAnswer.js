@@ -15,7 +15,7 @@ export class ModalAnswer extends Component {
     this.handleCriarResposta = this.handleCriarResposta.bind(this);
   }
   handleCriarResposta() {
-    api("http://localhost:5000/api/RespAutomatica", {
+    api("http://localhost:5000/api/Resposta/RespAutomatica", {
       method: "post",
       headers: { "Content-Type": "application/json;" },
       body: JSON.stringify(this.state.respAuto)

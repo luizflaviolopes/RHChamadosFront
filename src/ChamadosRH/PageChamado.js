@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "../css/PageChamado.css";
-
 import { Link } from "react-router-dom";
 import { Button, Col, Row, Alert } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -27,48 +26,12 @@ export class PageChamado extends Component {
     this.handleAnswer = this.handleAnswer.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
     this.chamadoReaberto = this.chamadoReaberto.bind(this);
-    //  this.handleClicked = this.handleClicked.bind(this);
   }
 
   handleAnswer() {
     this.setState({ answerOpen: !this.state.answerOpen });
   }
 
-  /* handleClicked(num) {
-     api("http://localhost:5000/api/Download?id=" + num, {
-       method: "get",
-     }).then(response => response.blob())
-       .then(blob => {
-         var url = window.URL.createObjectURL(blob);
-         var a = document.createElement('a');
-         a.href = url;
-         a.download = "filename.xlsx";
-         document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
-         a.click();
-         a.remove();  //afterwards we remove the element again         
-       });
- 
- 
- 
-   }*/
-
-  /*
-  handleFile() {
-    const formData = new FormData();
-    var file = document.getElementById("anexo").files;
-    var chamado = this.state.numChamado;
-
-    formData.append('file', file[0]);
-    formData.append('chamado', chamado);
-
-    api(
-      "http://localhost:5000/api/values", {
-        method: "put",
-        body: formData
-      })
-      .then();
-  }
-*/
   handleBack() {
     this.props.history.goBack();
   }
@@ -95,7 +58,6 @@ export class PageChamado extends Component {
     }).then(() => {
       this.setState({ status: "Aberto" });
     });
-    //.then(Response => Response.json());
   }
 
   handleCloseModal(modal) {
@@ -194,9 +156,7 @@ export class PageChamado extends Component {
                 nome={a.textAnexo}
                 eliminar={_this.handleRemoveFile}
                 num={a.id}
-                typefile={
-                  a.typefile
-                } /* handleleClicked={_this.handleClicked} */
+                typefile={a.typefile}
               />
             );
           })}

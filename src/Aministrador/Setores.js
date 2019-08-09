@@ -103,12 +103,6 @@ export class Setores extends Component {
 
     return (
       <Container fluid className="setores">
-        {/* {this.state.listaSetores.map(function (a, i) {
-                    return (
-                        <Unidades idSetor={a.id} unidade={a.setor} active={a.active} pai={a.hieraquia} openShowModal={_this.handleOpenModal} />
-                    )
-                })} */}
-
         <HierarchyDraw
           data={this.state.listaSetores}
           el={Unidades}

@@ -32,18 +32,6 @@ export class Unidades extends Component {
           <span className="ttl">{this.props.text}</span>
         </div>
         <div className="bodyUni">
-          {/* <Button variant="outline-success"
-                        onClick={() => this.props.openShowModal("addUnidade", this.state)}
-                    >
-                        <FontAwesomeIcon icon="plus-circle" />
-                        Adicionar
-                    </Button>
-                    <Button variant="outline-danger"
-                        onClick={() => this.handleDesativarUnidade(this.state.idSetor)}
-                    >
-                        <FontAwesomeIcon icon="minus-circle" />
-                        Desativar
-                    </Button> */}
           <Can politica="Gerir Setor">
             <Button
               variant="success"
