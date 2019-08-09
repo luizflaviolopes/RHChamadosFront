@@ -184,7 +184,7 @@ export class PageChamado extends Component {
           {this.state.status !== "Encerrado" ? (
             <Row className="row text-center">
               <Col sm={3}>
-                <Link to="/">
+                <Link to="/Chamados">
                   <Button variant="outline-danger">
                     <FontAwesomeIcon icon="chevron-circle-left" /> Voltar
                   </Button>

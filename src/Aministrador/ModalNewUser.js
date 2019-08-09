@@ -73,108 +73,101 @@ export class NewUser extends Component {
           <Modal.Title id="newUser">Novo Atendente</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form
-            onSubmit={event => {
-              event.preventDefault();
-              this.handleNovoAtendente();
-            }}
-          >
-            <Form.Row>
-              <Col sm="6">
-                <Form.Group>
-                  <Form.Label>Nome</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Nome do Atendente"
-                    onChange={evt =>
-                      this.setState({
-                        newAtendente: {
-                          ...this.state.newAtendente,
-                          Usuario: evt.target.value
-                        }
-                      })
-                    }
-                  />
-                </Form.Group>
-              </Col>
-              <Col sm="6">
-                <Form.Group>
-                  <Form.Label>Masp</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Masp do Atendente"
-                    onChange={evt =>
-                      this.setState({
-                        newAtendente: {
-                          ...this.state.newAtendente,
-                          Masp: evt.target.value
-                        }
-                      })
-                    }
-                  />
-                </Form.Group>
-              </Col>
-              <Col sm="6">
-                <Form.Group>
-                  <Form.Label>E-mail</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="E-Mail do Atendente"
-                    onChange={evt =>
-                      this.setState({
-                        newAtendente: {
-                          ...this.state.newAtendente,
-                          Email: evt.target.value
-                        }
-                      })
-                    }
-                  />
-                </Form.Group>
-              </Col>
-              <Col sm="12">
-                <Form.Group>
-                  {this.state.listaPol.map(function(a, i) {
-                    return (
-                      <Politicas
-                        namePol={a.nome}
-                        onChange={evt => {
-                          let politicas = _this.newAtendente.politicas;
+          <Form.Row>
+            <Col sm="6">
+              <Form.Group>
+                <Form.Label>Nome</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Nome do Atendente"
+                  onChange={evt =>
+                    this.setState({
+                      newAtendente: {
+                        ...this.state.newAtendente,
+                        Usuario: evt.target.value
+                      }
+                    })
+                  }
+                />
+              </Form.Group>
+            </Col>
+            <Col sm="6">
+              <Form.Group>
+                <Form.Label>Masp</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Masp do Atendente"
+                  onChange={evt =>
+                    this.setState({
+                      newAtendente: {
+                        ...this.state.newAtendente,
+                        Masp: evt.target.value
+                      }
+                    })
+                  }
+                />
+              </Form.Group>
+            </Col>
+            <Col sm="6">
+              <Form.Group>
+                <Form.Label>E-mail</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="E-Mail do Atendente"
+                  onChange={evt =>
+                    this.setState({
+                      newAtendente: {
+                        ...this.state.newAtendente,
+                        Email: evt.target.value
+                      }
+                    })
+                  }
+                />
+              </Form.Group>
+            </Col>
+            <Col sm="12">
+              <Form.Group>
+                {this.state.listaPol.map(function(a, i) {
+                  return (
+                    <Politicas
+                      namePol={a.nome}
+                      onChange={evt => {
+                        let politicas = _this.newAtendente.politicas;
 
-                          if (politicas == null) {
-                            politicas = [];
-                          }
-                          let exist = politicas.find(function(j, h) {
-                            return j.id === a.id;
+                        if (politicas == null) {
+                          politicas = [];
+                        }
+                        let exist = politicas.find(function(j, h) {
+                          return j.id === a.id;
+                        });
+                        if (exist) {
+                          exist.valor = evt.target.checked;
+                        } else {
+                          politicas.push({
+                            nome: a.nome,
+                            valor: evt.target.checked,
+                            id: a.id
                           });
-                          if (exist) {
-                            exist.valor = evt.target.checked;
-                          } else {
-                            politicas.push({
-                              nome: a.nome,
-                              valor: evt.target.checked,
-                              id: a.id
-                            });
-                          }
+                        }
 
-                          __this.setState({
-                            newAtendente: {
-                              ..._this.newAtendente,
-                              politicas: politicas
-                            }
-                          });
-                        }}
-                      />
-                    );
-                  })}
-                </Form.Group>
-                <Link to="/User">
-                  <Button variant="primary" type="submit">
-                    Enviar
-                  </Button>
-                </Link>
-              </Col>
-            </Form.Row>
-          </Form>
+                        __this.setState({
+                          newAtendente: {
+                            ..._this.newAtendente,
+                            politicas: politicas
+                          }
+                        });
+                      }}
+                    />
+                  );
+                })}
+              </Form.Group>
+              <Link to="/User">
+                <Button variant="primary" onClick={this.handleNovoAtendente}>
+                  Enviar
+                </Button>
+              </Link>
+            </Col>
+          </Form.Row>
         </Modal.Body>
       </Modal>
     );
