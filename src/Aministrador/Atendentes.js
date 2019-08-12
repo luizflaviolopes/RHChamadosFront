@@ -81,7 +81,7 @@ export class Atendentes extends Component {
                   //   <Col sm="3">
                   //     <Button
                   //       variant="warning"
-                  //       //onClick={() => this.props.openShowModal("editUser", this.state)}
+                  //       onClick={() => this.props.openShowModal("editUser", this.state)}
                   //       disabled={!a.ativo}
                   //     >
                   //       <FontAwesomeIcon icon="user-edit" color="white" />

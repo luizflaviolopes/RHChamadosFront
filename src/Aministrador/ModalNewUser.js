@@ -42,11 +42,11 @@ export class NewUser extends Component {
         Usuario: this.state.newAtendente.Usuario,
         Email: this.state.newAtendente.Email,
         Masp: this.state.newAtendente.Masp,
-        Politicas: this.state.newAtendente.Politicas,
+        Politicas: this.state.newAtendente.politicas,
         IdSetor: this.props.IdSetor
       }
     }, () => {
-
+      console.log(this.state.newAtendente);
       api("http://localhost:5000/api/auth/nova-conta", {
         method: "post",
         headers: { "Content-Type": "application/json;" },
