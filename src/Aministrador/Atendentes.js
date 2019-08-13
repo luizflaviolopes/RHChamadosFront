@@ -27,7 +27,7 @@ export class Atendentes extends Component {
     api("http://localhost:5000/api/Atendente/ExcluirAtendete?id=" + id, {
       method: "delete"
     }).then(data => {
-      this.props.attAtendente(data.setores);
+      this.props.handlAttAtendentes(data.setores);
     });
   }
 

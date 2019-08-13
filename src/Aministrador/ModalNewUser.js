@@ -35,6 +35,7 @@ export class NewUser extends Component {
   }
 
   handleNovoAtendente() {
+    let t = "";
     this.setState(
       {
         newAtendente: {
