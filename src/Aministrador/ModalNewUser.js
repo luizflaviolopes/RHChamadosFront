@@ -35,6 +35,7 @@ export class NewUser extends Component {
   }
 
   handleNovoAtendente() {
+<<<<<<< HEAD
     this.setState(
       {
         newAtendente: {
@@ -59,6 +60,30 @@ export class NewUser extends Component {
           });
       }
     );
+=======
+
+    this.setState({
+      newAtendente: {
+        Usuario: this.state.newAtendente.Usuario,
+        Email: this.state.newAtendente.Email,
+        Masp: this.state.newAtendente.Masp,
+        Politicas: this.state.newAtendente.politicas,
+        IdSetor: this.props.IdSetor
+      }
+    }, () => {
+      console.log(this.state.newAtendente);
+      api("http://localhost:5000/api/auth/nova-conta", {
+        method: "post",
+        headers: { "Content-Type": "application/json;" },
+        body: JSON.stringify(this.state.newAtendente)
+      })
+        .then(Response => Response.json())
+        .then(data => {
+          this.props.attAtendente(data);
+          this.props.close();
+        });
+    })
+>>>>>>> origin/Renato
   }
   render() {
     let __this = this;
