@@ -21,7 +21,7 @@ export class History extends Component {
   }
   handleClickHistory() {
     api(
-      "http://localhost:5000/api/HistoricoDetalhado?formulario=" +
+      "http://localhost:5000/api/Historico/HistoricoDetalhado?formulario=" +
         this.state.numHistory,
       {}
     )

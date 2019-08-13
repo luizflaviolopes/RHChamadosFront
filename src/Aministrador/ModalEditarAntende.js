@@ -16,29 +16,24 @@ export class ModalEditarAntende extends Component {
       updateAtendente: props.params
     };
     this.handleEditarAtendente = this.handleEditarAtendente.bind(this);
-
   }
 
-
   componentDidMount() {
-    api("http://localhost:5000/api/auth", {})
+    api("http://localhost:5000/api/Atendente", {})
       .then(response => response.json())
-      .then(data =>
-        this.setState({ listSetores: data.listaSetores })
-      );
+      .then(data => this.setState({ listSetores: data.listaSetores }));
   }
 
   handleEditarAtendente() {
-
-
-    api("http://localhost:5000/api/auth/AtualizarAtendente", {
+    api("http://localhost:5000/api/Atendente/AtualizarAtendente", {
       method: "put",
       headers: { "Content-Type": "application/json;" },
       body: JSON.stringify(this.state.updateAtendente)
     })
       .then(Response => Response.json())
       .then(data => {
-        this.props.attAtendente(data)
+        this.props.attAtendente(data.setores);
+        console.log(data.setores, "datae");
       });
 
     this.props.close();
@@ -58,8 +53,18 @@ export class ModalEditarAntende extends Component {
           <Modal.Title id="editUser">Editar Usuário</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
-            <Form.Control type="text" value={this.props.params.Id} readOnly hidden />
+          <Form
+            onSubmit={event => {
+              event.preventDefault();
+              this.handleEditarAtendente();
+            }}
+          >
+            <Form.Control
+              type="text"
+              value={this.props.params.Id}
+              readOnly
+              hidden
+            />
             <Form.Row>
               <Col sm="6">
                 <Form.Group>
@@ -74,8 +79,8 @@ export class ModalEditarAntende extends Component {
                           ...this.state.updateAtendente,
                           nome: evt.target.value
                         }
-                      }
-                      )}
+                      })
+                    }
                   />
                 </Form.Group>
               </Col>
@@ -87,13 +92,14 @@ export class ModalEditarAntende extends Component {
                     type="text"
                     value={this.state.updateAtendente.masp}
                     placeholder="Masp do Usuário"
-                    onChange={evt => this.setState({
-                      updateAtendente: {
-                        ...this.state.updateAtendente,
-                        masp: evt.target.value
-                      }
+                    onChange={evt =>
+                      this.setState({
+                        updateAtendente: {
+                          ...this.state.updateAtendente,
+                          masp: evt.target.value
+                        }
+                      })
                     }
-                    )}
                   />
                 </Form.Group>
               </Col>
@@ -133,10 +139,8 @@ export class ModalEditarAntende extends Component {
                     }
                   >
                     <option>Selecione um Setor</option>
-                    {this.state.listSetores.map(function (a, i) {
-                      return (
-                        <option value={a.id}>{a.setor}</option>
-                      )
+                    {this.state.listSetores.map(function(a, i) {
+                      return <option value={a.id}>{a.setor}</option>;
                     })}
                   </Form.Control>
                 </Form.Group>
@@ -145,7 +149,7 @@ export class ModalEditarAntende extends Component {
               <Col sm="12">
                 <Form.Group>
                   <Form.Label>Permissões</Form.Label>
-                  {this.state.listaPol.map(function (a, i) {
+                  {this.state.listaPol.map(function(a, i) {
                     return (
                       <Politicas
                         namePol={a.nome}
@@ -155,7 +159,7 @@ export class ModalEditarAntende extends Component {
                           if (politicas == null) {
                             politicas = [];
                           }
-                          let exist = politicas.find(function (j, h) {
+                          let exist = politicas.find(function(j, h) {
                             return j.id === a.id;
                           });
                           if (exist) {
@@ -188,10 +192,7 @@ export class ModalEditarAntende extends Component {
                   })}
                 </Form.Group>
                 <Link to="/User">
-                  <Button
-                    variant="primary"
-                    onClick={this.handleEditarAtendente}
-                  >
+                  <Button variant="primary" type="submit">
                     Salvar
                   </Button>
                 </Link>

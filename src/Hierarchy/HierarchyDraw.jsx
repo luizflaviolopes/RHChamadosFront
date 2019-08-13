@@ -16,7 +16,7 @@ export class HierarchyDraw extends React.Component {
   }
 
   componentDidUpdate(a, b) {
-    if (a.data.length !== this.props.data.length) {
+    if (a.data.length !== this.props.data.length || a.data != this.props.data) {
       this.arrangeData(this.props.data);
     }
   }

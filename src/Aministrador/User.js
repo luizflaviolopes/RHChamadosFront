@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import "../css/bootstrap.css";
 import "../css/Botoes.css";
 import "../css/User.css";
-import MenuUser from "./SideMenuUser.js";
-import { Table } from "react-bootstrap";
 import Atendentes from "./Atendentes.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { HierarchyDraw } from "../Hierarchy/HierarchyDraw";
@@ -32,11 +30,11 @@ export class User extends Component {
 
   componentDidMount() {
     let _this = this;
-    api("http://localhost:5000/api/auth", {})
+    api("http://localhost:5000/api/Atendente", {})
       .then(response => response.json())
       .then(data =>
         this.setState({
-          listaSetoresAtendentes: data.setores.map(function (a) {
+          listaSetoresAtendentes: data.setores.map(function(a) {
             return {
               sigla: a.setor,
               id: a.id,
@@ -59,15 +57,14 @@ export class User extends Component {
   handleOpenModalEdit(at) {
     this.setState({
       editUser: true,
-      editUserParams: at,
+      editUserParams: at
     });
-
   }
 
   handlAttAtendentes(attAtendente) {
     let _this = this;
     this.setState({
-      listaSetoresAtendentes: attAtendente.setores.map(function (a) {
+      listaSetoresAtendentes: attAtendente.map(function(a) {
         return {
           sigla: a.setor,
           id: a.id,
@@ -84,7 +81,6 @@ export class User extends Component {
     this.setState({ editUser: false, addUser: false });
   }
   render() {
-
     let modalAdd;
     let modalEdit;
 
@@ -97,7 +93,8 @@ export class User extends Component {
             close={this.handleCloseModal}
             attAtendente={this.handlAttAtendentes}
             IdSetor={this.state.IdSetor}
-          />)
+          />
+        );
       }
     }
 
@@ -110,7 +107,8 @@ export class User extends Component {
           close={this.handleCloseModal}
           params={this.state.editUserParams}
           attAtendente={this.handlAttAtendentes}
-        />)
+        />
+      );
     }
 
     if (this.state.listaSetoresAtendentes === [])
@@ -129,34 +127,6 @@ export class User extends Component {
           />
           {modalAdd}
           {modalEdit}
-
-          {/* <MenuUser AttListAtdnt={this.handlAttAtendentes} />
-
-          <Table>
-            <thead>
-              <tr>
-                <th>Nome</th>
-                <th>Masp</th>
-                <th>Login</th>
-                <th>Ativo</th>
-                <th>Unidade</th>
-                <th />
-              </tr>
-            </thead>
-            <tbody>
-              {this.state.listaAtendentes.map(function(a, i) {
-                return (
-                  <Atendentes {...a} openShowModal={_this.handleOpenModal} />
-                );
-              })}
-            </tbody>
-          </Table>
-          <ModalEditarAntende
-            show={this.state.editUser}
-            modalName="editUser"
-            close={this.handleCloseModal}
-            params={this.state.editUserParams}
-          /> */}
         </div>
       );
   }

@@ -3,24 +3,23 @@ import "../css/PageChamado.css";
 import { Link } from "react-router-dom";
 import { Button, Col, Row, Alert } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import api from "../APIs/DataApi";
 
 export class RastreioChamado extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
-      tag: this.props.match.params.tag,
-
+      tag: this.props.match.params.tag
     };
   }
 
   componentDidMount() {
-    fetch(
-      "http://localhost:5000/api/auth/pesquisa-chamado?tag=" + this.state.tag
+    api(
+      "http://localhost:5000/api/rastreio/pesquisa-chamado?tag=" +
+        this.state.tag
     )
       .then(rastreio => rastreio.json())
       .then(rastreio => this.setState({ ...rastreio }));
-
   }
 
   render() {
@@ -45,7 +44,6 @@ export class RastreioChamado extends React.Component {
           </div>
           <div className="form-group">
             <Row>
-
               <Col sm={4}>
                 <label>
                   <span>E-Mail: </span>
@@ -62,7 +60,6 @@ export class RastreioChamado extends React.Component {
           </div>
           <div className="form-group">
             <Row>
-
               <Col sm={4}>
                 <label>
                   <span>Assunto: </span>
@@ -83,14 +80,9 @@ export class RastreioChamado extends React.Component {
             </label>
             <p>{this.state.descricao}</p>
           </div>
-
-
         </div>
       </div>
-
-    )
-
-
-  };
+    );
+  }
 }
 export default RastreioChamado;

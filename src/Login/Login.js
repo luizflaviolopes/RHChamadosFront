@@ -15,7 +15,7 @@ export class Login extends Component {
     this.handleLogin = this.handleLogin.bind(this);
   }
 
-  handleLogin = () => {
+  handleLogin() {
     api("http://localhost:5000/api/auth/entrar", {
       method: "post",
       body: JSON.stringify(this.state.loginUser),
@@ -25,7 +25,7 @@ export class Login extends Component {
       localStorage.setItem("Politica", resp);
       window.location.reload();
     });
-  };
+  }
 
   render() {
     return (
@@ -39,47 +39,57 @@ export class Login extends Component {
             </div>
             <div className="login container">
               <div className="logonForm">
-                <Form.Group className="ttl">
-                  <Form.Label>Entrar</Form.Label>
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Login</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Login de Acesso"
-                    name="Login"
-                    onChange={evt =>
-                      this.setState({
-                        loginUser: {
-                          ...this.state.loginUser,
-                          Login: evt.target.value
-                        }
-                      })
-                    }
-                  />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Senha</Form.Label>
-                  <Form.Control
-                    type="password"
-                    placeholder="Senha de Acesso"
-                    name="Password"
-                    onChange={evt =>
-                      this.setState({
-                        loginUser: {
-                          ...this.state.loginUser,
-                          Password: evt.target.value
-                        }
-                      })
-                    }
-                  />
-                  <Form.Text className="text-primary link">
-                    <a href="http://localhost:3000/EsqueciSenha">Esqueci Minha Senha</a>
-                  </Form.Text>
-                </Form.Group>
-                <Button className="btn-menu" onClick={this.handleLogin}>
-                  Entrar
-                </Button>
+                <Form
+                  onSubmit={event => {
+                    event.preventDefault();
+                    this.handleLogin();
+                  }}
+                >
+                  <Form.Group className="ttl">
+                    <Form.Label>Entrar</Form.Label>
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label>Login</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Login de Acesso"
+                      name="Login"
+                      onChange={evt =>
+                        this.setState({
+                          loginUser: {
+                            ...this.state.loginUser,
+                            Login: evt.target.value
+                          }
+                        })
+                      }
+                    />
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label>Senha</Form.Label>
+                    <Form.Control
+                      type="password"
+                      placeholder="Senha de Acesso"
+                      name="Password"
+                      onChange={evt =>
+                        this.setState({
+                          loginUser: {
+                            ...this.state.loginUser,
+                            Password: evt.target.value
+                          }
+                        })
+                      }
+                    />
+                    <Form.Text className="text-primary link">
+                      <a href="http://localhost:3000/EsqueciSenha">
+                        Esqueci Minha Senha
+                      </a>
+                    </Form.Text>
+                  </Form.Group>
+
+                  <Button type="submit" className="btn-menu">
+                    Entrar
+                  </Button>
+                </Form>
               </div>
             </div>
           </div>
