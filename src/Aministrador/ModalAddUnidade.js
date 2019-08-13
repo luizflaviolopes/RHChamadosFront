@@ -13,7 +13,8 @@ export class ModalAddUnidade extends Component {
       modalName: props.modalName,
       newSet: {},
       idSetor: this.props.params.id || null,
-      attList: {}
+      attList: {},
+      listVinculo:[]
     };
     this.handleNovaUnidade = this.handleNovaUnidade.bind(this);
   }

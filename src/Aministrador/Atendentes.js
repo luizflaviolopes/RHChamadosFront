@@ -24,9 +24,11 @@ export class Atendentes extends Component {
   }
 
   handleDesativarAtendente(id) {
-    api("http://localhost:5000/api/Atendente/ExcluirAtendente?id=" + id, {
+    api("http://localhost:5000/api/Atendente/ExcluirAtendete?id=" + id, {
       method: "delete"
-    }).then();
+    }).then(data => {
+      this.props.handlAttAtendentes(data.setores);
+    });
   }
 
   render() {
@@ -45,7 +47,7 @@ export class Atendentes extends Component {
         <div className="bodyAtendente">
           <Table>
             <tbody>
-              {this.props.obj.atendentes.map(function(a, b) {
+              {this.props.obj.atendentes.map(function (a, b) {
                 return (
                   <tr>
                     <td className="nameUser">{a.nome}</td>
@@ -74,13 +76,13 @@ export class Atendentes extends Component {
                             <FontAwesomeIcon icon="times" color="white" />
                           </Button>
                         ) : (
-                          <Button
-                            variant="success"
-                            onClick={() => _this.handleDesativarAtendente(a.id)}
-                          >
-                            <FontAwesomeIcon icon="check" color="white" />
-                          </Button>
-                        )}
+                            <Button
+                              variant="success"
+                              onClick={() => _this.handleDesativarAtendente(a.id)}
+                            >
+                              <FontAwesomeIcon icon="check" color="white" />
+                            </Button>
+                          )}
                       </Can>
                     </td>
                   </tr>

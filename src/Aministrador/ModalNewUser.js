@@ -35,28 +35,30 @@ export class NewUser extends Component {
   }
 
   handleNovoAtendente() {
-
-    this.setState({
-      newAtendente: {
-        Usuario: this.state.newAtendente.Usuario,
-        Email: this.state.newAtendente.Email,
-        Masp: this.state.newAtendente.Masp,
-        Politicas: this.state.newAtendente.politicas,
-        IdSetor: this.props.IdSetor
+    let t = "";
+    this.setState(
+      {
+        newAtendente: {
+          Usuario: this.state.newAtendente.Usuario,
+          Email: this.state.newAtendente.Email,
+          Masp: this.state.newAtendente.Masp,
+          Politicas: this.state.newAtendente.politicas,
+          IdSetor: this.props.IdSetor
+        }
+      },
+      () => {
+        api("http://localhost:5000/api/Auth/nova-conta", {
+          method: "post",
+          headers: { "Content-Type": "application/json;" },
+          body: JSON.stringify(this.state.newAtendente)
+        })
+          .then(Response => Response.json())
+          .then(data => {
+            this.props.attAtendente(data.setores);
+            this.props.close();
+          });
       }
-    }, () => {
-      console.log(this.state.newAtendente);
-      api("http://localhost:5000/api/auth/nova-conta", {
-        method: "post",
-        headers: { "Content-Type": "application/json;" },
-        body: JSON.stringify(this.state.newAtendente)
-      })
-        .then(Response => Response.json())
-        .then(data => {
-          this.props.attAtendente(data);
-          this.props.close();
-        });
-    })
+    );
   }
   render() {
     let __this = this;
@@ -125,7 +127,7 @@ export class NewUser extends Component {
             </Col>
             <Col sm="12">
               <Form.Group>
-                {this.state.listaPol.map(function(a, i) {
+                {this.state.listaPol.map(function (a, i) {
                   return (
                     <Politicas
                       namePol={a.nome}
@@ -135,7 +137,7 @@ export class NewUser extends Component {
                         if (politicas == null) {
                           politicas = [];
                         }
-                        let exist = politicas.find(function(j, h) {
+                        let exist = politicas.find(function (j, h) {
                           return j.id === a.id;
                         });
                         if (exist) {
