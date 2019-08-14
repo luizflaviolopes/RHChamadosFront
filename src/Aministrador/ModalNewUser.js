@@ -25,7 +25,7 @@ export class NewUser extends Component {
       this.setState({ show: this.props.show });
   }
   componentDidMount() {
-    api("http://localhost:5000/api/Atendente", {})
+    api("api/Atendente", {})
       .then(response => response.json())
       .then(data =>
         this.setState({
@@ -47,7 +47,7 @@ export class NewUser extends Component {
         }
       },
       () => {
-        api("http://localhost:5000/api/Auth/nova-conta", {
+        api("api/Auth/nova-conta", {
           method: "post",
           headers: { "Content-Type": "application/json;" },
           body: JSON.stringify(this.state.newAtendente)

@@ -13,7 +13,7 @@ class PreApp extends Component {
   }
 
   componentDidMount() {
-    api("http://localhost:5000/api/auth/authenticate")
+    api("api/auth/authenticate")
       .then(resp => {
         if (resp.status === 200) {
           return resp.json();

@@ -35,7 +35,7 @@ export class Formulario extends Component {
         formData.append("file" + r, j);
       });
 
-      api("http://localhost:5000/api/NovoChamado", {
+      api("api/NovoChamado", {
         method: "post",
         body: formData
       }).then(Response => Response.json());
@@ -51,7 +51,7 @@ export class Formulario extends Component {
   }
 
   openModal() {
-    api("http://localhost:5000/api/NovoChamado", {})
+    api("api/NovoChamado", {})
       .then(response => response.json())
       .then(data => this.setState({ assuntos: data.assuntos }));
   }
@@ -65,7 +65,7 @@ export class Formulario extends Component {
       listFile: [...this.state.listFile, FormData]
     });
 
-    api("http://localhost:5000/api/values", {
+    api("api/values", {
       method: "put",
       body: this.state.listFile
     }).then();

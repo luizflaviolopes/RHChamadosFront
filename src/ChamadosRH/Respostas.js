@@ -33,7 +33,7 @@ export class Respostas extends Component {
   }
 
   handleRespostaAutomatica() {
-    api("http://localhost:5000/api/resposta", {
+    api("api/resposta", {
       method: "post",
       headers: { "Content-Type": "application/json;" },
       body: JSON.stringify(this.state.resp)
@@ -42,7 +42,7 @@ export class Respostas extends Component {
 
   handleResponder() {
     this.state.resp.finalResp = this.state.finalResp;
-    api("http://localhost:5000/api/resposta", {
+    api("api/resposta", {
       method: "post",
       headers: { "Content-Type": "application/json;" },
       body: JSON.stringify(this.state.resp)
@@ -50,7 +50,7 @@ export class Respostas extends Component {
   }
 
   componentDidMount() {
-    api("http://localhost:5000/api/resposta", {})
+    api("api/resposta", {})
       .then(response => response.json())
       .then(data =>
         this.setState({ respostaAutomatica: data.respostaAutomatica })
@@ -59,7 +59,7 @@ export class Respostas extends Component {
 
   componentWillUpdate() {
     {
-      api("http://localhost:5000/api/resposta", {})
+      api("api/resposta", {})
         .then(response => response.json())
         .then(data =>
           this.setState({ respostaAutomatica: data.respostaAutomatica })

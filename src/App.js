@@ -39,7 +39,7 @@ class App extends Component {
   }
 
   handleLogout() {
-    api("http://localhost:5000/api/auth/Logout", {
+    api("api/auth/Logout", {
       method: "post",
       headers: { "Content-Type": "application/json;" }
     })

@@ -15,7 +15,7 @@ export class RastreioChamado extends React.Component {
 
   componentDidMount() {
     api(
-      "http://localhost:5000/api/rastreio/pesquisa-chamado?tag=" +
+      "api/rastreio/pesquisa-chamado?tag=" +
         this.state.tag
     )
       .then(rastreio => rastreio.json())

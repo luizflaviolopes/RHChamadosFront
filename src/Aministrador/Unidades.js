@@ -16,7 +16,7 @@ export class Unidades extends Component {
   }
 
   componentDidMount() {
-    api("http://localhost:5000/api/Setores", {})
+    api("api/Setores", {})
       .then(response => response.json())
       .then(data => this.setState({ listaSetores: data.setores }));
   }

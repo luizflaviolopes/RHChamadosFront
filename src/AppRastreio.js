@@ -25,8 +25,8 @@ class AppRastreio extends Component {
     let tag = params.get('tag');
 
     if (tag)
-      fetch(
-        "http://localhost:5000/api/auth/pesquisa-chamado?tag=" + tag
+      api(
+        "api/auth/pesquisa-chamado?tag=" + tag
       )
         .then(rastreio => rastreio.json())
         .then(rastreio =>

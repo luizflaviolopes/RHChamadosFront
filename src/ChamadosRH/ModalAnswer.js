@@ -15,7 +15,7 @@ export class ModalAnswer extends Component {
     this.handleCriarResposta = this.handleCriarResposta.bind(this);
   }
   handleCriarResposta() {
-    api("http://localhost:5000/api/Resposta/RespAutomatica", {
+    api("api/Resposta/RespAutomatica", {
       method: "post",
       headers: { "Content-Type": "application/json;" },
       body: JSON.stringify(this.state.respAuto)
@@ -27,7 +27,7 @@ export class ModalAnswer extends Component {
     }
   }
   componentWillMount() {
-    api("http://localhost:5000/api/resposta", {})
+    api("api/resposta", {})
       .then(response => response.json())
       .then(data => {
         this.setState({ respostaAutomatica: data, all: data });

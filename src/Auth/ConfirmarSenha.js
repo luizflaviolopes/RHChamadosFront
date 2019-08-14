@@ -29,7 +29,7 @@ export class ConfirmarSenha extends Component {
         }
       },
       () => {
-        api("http://localhost:5000/api/auth/novaSenha", {
+        api("api/auth/novaSenha", {
           method: "post",
           headers: { "Content-Type": "application/json;" },
           body: JSON.stringify(this.state.Password)

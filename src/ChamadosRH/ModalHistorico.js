@@ -22,7 +22,7 @@ class ModalHistorico extends Component {
 
       if (this.props.show) {
         api(
-          "http://localhost:5000/api/Historico?formulario=" + this.state.idForm,
+          "api/Historico?formulario=" + this.state.idForm,
           {}
         )
           .then(resp => resp.json())
