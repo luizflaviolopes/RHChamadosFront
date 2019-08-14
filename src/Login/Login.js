@@ -80,7 +80,7 @@ export class Login extends Component {
                       }
                     />
                     <Form.Text className="text-primary link">
-                      <a href="http://localhost:3000/EsqueciSenha">
+                      <a href="/EsqueciSenha">
                         Esqueci Minha Senha
                       </a>
                     </Form.Text>
