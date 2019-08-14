@@ -6,7 +6,7 @@ import TabelaIndex from "./ChamadosRH/TabelaIndex.js";
 import { Setores } from "./Aministrador/Setores";
 import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 import { PageChamado } from "./ChamadosRH/PageChamado.js";
-import { RastreioChamado} from "./ChamadosRH/RastreioChamado.js";
+import { RastreioChamado } from "./ChamadosRH/RastreioChamado.js";
 import SideMenuIndex from "./SideMenuIndex.js";
 import Button from "react-bootstrap/Button";
 import Formulario from "./Aministrador/Formulario.js";
@@ -115,14 +115,18 @@ class App extends Component {
             />
 
             <Button className="btn-menu logout" onClick={this.handleLogout}>
-              Olá, ! Sair.
+              Sair.
             </Button>
           </Menu>
           <Container fluid={true} className="position-relative">
             <div className="allScreen">
               <div className="menu-l">
                 <Switch>
-                  <Route path="/chamados" exact={true} component={SideMenuIndex} />
+                  <Route
+                    path="/chamados"
+                    exact={true}
+                    component={SideMenuIndex}
+                  />
                   <Route path="/Chamados" component={SideMenuIndex} />
                 </Switch>
               </div>
@@ -132,7 +136,10 @@ class App extends Component {
                 <Route path="/DetalhamentoChamado" component={PageChamado} />
                 <Route path="/User" component={User} />
                 <Route path="/ConfiguracaoDeSetores" component={Setores} />
-                <Route path="/RastreioChamado/:tag" component={RastreioChamado}/>
+                <Route
+                  path="/RastreioChamado/:tag"
+                  component={RastreioChamado}
+                />
               </Switch>
             </div>
           </Container>

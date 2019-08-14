@@ -241,7 +241,7 @@ export class PageChamado extends Component {
             this.state.status !== "Atendimento" ? (
             <Row className="row text-center">
               <Col sm={4}>
-                <Link to="/">
+                <Link to="/chamados">
                   <Button variant="outline-danger">
                     <FontAwesomeIcon icon="chevron-circle-left" /> Voltar
                   </Button>

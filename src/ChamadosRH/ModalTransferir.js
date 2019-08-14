@@ -111,7 +111,7 @@ export class ModalTransferir extends Component {
                 }
               />
             </Form.Group>
-            <Link to="/">
+            <Link to="/chamados">
               <Button variant="primary" onClick={this.handleTransferencia}>
                 Transferir
               </Button>
