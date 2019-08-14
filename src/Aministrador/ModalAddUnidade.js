@@ -1,3 +1,4 @@
+
 import React, { Component } from "react";
 import "../css/bootstrap.css";
 import "../css/Botoes.css";
@@ -13,8 +14,8 @@ export class ModalAddUnidade extends Component {
       modalName: props.modalName,
       newSet: {},
       idSetor: this.props.params.id || null,
-      attList: {},
-      listVinculo:[]
+      attList: {}
+
     };
     this.handleNovaUnidade = this.handleNovaUnidade.bind(this);
   }
@@ -37,6 +38,10 @@ export class ModalAddUnidade extends Component {
         show: this.props.show,
         idSetor: this.props.params.idSetor || null
       });
+  }
+
+  selectUnidades = () => {
+
   }
 
   render() {
@@ -67,6 +72,7 @@ export class ModalAddUnidade extends Component {
                 }
               />
             </Form.Group>
+
             <Form.Group>
               <Button variant="primary" type="submit">
                 Enviar

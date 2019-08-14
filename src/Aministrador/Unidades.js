@@ -6,6 +6,7 @@ import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "../APIs/DataApi";
 import { Can } from "../APIs/Can";
+import { ModalVinculoUni } from "./ModalVinculoUni";
 
 export class Unidades extends Component {
   constructor(props) {
@@ -30,24 +31,38 @@ export class Unidades extends Component {
       <div className="unidades" idSetor={this.props.id}>
         <div className="headUni">
           <span className="ttl">{this.props.text}</span>
+          <Can politica="Gerir Setor">
+            <span
+              className="vinculo"
+              onClick={
+                () =>
+                  this.props.obj.vinculo()}
+              title="Vincular Unidade"
+            >
+              <FontAwesomeIcon icon="exchange-alt" />
+            </span>
+          </Can>
         </div>
         <div className="bodyUni">
           <Can politica="Gerir Setor">
-            <Button
-              variant="success"
-              size="sm"
-              onClick={() => this.props.obj.add(this.props.obj)}
-            >
-              <FontAwesomeIcon icon="plus-circle" />
-            </Button>
+            <div>
+              <Button
+                variant="success"
+                size="sm"
+                onClick={() => this.props.obj.add(this.props.obj)}
+              >
+                <FontAwesomeIcon icon="plus-circle" />
+              </Button>
 
-            <Button
-              variant="danger"
-              size="sm"
-              onClick={this.handleDesativarUnidade}
-            >
-              <FontAwesomeIcon icon="minus-circle" />
-            </Button>
+              <Button
+                variant="danger"
+                size="sm"
+                onClick={this.handleDesativarUnidade}
+              >
+                <FontAwesomeIcon icon="minus-circle" />
+              </Button>
+            </div>
+
           </Can>
         </div>
       </div>

@@ -14,7 +14,11 @@
   font-size: initial;
   color: white;
 }
-
+.unidades .headUni span.vinculo {
+  float: right;
+  color: white;
+  cursor: pointer;
+}
 .bodyUni {
   border-left: 0.5px solid #841e19;
   border-right: 0.5px solid#841e19;

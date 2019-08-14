@@ -1,3 +1,4 @@
+
 import React, { Component } from "react";
 import "../css/bootstrap.css";
 import "../css/Botoes.css";
@@ -7,17 +8,20 @@ import { Unidades } from "./Unidades";
 import { ModalAddUnidade } from "./ModalAddUnidade";
 import { HierarchyDraw } from "../Hierarchy/HierarchyDraw";
 import api from "../APIs/DataApi";
+import { ModalVinculoUni } from "./ModalVinculoUni";
 
 export class Setores extends Component {
   constructor(props) {
     super(props);
     this.state = {
       listaSetores: [],
-      modalAddUnidade: null
+      modalAddUnidade: null,
+      modalVinculoUni: false
     };
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
     this.handlAttUnidades = this.handlAttUnidades.bind(this);
+    this.handleOpenModalVinculo = this.handleOpenModalVinculo.bind(this);
   } //
 
   componentDidMount() {
@@ -32,12 +36,14 @@ export class Setores extends Component {
               sigla: a.setor,
               pai: a.hierarquia,
               delete: _this.handleDesativarUnidade,
-              add: _this.handleOpenModal
+              add: _this.handleOpenModal,
+              vinculo: _this.handleOpenModalVinculo
             };
           })
         })
       );
   }
+
   handleDesativarUnidade = id => {
     let _this = this;
     api("http://localhost:5000/api/Setores?Id=" + id, {
@@ -52,7 +58,8 @@ export class Setores extends Component {
               sigla: a.setor,
               pai: a.hierarquia,
               delete: _this.handleDesativarUnidade,
-              add: _this.handleOpenModal
+              add: _this.handleOpenModal,
+              vinculo: _this.handleOpenModalVinculo
             };
           })
         })
@@ -61,14 +68,24 @@ export class Setores extends Component {
   handleOpenModal(obj) {
     this.setState({ modalAddUnidade: obj });
   }
+  handleOpenModalVinculo() {
+    let teste = 1;
+    this.setState({
+      modalVinculoUni: true
+    })
+  }
 
   handleCloseModal() {
-    this.setState({ modalAddUnidade: null });
+    this.setState({
+      modalAddUnidade: null,
+      modalVinculoUni: false
+    });
   }
 
   removeUnidade = id => {
     let setores = [...this.state.listaSetores];
   };
+
   handlAttUnidades(newUnidade) {
     let _this = this;
     this.setState({
@@ -78,16 +95,29 @@ export class Setores extends Component {
           sigla: a.setor,
           pai: a.hierarquia,
           delete: _this.handleDesativarUnidade,
-          add: _this.handleOpenModal
+          add: _this.handleOpenModal,
+          vinculo: _this.handleOpenModalVinculo
         };
       })
     });
   }
 
   render() {
-    let _this = this;
 
     let modalAdd;
+    let modalVinculo;
+
+    if (this.state.modalVinculoUni) {
+      modalVinculo = (
+        <ModalVinculoUni
+          modalName="VinculoUnidade"
+          show={true}
+          close={this.handleCloseModal}
+          AttListUndd={this.handlAttUnidades}
+          listaSetores={this.state.listaSetores}
+        />
+      );
+    }
 
     if (this.state.modalAddUnidade) {
       modalAdd = (
@@ -109,7 +139,7 @@ export class Setores extends Component {
           el={Unidades}
           lineColor={"black"}
         />
-
+        {modalVinculo}
         {modalAdd}
       </Container>
     );
