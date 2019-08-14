@@ -26,7 +26,7 @@ export class Setores extends Component {
       .then(response => response.json())
       .then(data =>
         this.setState({
-          listaSetores: data.map(function(a) {
+          listaSetores: data.map(function (a) {
             return {
               id: a.id,
               sigla: a.setor,
@@ -46,7 +46,7 @@ export class Setores extends Component {
       .then(resp => resp.json())
       .then(data =>
         this.setState({
-          listaSetores: data.map(function(a) {
+          listaSetores: data.map(function (a) {
             return {
               id: a.id,
               sigla: a.setor,
@@ -72,7 +72,7 @@ export class Setores extends Component {
   handlAttUnidades(newUnidade) {
     let _this = this;
     this.setState({
-      listaSetores: newUnidade.map(function(a) {
+      listaSetores: newUnidade.map(function (a) {
         return {
           id: a.id,
           sigla: a.setor,
@@ -97,6 +97,7 @@ export class Setores extends Component {
           close={this.handleCloseModal}
           params={this.state.modalAddUnidade}
           AttListUndd={this.handlAttUnidades}
+          listaSetores={this.state.listaSetores}
         />
       );
     }

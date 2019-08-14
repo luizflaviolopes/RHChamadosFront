@@ -35,6 +35,7 @@ export class NewUser extends Component {
   }
 
   handleNovoAtendente() {
+    let t = "";
     this.setState(
       {
         newAtendente: {
@@ -54,7 +55,6 @@ export class NewUser extends Component {
           .then(Response => Response.json())
           .then(data => {
             this.props.attAtendente(data.setores);
-            console.log(data.setores, "dataN");
             this.props.close();
           });
       }
@@ -127,7 +127,7 @@ export class NewUser extends Component {
             </Col>
             <Col sm="12">
               <Form.Group>
-                {this.state.listaPol.map(function(a, i) {
+                {this.state.listaPol.map(function (a, i) {
                   return (
                     <Politicas
                       namePol={a.nome}
@@ -137,7 +137,7 @@ export class NewUser extends Component {
                         if (politicas == null) {
                           politicas = [];
                         }
-                        let exist = politicas.find(function(j, h) {
+                        let exist = politicas.find(function (j, h) {
                           return j.id === a.id;
                         });
                         if (exist) {

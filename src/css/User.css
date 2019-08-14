@@ -2,6 +2,9 @@
   padding-left: 64px;
   text-align: center;
 }
+.atendente {
+  min-width: 5rem;
+}
 .headAtendente {
   padding: 0.5rem;
   background-color: #841e19;
@@ -45,5 +48,6 @@ div.headAtendente div.ttl {
   margin-left: 10px;
   color: white;
   cursor: pointer;
-  float: right;
+  display: inline-block;
+  text-align: right;
 }
