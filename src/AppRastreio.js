@@ -8,6 +8,7 @@ import "./css/bootstrap.css";
 import "./css/Botoes.css";
 import "./css/Chamados.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import api from "./APIs/DataApi.js";
 
 class AppRastreio extends Component {
   constructor(props) {
