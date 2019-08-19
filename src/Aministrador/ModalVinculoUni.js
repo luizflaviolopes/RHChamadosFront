@@ -34,7 +34,7 @@ export class ModalVinculoUni extends Component {
                         <Form.Group>
                             <Button variant="primary" type="submit">
                                 Enviar
-              </Button>
+                            </Button>
                         </Form.Group>
                     </Form>
                 </Modal.Body>
