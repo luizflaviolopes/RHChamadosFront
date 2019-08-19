@@ -16,7 +16,7 @@ export class Login extends Component {
   }
 
   handleLogin() {
-    api("http://localhost:5000/api/auth/entrar", {
+    api("api/auth/entrar", {
       method: "post",
       body: JSON.stringify(this.state.loginUser),
       headers: { "Content-Type": "application/json;" },
@@ -80,7 +80,7 @@ export class Login extends Component {
                       }
                     />
                     <Form.Text className="text-primary link">
-                      <a href="http://localhost:3000/EsqueciSenha">
+                      <a href="/EsqueciSenha">
                         Esqueci Minha Senha
                       </a>
                     </Form.Text>

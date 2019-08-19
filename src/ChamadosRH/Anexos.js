@@ -84,7 +84,7 @@ export class Anexo extends Component {
   render() {
     return (
       <div className="col-md-3">
-        <a href={"http://localhost:5000/api/Download?id=" + this.props.num}>
+        <a href={"/api/Download?id=" + this.props.num}>
           <div className="file" /*onClick={() => this.props.handleleClicked(this.props.num)}*/>
             <div>
               {(() => {

@@ -30,7 +30,7 @@ export class User extends Component {
 
   componentDidMount() {
     let _this = this;
-    api("http://localhost:5000/api/Atendente", {})
+    api("api/Atendente", {})
       .then(response => response.json())
       .then(data =>
         this.setState({

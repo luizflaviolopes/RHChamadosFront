@@ -15,7 +15,7 @@ export class EsqueciSenha extends Component {
   }
 
   handleEsqueciSenha = () => {
-    api("http://localhost:5000/api/auth/resetsenha", {
+    api("api/auth/resetsenha", {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(this.state)

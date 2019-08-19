@@ -61,7 +61,7 @@ class TabelaIndex extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.match.params.tipo !== this.props.match.params.tipo) {
       api(
-        "http://localhost:5000/api/values?tipo=" + nextProps.match.params.tipo,
+        "api/values?tipo=" + nextProps.match.params.tipo,
         {}
       )
         .then(response => response.json())
@@ -79,14 +79,14 @@ class TabelaIndex extends Component {
   }
 
   BuscarNovo() {
-    api("http://localhost:5000/api/values", {})
+    api("api/values", {})
       .then(response => response.json())
       .then(data => this.setState({ dems: [...this.state.dems, data.lista] }));
   }
 
   handlePageClick(a) {
     api(
-      "http://localhost:5000/api/values/pagina?" +
+      "api/values/pagina?" +
         "&tipo=" +
         this.props.match.params.tipo +
         "&pag=" +
@@ -108,7 +108,7 @@ class TabelaIndex extends Component {
   componentDidMount() {
     setTimeout(
       function() {
-        api("http://localhost:5000/api/values?tipo=" + this.state.tipo, {})
+        api("api/values?tipo=" + this.state.tipo, {})
           .then(response => response.json())
           .then(data =>
             this.setState({

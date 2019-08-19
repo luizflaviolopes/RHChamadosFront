@@ -19,13 +19,13 @@ export class ModalEditarAntende extends Component {
   }
 
   componentDidMount() {
-    api("http://localhost:5000/api/Atendente", {})
+    api("api/Atendente", {})
       .then(response => response.json())
       .then(data => this.setState({ listSetores: data.listaSetores }));
   }
 
   handleEditarAtendente() {
-    api("http://localhost:5000/api/Atendente/AtualizarAtendente", {
+    api("api/Atendente/AtualizarAtendente", {
       method: "put",
       headers: { "Content-Type": "application/json;" },
       body: JSON.stringify(this.state.updateAtendente)

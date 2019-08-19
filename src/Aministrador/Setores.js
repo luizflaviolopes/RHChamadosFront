@@ -26,7 +26,7 @@ export class Setores extends Component {
 
   componentDidMount() {
     let _this = this;
-    api("http://localhost:5000/api/Setores", {})
+    api("api/Setores", {})
       .then(response => response.json())
       .then(data =>
         this.setState({
@@ -46,7 +46,7 @@ export class Setores extends Component {
 
   handleDesativarUnidade = id => {
     let _this = this;
-    api("http://localhost:5000/api/Setores?Id=" + id, {
+    api("api/Setores?Id=" + id, {
       method: "delete"
     })
       .then(resp => resp.json())

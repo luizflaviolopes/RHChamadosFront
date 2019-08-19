@@ -38,7 +38,7 @@ export class PageChamado extends Component {
 
   componentDidMount() {
     api(
-      "http://localhost:5000/api/Resposta?formulario=" + this.state.numChamado,
+      "api/Resposta?formulario=" + this.state.numChamado,
       {}
     )
       .then(resp => resp.json())
@@ -51,7 +51,7 @@ export class PageChamado extends Component {
     };
     reabrirChamado.numChamado = a;
 
-    api("http://localhost:5000/api/ReabrirChamado", {
+    api("api/ReabrirChamado", {
       method: "post",
       headers: { "Content-Type": "application/json;" },
       body: JSON.stringify(reabrirChamado)
@@ -241,7 +241,7 @@ export class PageChamado extends Component {
             this.state.status !== "Atendimento" ? (
             <Row className="row text-center">
               <Col sm={4}>
-                <Link to="/">
+                <Link to="/chamados">
                   <Button variant="outline-danger">
                     <FontAwesomeIcon icon="chevron-circle-left" /> Voltar
                   </Button>

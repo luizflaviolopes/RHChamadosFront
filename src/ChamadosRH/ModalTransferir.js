@@ -19,7 +19,7 @@ export class ModalTransferir extends Component {
   }
 
   handleTransferencia() {
-    api("http://localhost:5000/api/Redirecionar", {
+    api("api/Redirecionar", {
       method: "post",
       headers: { "Content-Type": "application/json;" },
       body: JSON.stringify(this.state.transf)
@@ -33,7 +33,7 @@ export class ModalTransferir extends Component {
   }
 
   openModal() {
-    api("http://localhost:5000/api/redirecionar", {})
+    api("api/redirecionar", {})
       .then(r => r.json())
       .then(rj =>
         this.setState({ prioridades: rj.prioridades, setores: rj.setores })
@@ -111,7 +111,7 @@ export class ModalTransferir extends Component {
                 }
               />
             </Form.Group>
-            <Link to="/">
+            <Link to="/chamados">
               <Button variant="primary" onClick={this.handleTransferencia}>
                 Transferir
               </Button>

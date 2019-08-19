@@ -21,7 +21,7 @@ export class ModalAddUnidade extends Component {
   }
 
   handleNovaUnidade() {
-    api("http://localhost:5000/api/Setores", {
+    api("api/Setores", {
       method: "post",
       headers: { "Content-Type": "application/json;" },
       body: JSON.stringify(this.state.newSet)
