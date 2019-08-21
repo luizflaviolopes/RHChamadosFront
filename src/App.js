@@ -19,6 +19,8 @@ import "./css/bootstrap.css";
 import "./css/Botoes.css";
 import api from "./APIs/DataApi.js";
 import { Can } from "./APIs/Can.jsx";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 library.add(fas);
 
@@ -63,6 +65,9 @@ class App extends Component {
 
     return (
       <div className="body">
+        <ToastContainer
+          position="top-center"
+          closeOnClick />
         <BrowserRouter>
           <Cabecalho />
           <Menu>

@@ -34,14 +34,15 @@ export class User extends Component {
       .then(response => response.json())
       .then(data =>
         this.setState({
-          listaSetoresAtendentes: data.setores.map(function(a) {
+          listaSetoresAtendentes: data.setores.map(function (a) {
             return {
               sigla: a.setor,
               id: a.id,
               pai: a.hierarquia,
               atendentes: a.atendente,
               add: _this.handleOpenModalAdd,
-              edit: _this.handleOpenModalEdit
+              edit: _this.handleOpenModalEdit,
+              att: _this.handlAttAtendentes
             };
           }),
 
@@ -64,14 +65,15 @@ export class User extends Component {
   handlAttAtendentes(attAtendente) {
     let _this = this;
     this.setState({
-      listaSetoresAtendentes: attAtendente.map(function(a) {
+      listaSetoresAtendentes: attAtendente.map(function (a) {
         return {
           sigla: a.setor,
           id: a.id,
           pai: a.hierarquia,
           atendentes: a.atendente,
           add: _this.handleOpenModalAdd,
-          edit: _this.handleOpenModalEdit
+          edit: _this.handleOpenModalEdit,
+          att: _this.handlAttAtendentes
         };
       })
     });

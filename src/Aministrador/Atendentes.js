@@ -3,6 +3,7 @@ import "../css/bootstrap.css";
 import "../css/Botoes.css";
 import { Button, Table } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { toast } from 'react-toastify';
 import api from "../APIs/DataApi";
 import { Can } from "../APIs/Can";
 
@@ -26,9 +27,30 @@ export class Atendentes extends Component {
   handleDesativarAtendente(id) {
     api("api/Atendente/ExcluirAtendete?id=" + id, {
       method: "delete"
-    }).then(data => {
-      this.props.handlAttAtendentes(data.setores);
-    });
+    }).then(
+      resp => {
+        if (resp.status == 200)
+          return resp.json()
+        else
+          throw resp.json();
+      }
+    )
+      .then(data => {
+        this.props.obj.att(data.setores);
+        toast.success(
+          "Usuario Excluido"
+        )
+      })
+      .catch(
+        a => a.then(e =>
+          toast.error(
+            e.message,
+            {
+              position: toast.POSITION.TOP_CENTER
+            }
+          )
+        )
+      );
   }
 
   render() {
