@@ -34,9 +34,7 @@ export class Unidades extends Component {
           <Can politica="Gerir Setor">
             <span
               className="vinculo"
-              onClick={
-                () =>
-                  this.props.obj.vinculo()}
+              onClick={() => this.props.obj.vinculo()}
               title="Vincular Unidade"
             >
               <FontAwesomeIcon icon="exchange-alt" />
@@ -62,19 +60,12 @@ export class Unidades extends Component {
                 <FontAwesomeIcon icon="minus-circle" />
               </Button>
             </div>
-
           </Can>
           <Can politica="Visualizar Hierarquia">
             <div className="vinculos">
-              {/* 
-              {this.props.obj.SetoresVinculados.map(function (a) {
-                return (
-                  <div className="setVin">
-                    {a.setor}
-                  </div>
-                )
-              })} 
-            */}
+              {this.props.obj.SetoresVinculados.map(function(a) {
+                return <div className="setVin">{a.setorDestino}</div>;
+              })}
             </div>
           </Can>
         </div>

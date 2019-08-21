@@ -1,4 +1,3 @@
-
 import React, { Component } from "react";
 import "../css/bootstrap.css";
 import "../css/Botoes.css";
@@ -30,14 +29,15 @@ export class Setores extends Component {
       .then(response => response.json())
       .then(data =>
         this.setState({
-          listaSetores: data.map(function (a) {
+          listaSetores: data.map(function(a) {
             return {
               id: a.id,
               sigla: a.setor,
               pai: a.hierarquia,
               delete: _this.handleDesativarUnidade,
               add: _this.handleOpenModal,
-              vinculo: _this.handleOpenModalVinculo
+              vinculo: _this.handleOpenModalVinculo,
+              SetoresVinculados: a.relacaoSetorSetor
             };
           })
         })
@@ -52,14 +52,15 @@ export class Setores extends Component {
       .then(resp => resp.json())
       .then(data =>
         this.setState({
-          listaSetores: data.map(function (a) {
+          listaSetores: data.map(function(a) {
             return {
               id: a.id,
               sigla: a.setor,
               pai: a.hierarquia,
               delete: _this.handleDesativarUnidade,
               add: _this.handleOpenModal,
-              vinculo: _this.handleOpenModalVinculo
+              vinculo: _this.handleOpenModalVinculo,
+              SetoresVinculados: a.relacaoSetorSetor
             };
           })
         })
@@ -72,7 +73,7 @@ export class Setores extends Component {
     let teste = 1;
     this.setState({
       modalVinculoUni: true
-    })
+    });
   }
 
   handleCloseModal() {
@@ -89,21 +90,21 @@ export class Setores extends Component {
   handlAttUnidades(newUnidade) {
     let _this = this;
     this.setState({
-      listaSetores: newUnidade.map(function (a) {
+      listaSetores: newUnidade.map(function(a) {
         return {
           id: a.id,
           sigla: a.setor,
           pai: a.hierarquia,
           delete: _this.handleDesativarUnidade,
           add: _this.handleOpenModal,
-          vinculo: _this.handleOpenModalVinculo
+          vinculo: _this.handleOpenModalVinculo,
+          SetoresVinculados: a.relacaoSetorSetor
         };
       })
     });
   }
 
   render() {
-
     let modalAdd;
     let modalVinculo;
 
