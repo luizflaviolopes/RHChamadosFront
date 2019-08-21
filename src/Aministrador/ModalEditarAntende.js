@@ -139,7 +139,7 @@ export class ModalEditarAntende extends Component {
                     }
                   >
                     <option>Selecione um Setor</option>
-                    {this.state.listSetores.map(function(a, i) {
+                    {this.state.listSetores.map(function (a, i) {
                       return <option value={a.id}>{a.setor}</option>;
                     })}
                   </Form.Control>
@@ -149,7 +149,7 @@ export class ModalEditarAntende extends Component {
               <Col sm="12">
                 <Form.Group>
                   <Form.Label>Permissões</Form.Label>
-                  {this.state.listaPol.map(function(a, i) {
+                  {this.state.listaPol.map(function (a, i) {
                     return (
                       <Politicas
                         namePol={a.nome}
@@ -159,7 +159,7 @@ export class ModalEditarAntende extends Component {
                           if (politicas == null) {
                             politicas = [];
                           }
-                          let exist = politicas.find(function(j, h) {
+                          let exist = politicas.find(function (j, h) {
                             return j.id === a.id;
                           });
                           if (exist) {
@@ -191,11 +191,9 @@ export class ModalEditarAntende extends Component {
                     );
                   })}
                 </Form.Group>
-                <Link to="/User">
-                  <Button variant="primary" type="submit">
-                    Salvar
+                <Button variant="primary" type="submit">
+                  Salvar
                   </Button>
-                </Link>
               </Col>
             </Form.Row>
           </Form>

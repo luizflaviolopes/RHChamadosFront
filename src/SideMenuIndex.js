@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./css/App.css";
 import "./css/bootstrap.css";
 import "./css/Botoes.css";
-import SideNav, { NavItem, NavIcon, NavText } from "@trendmicro/react-sidenav";
+import SideNav, { NavItem, NavIcon, NavText, Nav } from "@trendmicro/react-sidenav";
 import "@trendmicro/react-sidenav/dist/react-sidenav.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -49,8 +49,25 @@ class MenuIndex extends Component {
             <NavIcon>
               <FontAwesomeIcon icon="building" />
             </NavIcon>
-            <NavText>Setor</NavText>
+            <NavText>
+              Todos Setor
+            </NavText>
+            <NavItem eventKey="SetorAbertos">
+
+              <NavText>Abertos Setor</NavText>
+            </NavItem>
+            <NavItem eventKey="SetorFechados">
+
+              <NavText>Fechados Setor</NavText>
+            </NavItem>
+            <NavItem eventKey="SetorAtendimento">
+
+              <NavText>Em Atendimento Setor</NavText>
+            </NavItem>
           </NavItem>
+
+
+
         </SideNav.Nav>
       </SideNav>
     );

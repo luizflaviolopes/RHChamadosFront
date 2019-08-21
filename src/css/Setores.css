@@ -36,3 +36,9 @@
 .bodyUni .btn-danger {
   float: right;
 }
+.vinculos .setVin {
+  font-size: small;
+  border-top: 1px solid #aeaeae;
+  margin-top: 3px;
+  text-align: center;
+}

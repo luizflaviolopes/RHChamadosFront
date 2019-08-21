@@ -22,7 +22,7 @@ export class Setores extends Component {
     this.handleCloseModal = this.handleCloseModal.bind(this);
     this.handlAttUnidades = this.handlAttUnidades.bind(this);
     this.handleOpenModalVinculo = this.handleOpenModalVinculo.bind(this);
-  } //
+  }
 
   componentDidMount() {
     let _this = this;

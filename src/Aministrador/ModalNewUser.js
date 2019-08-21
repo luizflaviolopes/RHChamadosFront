@@ -161,11 +161,11 @@ export class NewUser extends Component {
                   );
                 })}
               </Form.Group>
-              <Link to="/User">
-                <Button variant="primary" onClick={this.handleNovoAtendente}>
-                  Enviar
+
+              <Button variant="primary" onClick={this.handleNovoAtendente}>
+                Enviar
                 </Button>
-              </Link>
+
             </Col>
           </Form.Row>
         </Modal.Body>

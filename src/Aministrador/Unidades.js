@@ -64,6 +64,19 @@ export class Unidades extends Component {
             </div>
 
           </Can>
+          <Can politica="Visualizar Hierarquia">
+            <div className="vinculos">
+              {/* 
+              {this.props.obj.SetoresVinculados.map(function (a) {
+                return (
+                  <div className="setVin">
+                    {a.setor}
+                  </div>
+                )
+              })} 
+            */}
+            </div>
+          </Can>
         </div>
       </div>
     );
