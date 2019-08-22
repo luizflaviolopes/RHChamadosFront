@@ -68,12 +68,18 @@ export class NewUser extends Component {
           })
           .catch(
             a => a.then(e =>
-              toast.error(
-                e.message,
-                {
-                  position: toast.POSITION.TOP_CENTER
+              Object.keys(e).forEach(
+                function(a,i){
+                  toast.error(
+                    Array.isArray(e[a])? e[a][0] : e[a],
+                    {
+                      position: toast.POSITION.TOP_CENTER
+                    }
+                  )
+                 
                 }
               )
+              
             )
           );
       }

@@ -106,8 +106,6 @@ class TabelaIndex extends Component {
   }
 
   componentDidMount() {
-    setTimeout(
-      function() {
         api("api/values?tipo=" + this.state.tipo, {})
           .then(response => response.json())
           .then(data =>
@@ -121,8 +119,6 @@ class TabelaIndex extends Component {
               )
             })
           );
-      }.bind(this)
-    );
   }
 
   render() {

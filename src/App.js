@@ -63,6 +63,14 @@ class App extends Component {
         newCallModal: false
       });
 
+      let modalans;
+      if(this.state.answerModal)
+      modalans = (<ModalAnswer
+        show={this.state.answerModal}
+        modalName="answerModal"
+        close={this.handleCloseModal}
+      />)
+
     return (
       <div className="body">
         <ToastContainer
@@ -71,11 +79,13 @@ class App extends Component {
         <BrowserRouter>
           <Cabecalho />
           <Menu>
+          <Can politica="Visualizar Chamado">
             <Link to="/chamados">
               <Button className="btn-menu" onClick={this.OnclickHande}>
                 Chamados
               </Button>
             </Link>
+            </Can>
             <Can politica="Gerir Usuario">
               <Link to="/User">
                 <Button className="btn-menu" onClick={this.OnclickHande}>
@@ -90,7 +100,7 @@ class App extends Component {
                 </Button>
               </Link>
             </Can>
-            <Can politica="Gerir Setor">
+            <Can politica="Abrir Chamado">
               <Button
                 className="btn-menu"
                 onClick={() => this.setState({ newCallModal: true })}
@@ -113,11 +123,7 @@ class App extends Component {
                 Respostas Padrão
               </Button>
             </Can>
-            <ModalAnswer
-              show={this.state.answerModal}
-              modalName="answerModal"
-              close={this.handleCloseModal}
-            />
+            {modalans}
 
             <Button className="btn-menu logout" onClick={this.handleLogout}>
               Sair.
