@@ -42,8 +42,16 @@ export class ModalVinculoUni extends Component {
       return xs.id == setor;
     });
 
+    let newSetorV = { id: setorV.id, setorDestino: setorV.setor }
+
     this.setState({
-      ListSetorVinculo: this.state.ListSetorVinculo.concat(setorV)
+      ListSetorVinculo: this.state.ListSetorVinculo.concat(newSetorV)
+      //function () {
+      //   return (
+      //     id = setorV.id,
+      //     setorDestino = setorV.setor
+      //   )
+      // })
     });
     console.log(this.state.ListSetorVinculo);
   };
@@ -86,7 +94,7 @@ export class ModalVinculoUni extends Component {
                 as="select"
               >
                 <option>Escolha um Setor</option>
-                {this.state.setores.map(function(a) {
+                {this.state.setores.map(function (a) {
                   return (
                     <option value={a.id} name={a.setor}>
                       {a.setor}
@@ -96,7 +104,7 @@ export class ModalVinculoUni extends Component {
               </Form.Control>
             </Form.Group>
             <Form.Group>
-              {this.state.ListSetorVinculo.map(function(a) {
+              {this.state.ListSetorVinculo.map(function (a) {
                 return (
                   <Vinculo
                     id={a.id}
