@@ -6,6 +6,7 @@ import { Modal, Button, Col, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Politicas } from "./Politicas";
 import api from "../APIs/DataApi";
+import { toast } from "react-toastify";
 
 export class NewUser extends Component {
   constructor(props) {
@@ -52,11 +53,29 @@ export class NewUser extends Component {
           headers: { "Content-Type": "application/json;" },
           body: JSON.stringify(this.state.newAtendente)
         })
-          .then(Response => Response.json())
+          .then(resp => {
+            if (resp.status == 200)
+              return resp.json()
+            else
+              throw resp.json();
+          })
           .then(data => {
             this.props.attAtendente(data.setores);
             this.props.close();
-          });
+            toast.success(
+              "Usuario Criado"
+            )
+          })
+          .catch(
+            a => a.then(e =>
+              toast.error(
+                e.message,
+                {
+                  position: toast.POSITION.TOP_CENTER
+                }
+              )
+            )
+          );
       }
     );
   }

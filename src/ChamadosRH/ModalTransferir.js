@@ -3,6 +3,7 @@ import "../css/PageChamado.css";
 import { Modal, Col, Button, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import api from "../APIs/DataApi";
+import { toast } from 'react-toastify';
 
 export class ModalTransferir extends Component {
   constructor(props) {
@@ -23,7 +24,30 @@ export class ModalTransferir extends Component {
       method: "post",
       headers: { "Content-Type": "application/json;" },
       body: JSON.stringify(this.state.transf)
-    }).then(Response => Response.json());
+    })
+      .then(
+        resp => {
+          if (resp.status == 200)
+            return resp.json()
+          else
+            throw resp.json();
+        }
+      )
+      .then(data =>
+        toast.success(
+          data.message
+        )
+      )
+      .catch(
+        a => a.then(e =>
+          toast.error(
+            e.message,
+            {
+              position: toast.POSITION.TOP_CENTER
+            }
+          )
+        )
+      );
   }
 
   componentDidUpdate(prevProps) {
@@ -71,7 +95,7 @@ export class ModalTransferir extends Component {
                   }
                 >
                   <option value="0">Selecione uma Secretaria</option>;
-                  {this.state.setores.map(function(a, i) {
+                  {this.state.setores.map(function (a, i) {
                     return <option value={a.id}>{a.value}</option>;
                   })}
                 </Form.Control>
@@ -90,7 +114,7 @@ export class ModalTransferir extends Component {
                   }
                 >
                   <option value="0">Selecione uma Prioridade</option>;
-                  {this.state.prioridades.map(function(a, i) {
+                  {this.state.prioridades.map(function (a, i) {
                     return <option value={a.id}>{a.value}</option>;
                   })}
                 </Form.Control>

@@ -10,21 +10,34 @@ export class ModalVinculoUni extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      setores: this.props.listaSetores,
-      ListSetorVinculo: this.props.listaSetores.setoresVinculados
+      setores: [],
+      ListSetorVinculo: []
     };
     this.deletarVinculo = this.deletarVinculo.bind(this);
   }
-  //   componentDidMount() {
-  //     api("api/Setores", {})
-  //       .then(Response => Response.json())
-  //       .then(data =>
-  //         this.setState({
-  //           setores: data,
-  //           ListSetorVinculo: data.relacaoSetoSetor
-  //         })
-  //       );
-  //   }
+  componentDidMount() {
+    api("api/Setores", {})
+      .then(Response => Response.json())
+      .then(
+        data =>
+          this.setState({
+            setores: data,
+
+          },
+            () => {
+              let setorV = this.state.setores.find(xs => {
+                return xs.id == this.props.setor;
+              });
+              this.setState({
+                ListSetorVinculo: this.state.ListSetorVinculo.concat(setorV.relacaoSetorSetor)
+              });
+            }
+          )
+      );
+
+
+
+  }
 
   AddVinculo = setor => {
     let setorV = this.state.setores.find(xs => {
@@ -75,7 +88,7 @@ export class ModalVinculoUni extends Component {
                 as="select"
               >
                 <option>Escolha um Setor</option>
-                {this.state.setores.map(function(a) {
+                {this.state.setores.map(function (a) {
                   return (
                     <option value={a.id} name={a.setor}>
                       {a.setor}
@@ -85,7 +98,7 @@ export class ModalVinculoUni extends Component {
               </Form.Control>
             </Form.Group>
             <Form.Group>
-              {this.state.ListSetorVinculo.map(function(a) {
+              {this.state.ListSetorVinculo.map(function (a) {
                 return (
                   <Vinculo
                     id={a.id}

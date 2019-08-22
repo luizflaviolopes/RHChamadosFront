@@ -3,6 +3,7 @@ import { Modal, Button, Col, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Politicas } from "./Politicas";
 import api from "../APIs/DataApi";
+import { toast } from "react-toastify";
 
 export class ModalEditarAntende extends Component {
   constructor(props) {
@@ -30,11 +31,28 @@ export class ModalEditarAntende extends Component {
       headers: { "Content-Type": "application/json;" },
       body: JSON.stringify(this.state.updateAtendente)
     })
-      .then(Response => Response.json())
+      .then(resp => {
+        if (resp.status == 200)
+          return resp.json()
+        else
+          throw resp.json();
+      })
       .then(data => {
         this.props.attAtendente(data.setores);
-        console.log(data.setores, "datae");
-      });
+        toast.success(
+          "Usuario Editado"
+        )
+      })
+      .catch(
+        a => a.then(e =>
+          toast.error(
+            e.message,
+            {
+              position: toast.POSITION.TOP_CENTER
+            }
+          )
+        )
+      );
 
     this.props.close();
   }

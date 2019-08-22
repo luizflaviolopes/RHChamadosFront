@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { Anexos } from "../ChamadosRH/Anexos";
 import Dropzone from "react-dropzone";
 import api from "../APIs/DataApi";
+import { toast } from 'react-toastify';
 
 export class Formulario extends Component {
   constructor(props) {
@@ -27,18 +28,39 @@ export class Formulario extends Component {
     const _this = this;
 
     if (this.state.newChamado !== undefined) {
-      Object.keys(this.state.newChamado).forEach(function(a, i) {
+      Object.keys(this.state.newChamado).forEach(function (a, i) {
         if (a !== undefined) formData.append(a, _this.state.newChamado[a]);
       });
 
-      this.state.listFile.forEach(function(j, r) {
+      this.state.listFile.forEach(function (j, r) {
         formData.append("file" + r, j);
       });
 
       api("api/NovoChamado", {
         method: "post",
         body: formData
-      }).then(Response => Response.json());
+      }).then(
+        resp => {
+          if (resp.status == 200)
+            return resp.json()
+          else
+            throw resp.json();
+        })
+        .then(data =>
+          toast.success(
+            data.message
+          )
+        )
+        .catch(
+          a => a.then(e =>
+            toast.error(
+              e.message,
+              {
+                position: toast.POSITION.TOP_CENTER
+              }
+            )
+          )
+        );
 
       this.props.close(this.state.modalName);
     }
@@ -189,7 +211,7 @@ export class Formulario extends Component {
                   }
                 >
                   <option value="0">Selecione um Assunto</option>;
-                  {this.state.assuntos.map(function(a, i) {
+                  {this.state.assuntos.map(function (a, i) {
                     return <option value={a.id}>{a.value}</option>;
                   })}
                 </Form.Control>
@@ -237,7 +259,7 @@ export class Formulario extends Component {
 
                 <div className="anexo">
                   <Row>
-                    {this.state.listFile.map(function(a, i) {
+                    {this.state.listFile.map(function (a, i) {
                       return (
                         <Anexos
                           nome={a.name}

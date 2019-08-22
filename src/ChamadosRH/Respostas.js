@@ -6,6 +6,7 @@ import "../css/Respostas.css";
 import { Link, Redirect } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "../APIs/DataApi";
+import { toast } from "react-toastify";
 
 export class Respostas extends Component {
   constructor(props) {
@@ -37,7 +38,28 @@ export class Respostas extends Component {
       method: "post",
       headers: { "Content-Type": "application/json;" },
       body: JSON.stringify(this.state.resp)
-    }).then(Response => Response.json());
+    }).then(
+      resp => {
+        if (resp.status == 200)
+          return resp.json()
+        else
+          throw resp.json();
+      })
+      .then(data =>
+        toast.success(
+          data.message
+        )
+      )
+      .catch(
+        a => a.then(e =>
+          toast.error(
+            e.message,
+            {
+              position: toast.POSITION.TOP_CENTER
+            }
+          )
+        )
+      );
   }
 
   handleResponder() {
@@ -46,7 +68,28 @@ export class Respostas extends Component {
       method: "post",
       headers: { "Content-Type": "application/json;" },
       body: JSON.stringify(this.state.resp)
-    }).then(Response => Response.json());
+    }).then(
+      resp => {
+        if (resp.status == 200)
+          return resp.json()
+        else
+          throw resp.json();
+      })
+      .then(data =>
+        toast.success(
+          data.message
+        )
+      )
+      .catch(
+        a => a.then(e =>
+          toast.error(
+            e.message,
+            {
+              position: toast.POSITION.TOP_CENTER
+            }
+          )
+        )
+      );
   }
 
   componentDidMount() {
@@ -73,7 +116,7 @@ export class Respostas extends Component {
       return (
         <Redirect
           to={{
-            pathname: "/",
+            pathname: "/chamados",
             state: { finalResp: true }
           }}
         />
@@ -102,7 +145,7 @@ export class Respostas extends Component {
             </Form.Group>
             <hr />
             <Form.Group>
-              {this.state.respostaAutomatica.map(function(a, i) {
+              {this.state.respostaAutomatica.map(function (a, i) {
                 return (
                   <div className="checkChamado">
                     <Form.Check
@@ -130,7 +173,7 @@ export class Respostas extends Component {
                 Enviar Resposta Final
               </Button>
 
-              <Link to="/">
+              <Link to="/chamados">
                 <Button
                   variant="warning"
                   type="submit"

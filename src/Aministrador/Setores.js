@@ -8,6 +8,7 @@ import { ModalAddUnidade } from "./ModalAddUnidade";
 import { HierarchyDraw } from "../Hierarchy/HierarchyDraw";
 import api from "../APIs/DataApi";
 import { ModalVinculoUni } from "./ModalVinculoUni";
+import { toast } from "react-toastify";
 
 export class Setores extends Component {
   constructor(props) {
@@ -15,7 +16,8 @@ export class Setores extends Component {
     this.state = {
       listaSetores: [],
       modalAddUnidade: null,
-      modalVinculoUni: false
+      modalVinculoUni: false,
+      setor: null
     };
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
@@ -29,7 +31,7 @@ export class Setores extends Component {
       .then(response => response.json())
       .then(data =>
         this.setState({
-          listaSetores: data.map(function(a) {
+          listaSetores: data.map(function (a) {
             return {
               id: a.id,
               sigla: a.setor,
@@ -38,6 +40,7 @@ export class Setores extends Component {
               add: _this.handleOpenModal,
               vinculo: _this.handleOpenModalVinculo,
               SetoresVinculados: a.relacaoSetorSetor
+
             };
           })
         })
@@ -49,29 +52,50 @@ export class Setores extends Component {
     api("api/Setores?Id=" + id, {
       method: "delete"
     })
-      .then(resp => resp.json())
-      .then(data =>
-        this.setState({
-          listaSetores: data.map(function(a) {
-            return {
-              id: a.id,
-              sigla: a.setor,
-              pai: a.hierarquia,
-              delete: _this.handleDesativarUnidade,
-              add: _this.handleOpenModal,
-              vinculo: _this.handleOpenModalVinculo,
-              SetoresVinculados: a.relacaoSetorSetor
-            };
-          })
-        })
+      .then(resp => {
+        if (resp.status == 200)
+          return resp.json()
+        else
+          throw resp.json();
+      })
+      .then(
+        data =>
+          this.setState({
+            listaSetores: data.map(function (a) {
+              return {
+                id: a.id,
+                sigla: a.setor,
+                pai: a.hierarquia,
+                delete: _this.handleDesativarUnidade,
+                add: _this.handleOpenModal,
+                vinculo: _this.handleOpenModalVinculo,
+                SetoresVinculados: a.relacaoSetorSetor
+              };
+            })
+          }),
+        toast.success(
+          "Setor Excluido"
+        )
+      )
+      .catch(
+        a => a.then(e =>
+          toast.error(
+            e.message,
+            {
+              position: toast.POSITION.TOP_CENTER
+            }
+          )
+        )
       );
   };
+
   handleOpenModal(obj) {
     this.setState({ modalAddUnidade: obj });
   }
-  handleOpenModalVinculo() {
-    let teste = 1;
+  handleOpenModalVinculo(idSetor) {
+
     this.setState({
+      setor: idSetor,
       modalVinculoUni: true
     });
   }
@@ -90,7 +114,7 @@ export class Setores extends Component {
   handlAttUnidades(newUnidade) {
     let _this = this;
     this.setState({
-      listaSetores: newUnidade.map(function(a) {
+      listaSetores: newUnidade.map(function (a) {
         return {
           id: a.id,
           sigla: a.setor,
@@ -116,6 +140,7 @@ export class Setores extends Component {
           close={this.handleCloseModal}
           AttListUndd={this.handlAttUnidades}
           listaSetores={this.state.listaSetores}
+          setor={this.state.setor}
         />
       );
     }
@@ -129,6 +154,7 @@ export class Setores extends Component {
           params={this.state.modalAddUnidade}
           AttListUndd={this.handlAttUnidades}
           listaSetores={this.state.listaSetores}
+
         />
       );
     }

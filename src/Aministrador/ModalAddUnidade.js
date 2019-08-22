@@ -5,6 +5,7 @@ import "../css/Botoes.css";
 import "../css/User.css";
 import { Modal, Button, Form } from "react-bootstrap";
 import api from "../APIs/DataApi";
+import { toast } from 'react-toastify';
 
 export class ModalAddUnidade extends Component {
   constructor(props) {
@@ -26,11 +27,29 @@ export class ModalAddUnidade extends Component {
       headers: { "Content-Type": "application/json;" },
       body: JSON.stringify(this.state.newSet)
     })
-      .then(Response => Response.json())
+      .then(resp => {
+        if (resp.status == 200)
+          return resp.json()
+        else
+          throw resp.json();
+      })
       .then(data => {
         this.props.AttListUndd(data);
         this.props.close(this.state.modalName);
-      });
+        toast.success(
+          "Unidade Criada"
+        )
+      })
+      .catch(
+        a => a.then(e =>
+          toast.error(
+            e.message,
+            {
+              position: toast.POSITION.TOP_CENTER
+            }
+          )
+        )
+      );
   }
   componentDidUpdate(newProps) {
     if (this.props.show !== this.state.show)

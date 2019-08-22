@@ -21,20 +21,21 @@ export class Atendentes extends Component {
   }
 
   componentDidUpdate(a, b) {
-    console.log(a);
+
   }
 
   handleDesativarAtendente(id) {
     api("api/Atendente/ExcluirAtendete?id=" + id, {
       method: "delete"
-    }).then(
-      resp => {
-        if (resp.status == 200)
-          return resp.json()
-        else
-          throw resp.json();
-      }
-    )
+    })
+      .then(
+        resp => {
+          if (resp.status == 200)
+            return resp.json()
+          else
+            throw resp.json();
+        }
+      )
       .then(data => {
         this.props.obj.att(data.setores);
         toast.success(
