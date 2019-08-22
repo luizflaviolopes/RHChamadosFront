@@ -18,25 +18,23 @@ export class ModalVinculoUni extends Component {
   componentDidMount() {
     api("api/Setores", {})
       .then(Response => Response.json())
-      .then(
-        data =>
-          this.setState({
-            setores: data,
-
+      .then(data =>
+        this.setState(
+          {
+            setores: data
           },
-            () => {
-              let setorV = this.state.setores.find(xs => {
-                return xs.id == this.props.setor;
-              });
-              this.setState({
-                ListSetorVinculo: this.state.ListSetorVinculo.concat(setorV.relacaoSetorSetor)
-              });
-            }
-          )
+          () => {
+            let setorV = this.state.setores.find(xs => {
+              return xs.id == this.props.setor;
+            });
+            this.setState({
+              ListSetorVinculo: this.state.ListSetorVinculo.concat(
+                setorV.relacaoSetorSetor
+              )
+            });
+          }
+        )
       );
-
-
-
   }
 
   AddVinculo = setor => {
@@ -88,7 +86,7 @@ export class ModalVinculoUni extends Component {
                 as="select"
               >
                 <option>Escolha um Setor</option>
-                {this.state.setores.map(function (a) {
+                {this.state.setores.map(function(a) {
                   return (
                     <option value={a.id} name={a.setor}>
                       {a.setor}
@@ -98,11 +96,11 @@ export class ModalVinculoUni extends Component {
               </Form.Control>
             </Form.Group>
             <Form.Group>
-              {this.state.ListSetorVinculo.map(function (a) {
+              {this.state.ListSetorVinculo.map(function(a) {
                 return (
                   <Vinculo
                     id={a.id}
-                    nome={a.setor}
+                    nome={a.setorDestino}
                     delete={_this.deletarVinculo}
                   />
                 );
