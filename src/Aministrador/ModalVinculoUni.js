@@ -5,6 +5,7 @@ import "../css/User.css";
 import { Modal, Button, Form } from "react-bootstrap";
 import api from "../APIs/DataApi";
 import { Vinculo } from "./Vinculo";
+import { toast } from "react-toastify";
 
 export class ModalVinculoUni extends Component {
   constructor(props) {
@@ -19,22 +20,31 @@ export class ModalVinculoUni extends Component {
     api("api/Setores", {})
       .then(Response => Response.json())
       .then(data =>
-        this.setState(
-          {
-            setores: data
-          },
-          () => {
-            let setorV = this.state.setores.find(xs => {
-              return xs.id == this.props.setor;
-            });
-            this.setState({
-              ListSetorVinculo: this.state.ListSetorVinculo.concat(
-                setorV.relacaoSetorSetor
-              )
-            });
-          }
-        )
-      );
+        {
+          let setorV = data.find(xs => {
+            return xs.id == this.props.setor;
+          });
+          this.setState({
+            setores: data,
+            ListSetorVinculo: setorV.relacaoSetorSetor
+          })
+        })
+        // this.setState(
+        //   {
+        //     setores: data
+        //   },
+        //   () => {
+        //     let setorV = this.state.setores.find(xs => {
+        //       return xs.id == this.props.setor;
+        //     });
+        //     this.setState({
+        //       ListSetorVinculo: this.state.ListSetorVinculo.concat(
+        //         setorV.relacaoSetorSetor
+        //       )
+        //     });
+        //   }
+        // )
+      // );
   }
 
   AddVinculo = setor => {
@@ -58,7 +68,7 @@ export class ModalVinculoUni extends Component {
 
   deletarVinculo = setor => {
     //indexOF não esta funcionando
-    let t = this.state.setores.find(xs => {
+    let t = this.state.ListSetorVinculo.find(xs => {
       return xs.id == setor;
     });
     let setorV = this.state.ListSetorVinculo.indexOf(t);
@@ -72,6 +82,43 @@ export class ModalVinculoUni extends Component {
     });
   };
 
+  enviar = (evt)=>{
+    evt.preventDefault();
+    let _this = this;
+
+    let list = this.state.ListSetorVinculo.map((a)=>{return {Destino: a.id, Origem: _this.props.setor}});
+
+    api("api/Setores/NovaRelacao",{
+      method:"post",
+      body: JSON.stringify(list),
+      headers: { "Content-Type": "application/json;" },
+    })
+    .then(
+      resp => {
+        if (resp.status == 200)
+          return resp.json()
+        else
+          throw resp.json();
+      }
+    )
+    .then(data => {
+      this.props.AttListUndd(data);
+      toast.success(
+        "Setores Vinculados"
+      )
+    })
+    .catch(
+      a => a.then(e =>
+        toast.error(
+          e.message,
+          {
+            position: toast.POSITION.TOP_CENTER
+          }
+        )
+      )
+    );
+  }
+
   render() {
     let _this = this;
     return (
@@ -82,7 +129,7 @@ export class ModalVinculoUni extends Component {
         <Modal.Body>
           <Form
             onSubmit={event => {
-              event.preventDefault();
+              this.enviar(event);
             }}
           >
             <Form.Group>

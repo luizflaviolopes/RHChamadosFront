@@ -50,19 +50,19 @@ class MenuIndex extends Component {
               <FontAwesomeIcon icon="building" />
             </NavIcon>
             <NavText>
-              Todos Setor
+              Geral
             </NavText>
-            <NavItem eventKey="SetorAbertos">
+            <NavItem eventKey="TodosAbertos">
 
-              <NavText>Abertos Setor</NavText>
+              <NavText>Abertos</NavText>
             </NavItem>
-            <NavItem eventKey="SetorFechados">
+            <NavItem eventKey="TodosFechados">
 
-              <NavText>Fechados Setor</NavText>
+              <NavText>Fechados</NavText>
             </NavItem>
-            <NavItem eventKey="SetorAtendimento">
+            <NavItem eventKey="TodosAtendimento">
 
-              <NavText>Em Atendimento Setor</NavText>
+              <NavText>Em Atendimento</NavText>
             </NavItem>
           </NavItem>
 

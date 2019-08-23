@@ -109,6 +109,7 @@ class TabelaIndex extends Component {
         api("api/values?tipo=" + this.state.tipo, {})
           .then(response => response.json())
           .then(data =>
+            {
             this.setState({
               dems: data.lista,
               all: data.lista,
@@ -118,6 +119,7 @@ class TabelaIndex extends Component {
                   : data.registros / 10
               )
             })
+          }
           );
   }
 
@@ -247,6 +249,7 @@ class TabelaIndex extends Component {
             breakLabel={"..."}
             breakClassName={"break-me"}
             pageCount={this.state.current}
+            forcePage={0}
             marginPagesDisplayed={2}
             pageRangeDisplayed={5}
             onPageChange={this.handlePageClick}

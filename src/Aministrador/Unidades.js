@@ -42,7 +42,6 @@ export class Unidades extends Component {
           </Can>
         </div>
         <div className="bodyUni">
-          <Can politica="Gerir Setor">
             <div>
               <Button
                 variant="success"
@@ -60,14 +59,11 @@ export class Unidades extends Component {
                 <FontAwesomeIcon icon="minus-circle" />
               </Button>
             </div>
-          </Can>
-          <Can politica="Visualizar Hierarquia">
             <div className="vinculos">
               {this.props.obj.SetoresVinculados.map(function (a) {
                 return <div className="setVin">{a.setorDestino}</div>;
               })}
             </div>
-          </Can>
         </div>
       </div>
     );

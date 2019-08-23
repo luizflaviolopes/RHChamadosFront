@@ -66,6 +66,105 @@ export class PageChamado extends Component {
 
   render() {
     let _this = this;
+
+    let buttons;
+
+    if(this.state.status !== "Encerrado") 
+    buttons = (
+      <Row className="row text-center">
+        <Col sm={3} key={"b1"}>
+          <Link to="/Chamados">
+            <Button variant="outline-danger" >
+              <FontAwesomeIcon icon="chevron-circle-left" /> Voltar
+            </Button>
+          </Link>
+        </Col>
+
+        <Col sm={3}  key={"b2"}>
+          <Can politica="Encaminhar Chamado">
+            <Button
+              variant="primary"
+              onClick={() =>
+                this.setState({
+                  transferModal: true
+                })
+              }
+            >
+              <FontAwesomeIcon icon="exchange-alt" /> Redirecionar
+            </Button>
+          </Can>
+
+          <ModalTransferir
+            show={this.state.transferModal}
+            modalName="transferModal"
+            close={this.handleCloseModal}
+            numChamado={this.state.numChamado}
+          />
+        </Col>
+        <Col sm={3} key={"b3"}>
+          <Can politica="Responder Chamado">
+            <Button variant="success" onClick={this.handleAnswer} >
+              <FontAwesomeIcon icon="file-alt" /> Responder
+            </Button>
+          </Can>
+        </Col>
+        <Col sm={3} key={"b4"}>
+            <Button 
+              variant="secondary"
+              onClick={() => this.setState({ historyModal: true })}
+            >
+              <FontAwesomeIcon icon="history" /> Histórico
+            </Button>
+
+          <ModalHistorico
+            show={this.state.historyModal}
+            modalName="historyModal"
+            close={this.handleCloseModal}
+            numChamado={this.state.numChamado}
+          />
+        </Col>
+      </Row>
+    )
+    else
+    buttons = (
+      <Row className="row text-center">
+        <Col sm={4} key={"b5"}>
+          <Link to="/chamados">
+            <Button variant="outline-danger" >
+              <FontAwesomeIcon icon="chevron-circle-left" /> Voltar
+            </Button>
+          </Link>
+        </Col>
+        <Col sm={4}  key={"b6"}>
+          <Can politica="Reabrir Chamado">
+            <Button
+              variant="warning"
+              onClick={() => this.chamadoReaberto(this.state.numChamado)}
+            >
+              <FontAwesomeIcon icon="envelope-open-text" /> Reabrir
+            </Button>
+          </Can>
+        </Col>
+        <Col sm={4} key={"b7"}>
+            <Button 
+              variant="secondary"
+              onClick={() => this.setState({ historyModal: true })}
+            >
+              <FontAwesomeIcon icon="history" /> Histórico
+            </Button>
+
+          <ModalHistorico
+            show={this.state.historyModal}
+            modalName="historyModal"
+            close={this.handleCloseModal}
+            numChamado={this.state.numChamado}
+          />
+        </Col>
+      </Row>
+    )
+
+
+
     return (
       <div className="PageChamados">
         <div className="form-group chamado">
@@ -181,101 +280,7 @@ export class PageChamado extends Component {
         })}
 
         <div className="form-group">
-          {this.state.status !== "Encerrado" ? (
-            <Row className="row text-center">
-              <Col sm={3}>
-                <Link to="/Chamados">
-                  <Button variant="outline-danger">
-                    <FontAwesomeIcon icon="chevron-circle-left" /> Voltar
-                  </Button>
-                </Link>
-              </Col>
-
-              <Col sm={3}>
-                <Can politica="Encaminhar Chamado">
-                  <Button
-                    variant="primary"
-                    onClick={() =>
-                      this.setState({
-                        transferModal: true
-                      })
-                    }
-                  >
-                    <FontAwesomeIcon icon="exchange-alt" /> Redirecionar
-                  </Button>
-                </Can>
-
-                <ModalTransferir
-                  show={this.state.transferModal}
-                  modalName="transferModal"
-                  close={this.handleCloseModal}
-                  numChamado={this.state.numChamado}
-                />
-              </Col>
-              <Col sm={3}>
-                <Can politica="Responder Chamado">
-                  <Button variant="success" onClick={this.handleAnswer}>
-                    <FontAwesomeIcon icon="file-alt" /> Responder
-                  </Button>
-                </Can>
-              </Col>
-              <Col sm={3}>
-                <Can politica="Visualizar Relatorios">
-                  <Button
-                    variant="secondary"
-                    onClick={() => this.setState({ historyModal: true })}
-                  >
-                    <FontAwesomeIcon icon="history" /> Histórico
-                  </Button>
-                </Can>
-
-                <ModalHistorico
-                  show={this.state.historyModal}
-                  modalName="historyModal"
-                  close={this.handleCloseModal}
-                  numChamado={this.state.numChamado}
-                />
-              </Col>
-            </Row>
-          ) : this.state.status !== "Aberto" &&
-            this.state.status !== "Atendimento" ? (
-            <Row className="row text-center">
-              <Col sm={4}>
-                <Link to="/chamados">
-                  <Button variant="outline-danger">
-                    <FontAwesomeIcon icon="chevron-circle-left" /> Voltar
-                  </Button>
-                </Link>
-              </Col>
-              <Col sm={4}>
-                <Can politica="Reabrir Chamado">
-                  <Button
-                    variant="warning"
-                    onClick={() => this.chamadoReaberto(this.state.numChamado)}
-                  >
-                    <FontAwesomeIcon icon="envelope-open-text" /> Reabrir
-                  </Button>
-                </Can>
-              </Col>
-              <Col sm={4}>
-                <Can politica="Visualizar Relatorios">
-                  <Button
-                    variant="secondary"
-                    onClick={() => this.setState({ historyModal: true })}
-                  >
-                    <FontAwesomeIcon icon="history" /> Histórico
-                  </Button>
-                </Can>
-
-                <ModalHistorico
-                  show={this.state.historyModal}
-                  modalName="historyModal"
-                  close={this.handleCloseModal}
-                  numChamado={this.state.numChamado}
-                />
-              </Col>
-            </Row>
-          ) : null}
+          {buttons}
           {this.state.answerOpen ? (
             <Respostas
               closeAnswer={this.handleAnswer}
