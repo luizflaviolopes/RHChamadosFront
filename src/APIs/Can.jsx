@@ -18,7 +18,9 @@ export class Can extends Component {
     super(props);
     this.state = {
       logged: localStorage.getItem("Politica"),
-      politica: this.props.politica,
+      politica: Array.isArray(this.props.politica)
+        ? this.props.politica
+        : [this.props.politica],
       allowed: false,
       children: this.props.children
     };
@@ -26,11 +28,11 @@ export class Can extends Component {
   render() {
     const pol = this.state.logged.split(",");
     let _this = this;
-    // const allowed = pol.push(_this.state.politica);
 
     pol.forEach(function(a) {
-      if (a === _this.state.politica) {
+      if (_this.state.politica.some(x => x == a)) {
         _this.state.allowed = true;
+        return true;
       }
     });
     return (

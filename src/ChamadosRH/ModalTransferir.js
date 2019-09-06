@@ -4,6 +4,8 @@ import { Modal, Col, Button, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import api from "../APIs/DataApi";
 import { toast } from 'react-toastify';
+import { Typeahead } from "react-bootstrap-typeahead"
+import 'react-bootstrap-typeahead/css/Typeahead.css';
 
 export class ModalTransferir extends Component {
   constructor(props) {
@@ -120,6 +122,22 @@ export class ModalTransferir extends Component {
                 </Form.Control>
               </Form.Group>
             </Form.Row>
+            <Form.Group>
+              <Form.Label>Assunto</Form.Label>
+              <Typeahead
+                labelKey={(option) => `${option.value}`}
+                //Colocar assuntos /*Esta com os setores para teste */
+                options={this.state.setores}
+
+              />
+
+
+
+
+
+
+
+            </Form.Group>
             <Form.Group>
               <Form.Label>Descrição:</Form.Label>
               <Form.Control
