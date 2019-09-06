@@ -9,6 +9,11 @@ import ModalHistorico from "./ModalHistorico.js";
 import { Anexo } from "./Anexos";
 import api from "../APIs/DataApi";
 import { Can } from "../APIs/Can";
+import { Typeahead } from "react-bootstrap-typeahead"
+import 'react-bootstrap-typeahead/css/Typeahead.css';
+
+
+
 export class PageChamado extends Component {
   constructor(props) {
     super(props);
@@ -20,7 +25,7 @@ export class PageChamado extends Component {
       answerOpen: false,
       answered: [],
       listFile: [],
-      fileD: {}
+      fileD: {},
     };
     this.handleBack = this.handleBack.bind(this);
     this.handleAnswer = this.handleAnswer.bind(this);
@@ -64,105 +69,113 @@ export class PageChamado extends Component {
     this.setState({ [modal]: false });
   }
 
+
   render() {
     let _this = this;
 
     let buttons;
 
-    if(this.state.status !== "Encerrado") 
-    buttons = (
-      <Row className="row text-center">
-        <Col sm={3} key={"b1"}>
-          <Link to="/Chamados">
-            <Button variant="outline-danger" >
-              <FontAwesomeIcon icon="chevron-circle-left" /> Voltar
-            </Button>
-          </Link>
-        </Col>
+    let itens = [
+      { Name: 'Art', lastName: 'Blakey' },
+      { Name: 'Jimmy', lastName: 'Cobb' },
+      { Name: 'Elvin', lastName: 'Jones' },
+      { Name: 'Max', lastName: 'Roach' },
+      { Name: 'Tony', lastName: 'Williams' },
+    ]
 
-        <Col sm={3}  key={"b2"}>
-          <Can politica="Encaminhar Chamado">
+    if (this.state.status !== "Encerrado")
+      buttons = (
+        <Row className="row text-center">
+          <Col sm={3} key={"b1"}>
+            <Link to="/Chamados">
+              <Button variant="outline-danger" >
+                <FontAwesomeIcon icon="chevron-circle-left" /> Voltar
+            </Button>
+            </Link>
+          </Col>
+
+          <Col sm={3} key={"b2"}>
+            <Can politica="Encaminhar Chamado">
+              <Button
+                variant="primary"
+                onClick={() =>
+                  this.setState({
+                    transferModal: true
+                  })
+                }
+              >
+                <FontAwesomeIcon icon="exchange-alt" /> Redirecionar
+            </Button>
+            </Can>
+
+            <ModalTransferir
+              show={this.state.transferModal}
+              modalName="transferModal"
+              close={this.handleCloseModal}
+              numChamado={this.state.numChamado}
+            />
+          </Col>
+          <Col sm={3} key={"b3"}>
+            <Can politica="Responder Chamado">
+              <Button variant="success" onClick={this.handleAnswer} >
+                <FontAwesomeIcon icon="file-alt" /> Responder
+            </Button>
+            </Can >
+          </Col>
+          <Col sm={3} key={"b4"}>
             <Button
-              variant="primary"
-              onClick={() =>
-                this.setState({
-                  transferModal: true
-                })
-              }
-            >
-              <FontAwesomeIcon icon="exchange-alt" /> Redirecionar
-            </Button>
-          </Can>
-
-          <ModalTransferir
-            show={this.state.transferModal}
-            modalName="transferModal"
-            close={this.handleCloseModal}
-            numChamado={this.state.numChamado}
-          />
-        </Col>
-        <Col sm={3} key={"b3"}>
-          <Can politica="Responder Chamado">
-            <Button variant="success" onClick={this.handleAnswer} >
-              <FontAwesomeIcon icon="file-alt" /> Responder
-            </Button>
-          </Can>
-        </Col>
-        <Col sm={3} key={"b4"}>
-            <Button 
               variant="secondary"
               onClick={() => this.setState({ historyModal: true })}
             >
               <FontAwesomeIcon icon="history" /> Histórico
             </Button>
 
-          <ModalHistorico
-            show={this.state.historyModal}
-            modalName="historyModal"
-            close={this.handleCloseModal}
-            numChamado={this.state.numChamado}
-          />
-        </Col>
-      </Row>
-    )
+            <ModalHistorico
+              show={this.state.historyModal}
+              modalName="historyModal"
+              close={this.handleCloseModal}
+              numChamado={this.state.numChamado}
+            />
+          </Col>
+        </Row>
+      )
     else
-    buttons = (
-      <Row className="row text-center">
-        <Col sm={4} key={"b5"}>
-          <Link to="/chamados">
-            <Button variant="outline-danger" >
-              <FontAwesomeIcon icon="chevron-circle-left" /> Voltar
+      buttons = (
+        <Row className="row text-center">
+          <Col sm={4} key={"b5"}>
+            <Link to="/chamados">
+              <Button variant="outline-danger" >
+                <FontAwesomeIcon icon="chevron-circle-left" /> Voltar
             </Button>
-          </Link>
-        </Col>
-        <Col sm={4}  key={"b6"}>
-          <Can politica="Reabrir Chamado">
+            </Link>
+          </Col>
+          <Col sm={4} key={"b6"}>
+            <Can politica="Reabrir Chamado">
+              <Button
+                variant="warning"
+                onClick={() => this.chamadoReaberto(this.state.numChamado)}
+              >
+                <FontAwesomeIcon icon="envelope-open-text" /> Reabrir
+            </Button>
+            </Can>
+          </Col>
+          <Col sm={4} key={"b7"}>
             <Button
-              variant="warning"
-              onClick={() => this.chamadoReaberto(this.state.numChamado)}
-            >
-              <FontAwesomeIcon icon="envelope-open-text" /> Reabrir
-            </Button>
-          </Can>
-        </Col>
-        <Col sm={4} key={"b7"}>
-            <Button 
               variant="secondary"
               onClick={() => this.setState({ historyModal: true })}
             >
               <FontAwesomeIcon icon="history" /> Histórico
             </Button>
 
-          <ModalHistorico
-            show={this.state.historyModal}
-            modalName="historyModal"
-            close={this.handleCloseModal}
-            numChamado={this.state.numChamado}
-          />
-        </Col>
-      </Row>
-    )
-
+            <ModalHistorico
+              show={this.state.historyModal}
+              modalName="historyModal"
+              close={this.handleCloseModal}
+              numChamado={this.state.numChamado}
+            />
+          </Col>
+        </Row>
+      )
 
 
     return (
@@ -229,6 +242,7 @@ export class PageChamado extends Component {
               <Col sm={4}>
                 <label>
                   <span>Assunto: </span>
+
                 </label>
                 {this.state.assunto}
               </Col>
@@ -246,10 +260,33 @@ export class PageChamado extends Component {
             </label>
             <p>{this.state.desc}</p>
           </div>
+          <div className="form-group">
+            <Row>
+              <Col sm={6}>
+                <Can politica="Gerir Setor">
+                  <label>Atribuido à</label>
+                  <Typeahead
+                    labelKey={(option) => `${option.Name}`}
+                    //Colocar Atendentes /*Esta com uma variavel para teste */
+                    options={itens}
+                  //onChange={}
+                  />
+                </Can>
+
+                <Button
+                  variant="outline-success"
+                //onClick={}
+                >
+                  Assumir Chamado
+                </Button>
+              </Col>
+            </Row>
+
+          </div>
         </div>
 
         <div className="anexo row">
-          {this.state.listFile.map(function(a, i) {
+          {this.state.listFile.map(function (a, i) {
             return (
               <Anexo
                 nome={a.textAnexo}
@@ -261,7 +298,7 @@ export class PageChamado extends Component {
           })}
         </div>
 
-        {this.state.answered.map(function(a, i) {
+        {this.state.answered.map(function (a, i) {
           return (
             <div className="form-group">
               <Alert variant="dark">
