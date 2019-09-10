@@ -54,17 +54,17 @@ export class Formulario extends Component {
         .catch(
           a => a.then(e =>
             Object.keys(e).forEach(
-              function(a,i){
+              function (a, i) {
                 toast.error(
                   e[a],
                   {
                     position: toast.POSITION.TOP_CENTER
                   }
                 )
-               
+
               }
             )
-            
+
           )
         );
 
@@ -140,53 +140,7 @@ export class Formulario extends Component {
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <Form.Group as={Row}>
-              <Col sm="6">
-                <Form.Label>MASP</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Digite o MASP"
-                  onChange={evt =>
-                    this.setState({
-                      newChamado: {
-                        ...this.state.newChamado,
-                        Masp: evt.target.value
-                      }
-                    })
-                  }
-                />
-              </Col>
-              <Col sm="6">
-                <Form.Label>CPF</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Digite o CPF"
-                  onChange={evt =>
-                    this.setState({
-                      newChamado: {
-                        ...this.state.newChamado,
-                        Cpf: evt.target.value
-                      }
-                    })
-                  }
-                />
-              </Col>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Nome</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Digite o Nome"
-                onChange={evt =>
-                  this.setState({
-                    newChamado: {
-                      ...this.state.newChamado,
-                      Nome: evt.target.value
-                    }
-                  })
-                }
-              />
-            </Form.Group>
+
             <Form.Group>
               <Form.Label>E-Mail</Form.Label>
               <Form.Control
