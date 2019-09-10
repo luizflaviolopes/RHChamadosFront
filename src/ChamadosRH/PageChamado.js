@@ -272,13 +272,14 @@ export class PageChamado extends Component {
                   //onChange={}
                   />
                 </Can>
-
-                <Button
-                  variant="outline-success"
-                //onClick={}
-                >
-                  Assumir Chamado
+                <Can politica="Gerir Setor" reverse>
+                  <Button
+                    variant="outline-success"
+                  //onClick={}
+                  >
+                    Assumir Chamado
                 </Button>
+                </Can>
               </Col>
             </Row>
 

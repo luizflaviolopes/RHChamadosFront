@@ -18,6 +18,7 @@ class TabelaIndex extends Component {
       tipo: this.props.match.params.tipo,
       filters: {},
       all: null,
+      filtered: null,
       current: 0,
       private: true,
       anexoFile: File
@@ -30,9 +31,9 @@ class TabelaIndex extends Component {
     let newFilter = this.state.filters;
     newFilter[a.propertie] = a.value;
     window.teste = newFilter;
-    var checkFilter = function(element) {
+    var checkFilter = function (element) {
       let retorno = true;
-      Object.keys(newFilter).forEach(function(p, i) {
+      Object.keys(newFilter).forEach(function (p, i) {
         if (!isNaN(element[p])) {
           if (
             newFilter[p] !== "" &&
@@ -51,12 +52,17 @@ class TabelaIndex extends Component {
       });
       return retorno;
     };
-    let newDems = this.state.all.filter(function(a, i) {
+    let newDems = this.state.all.filter(function (a, i) {
       return checkFilter(a);
     });
 
-    this.setState({ filters: newFilter, dems: newDems });
+    this.setState({
+      filters: newFilter,
+      filtered: newDems,
+      current: 0,
+    });
   }
+
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.match.params.tipo !== this.props.match.params.tipo) {
@@ -68,11 +74,9 @@ class TabelaIndex extends Component {
         .then(data =>
           this.setState({
             dems: data.lista,
-            current: Math.floor(
-              data.registros % 10 > 0
-                ? data.registros / 10 + 1
-                : data.registros / 10
-            )
+            all: data.lista,
+            filtered: data.lista
+
           })
         );
     }
@@ -85,48 +89,31 @@ class TabelaIndex extends Component {
   }
 
   handlePageClick(a) {
-    api(
-      "api/values/pagina?" +
-        "&tipo=" +
-        this.props.match.params.tipo +
-        "&pag=" +
-        a.selected
-    )
-      .then(Response => Response.json())
-      .then(data => {
-        this.setState({
-          dems: data.lista,
-          current: Math.floor(
-            data.registros % 10 > 0
-              ? data.registros / 10 + 1
-              : data.registros / 10
-          )
-        });
-      });
+
+    this.setState({ current: a.selected });
+
   }
 
   componentDidMount() {
-        api("api/values?tipo=" + this.state.tipo, {})
-          .then(response => response.json())
-          .then(data =>
-            {
-            this.setState({
-              dems: data.lista,
-              all: data.lista,
-              current: Math.floor(
-                data.registros % 10 > 0
-                  ? data.registros / 10 + 1
-                  : data.registros / 10
-              )
-            })
-          }
-          );
+    api("api/values?tipo=" + this.state.tipo, {})
+      .then(response => response.json())
+      .then(data => {
+        this.setState({
+          all: data.lista,
+          filtered: data.lista
+        })
+      }
+      );
   }
 
   render() {
+
+
+
+
     let filterObj = this.state.filters;
     let _this = this;
-    var checkFilter = function(element) {
+    var checkFilter = function (element) {
       for (var p in Object.keys(filterObj)) {
         if (filterObj[p] !== "" && element[p] !== filterObj[p]) return false;
       }
@@ -134,7 +121,19 @@ class TabelaIndex extends Component {
       return true;
     };
 
-    if (this.state.dems == null)
+    function calcNumPages() {
+      let { filtered } = _this.state;
+
+      return Math.floor(filtered.length % 10 > 0 ? filtered.length / 10 + 1 : filtered.length / 10)
+    }
+
+    function getPageDems() {
+      let { current, filtered } = _this.state;
+
+      return filtered.slice(current * 10, current * 10 + 10)
+    }
+
+    if (this.state.filtered == null)
       return (
         <div className="carregando">
           <FontAwesomeIcon icon="spinner" pulse />
@@ -221,7 +220,7 @@ class TabelaIndex extends Component {
               </tr>
             </thead>
             <tbody>
-              {this.state.dems.map(function(a, i) {
+              {getPageDems().map(function (a, i) {
                 return (
                   <Chamado
                     numChamado={a.numChamado}
@@ -248,7 +247,7 @@ class TabelaIndex extends Component {
             nextLabel={">"}
             breakLabel={"..."}
             breakClassName={"break-me"}
-            pageCount={this.state.current}
+            pageCount={calcNumPages()}
             forcePage={0}
             marginPagesDisplayed={2}
             pageRangeDisplayed={5}

@@ -76,7 +76,7 @@ export class Atendentes extends Component {
                     <td className="nameUser">{a.nome}</td>
 
                     <td>
-                      <Can politica={["Gerir Usuario", "teste"]}>
+                      <Can politica={["Gerir Usuario"]}>
                         <Button
                           variant="warning"
                           onClick={() =>
