@@ -244,7 +244,7 @@ export class PageChamado extends Component {
                       labelKey={option => `${option.Name}`}
                       //Colocar Atendentes /*Esta com uma variavel para teste */
                       options={itens}
-                      //onChange={}
+                    //onChange={}
                     />
                     <div class="input-group-prepend">
                       <Button variant="success">Alterar</Button>
@@ -266,12 +266,14 @@ export class PageChamado extends Component {
             </label>
             <p>{this.state.desc}</p>
           </div>
-          <div className="form-group">
+          {this.state.justificativa !== "N/A" ? (<div className="form-group">
             <label>
               <span>Motivo da reabertura do chamado: </span>
             </label>
             <p>{this.state.justificativa}</p>
           </div>
+
+          ) : null}
           <div className="form-group">
             <Row>
               <Col sm={6}>
@@ -283,7 +285,7 @@ export class PageChamado extends Component {
                         labelKey={option => `${option.Name}`}
                         //Colocar Atendentes /*Esta com uma variavel para teste */
                         options={itens}
-                        //onChange={}
+                      //onChange={}
                       />
                       <div class="input-group-prepend">
                         <Button variant="success">Alterar</Button>
@@ -294,7 +296,7 @@ export class PageChamado extends Component {
                 <Can politica="Gerir Setor" reverse>
                   <Button
                     variant="outline-success"
-                    //onClick={}
+                  //onClick={}
                   >
                     Assumir Chamado
                   </Button>
@@ -305,7 +307,7 @@ export class PageChamado extends Component {
         </div>
 
         <div className="anexo row">
-          {this.state.listFile.map(function(a, i) {
+          {this.state.listFile.map(function (a, i) {
             return (
               <Anexo
                 nome={a.textAnexo}
@@ -317,7 +319,7 @@ export class PageChamado extends Component {
           })}
         </div>
 
-        {this.state.answered.map(function(a, i) {
+        {this.state.answered.map(function (a, i) {
           return (
             <div className="form-group">
               <Alert variant="dark">
