@@ -21,24 +21,23 @@ export class Can extends Component {
       politica: Array.isArray(this.props.politica)
         ? this.props.politica
         : [this.props.politica],
-      allowed: false,
+      allowed: props.reverse || false,
       children: this.props.children
     };
   }
   render() {
     const pol = this.state.logged.split(",");
     let _this = this;
+    let allow = this.state.allowed;
 
-    pol.forEach(function(a) {
-      if (_this.state.politica.some(x => x == a)) {
-        _this.state.allowed = true;
-        return true;
+    for (let i = 0; i < pol.length; i++) {
+      if (_this.state.politica.some(x => x == pol[i])) {
+        allow = !allow;
+        break;
       }
-    });
+    }
     return (
-      <div className="can">
-        {this.state.allowed ? this.state.children : null}
-      </div>
+      <React.Fragment>{allow ? this.state.children : null}</React.Fragment>
     );
   }
 }

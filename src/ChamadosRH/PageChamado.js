@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "../css/PageChamado.css";
 import { Link } from "react-router-dom";
-import { Button, Col, Row, Alert, Form } from "react-bootstrap";
+import { Button, Col, Row, Alert, Form, InputGroup } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Respostas } from "./Respostas.js";
 import { ReabrirChamado } from "./ReabrirChamado";
@@ -237,10 +237,20 @@ export class PageChamado extends Component {
                 {this.state.setor}
               </Col>
               <Col sm={4}>
-                <label>
-                  <span>Assunto: </span>
-                </label>
-                {this.state.assunto}
+                <Form.Group>
+                  <label>Assunto</label>
+                  <div class="input-group">
+                    <Typeahead
+                      labelKey={option => `${option.Name}`}
+                      //Colocar Atendentes /*Esta com uma variavel para teste */
+                      options={itens}
+                      //onChange={}
+                    />
+                    <div class="input-group-prepend">
+                      <Button variant="success">Alterar</Button>
+                    </div>
+                  </div>
+                </Form.Group>
               </Col>
               <Col sm={4}>
                 <label>
@@ -266,21 +276,29 @@ export class PageChamado extends Component {
             <Row>
               <Col sm={6}>
                 <Can politica="Gerir Setor">
-                  <label>Atribuido à</label>
-                  <Typeahead
-                    labelKey={option => `${option.Name}`}
-                    //Colocar Atendentes /*Esta com uma variavel para teste */
-                    options={itens}
-                    //onChange={}
-                  />
+                  <Form.Group>
+                    <label>Atribudo á</label>
+                    <div class="input-group">
+                      <Typeahead
+                        labelKey={option => `${option.Name}`}
+                        //Colocar Atendentes /*Esta com uma variavel para teste */
+                        options={itens}
+                        //onChange={}
+                      />
+                      <div class="input-group-prepend">
+                        <Button variant="success">Alterar</Button>
+                      </div>
+                    </div>
+                  </Form.Group>
                 </Can>
-
-                <Button
-                  variant="outline-success"
-                  //onClick={}
-                >
-                  Assumir Chamado
-                </Button>
+                <Can politica="Gerir Setor" reverse>
+                  <Button
+                    variant="outline-success"
+                    //onClick={}
+                  >
+                    Assumir Chamado
+                  </Button>
+                </Can>
               </Col>
             </Row>
           </div>

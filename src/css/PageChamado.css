@@ -56,3 +56,7 @@ div.form-group.chamado {
 div.container-app > table > tbody > tr {
   cursor: pointer;
 }
+
+.input-group-prepend button {
+  margin-left: 0;
+}

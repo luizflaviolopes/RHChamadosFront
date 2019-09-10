@@ -122,22 +122,7 @@ export class ModalTransferir extends Component {
                 </Form.Control>
               </Form.Group>
             </Form.Row>
-            <Form.Group>
-              <Form.Label>Assunto</Form.Label>
-              <Typeahead
-                labelKey={(option) => `${option.value}`}
-                //Colocar assuntos /*Esta com os setores para teste */
-                options={this.state.setores}
 
-              />
-
-
-
-
-
-
-
-            </Form.Group>
             <Form.Group>
               <Form.Label>Descrição:</Form.Label>
               <Form.Control

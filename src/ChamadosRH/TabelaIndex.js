@@ -18,6 +18,7 @@ class TabelaIndex extends Component {
       tipo: this.props.match.params.tipo,
       filters: {},
       all: null,
+      filtered: null,
       current: 0,
       private: true,
       anexoFile: File
@@ -55,7 +56,11 @@ class TabelaIndex extends Component {
       return checkFilter(a);
     });
 
-    this.setState({ filters: newFilter, dems: newDems });
+    this.setState({
+      filters: newFilter,
+      filtered: newDems,
+      current: 0
+    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -65,11 +70,8 @@ class TabelaIndex extends Component {
         .then(data =>
           this.setState({
             dems: data.lista,
-            current: Math.floor(
-              data.registros % 10 > 0
-                ? data.registros / 10 + 1
-                : data.registros / 10
-            )
+            all: data.lista,
+            filtered: data.lista
           })
         );
     }
@@ -82,24 +84,7 @@ class TabelaIndex extends Component {
   }
 
   handlePageClick(a) {
-    api(
-      "api/values/pagina?" +
-        "&tipo=" +
-        this.props.match.params.tipo +
-        "&pag=" +
-        a.selected
-    )
-      .then(Response => Response.json())
-      .then(data => {
-        this.setState({
-          dems: data.lista,
-          current: Math.floor(
-            data.registros % 10 > 0
-              ? data.registros / 10 + 1
-              : data.registros / 10
-          )
-        });
-      });
+    this.setState({ current: a.selected });
   }
 
   componentDidMount() {
@@ -107,13 +92,8 @@ class TabelaIndex extends Component {
       .then(response => response.json())
       .then(data => {
         this.setState({
-          dems: data.lista,
           all: data.lista,
-          current: Math.floor(
-            data.registros % 10 > 0
-              ? data.registros / 10 + 1
-              : data.registros / 10
-          )
+          filtered: data.lista
         });
       });
   }
@@ -129,7 +109,23 @@ class TabelaIndex extends Component {
       return true;
     };
 
-    if (this.state.dems == null)
+    function calcNumPages() {
+      let { filtered } = _this.state;
+
+      return Math.floor(
+        filtered.length % 10 > 0
+          ? filtered.length / 10 + 1
+          : filtered.length / 10
+      );
+    }
+
+    function getPageDems() {
+      let { current, filtered } = _this.state;
+
+      return filtered.slice(current * 10, current * 10 + 10);
+    }
+
+    if (this.state.filtered == null)
       return (
         <div className="carregando">
           <FontAwesomeIcon icon="spinner" pulse />
@@ -216,7 +212,7 @@ class TabelaIndex extends Component {
               </tr>
             </thead>
             <tbody>
-              {this.state.dems.map(function(a, i) {
+              {getPageDems().map(function(a, i) {
                 return (
                   <Chamado
                     numChamado={a.numChamado}
@@ -244,7 +240,7 @@ class TabelaIndex extends Component {
             nextLabel={">"}
             breakLabel={"..."}
             breakClassName={"break-me"}
-            pageCount={this.state.current}
+            pageCount={calcNumPages()}
             forcePage={0}
             marginPagesDisplayed={2}
             pageRangeDisplayed={5}
