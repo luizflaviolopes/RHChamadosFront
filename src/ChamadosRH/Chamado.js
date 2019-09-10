@@ -20,7 +20,8 @@ class Chamado extends Component {
       setor: props.setor,
       prioridade: props.prioridade,
       mc: props.mc,
-      prazo: props.prazo
+      prazo: props.prazo,
+      justificativa: props.justificativa
     };
     this.OnclickHande = this.OnclickHande.bind(this);
   }
@@ -39,7 +40,8 @@ class Chamado extends Component {
       setor: nextProps.setor,
       prioridade: nextProps.prioridade,
       mc: nextProps.mc,
-      prazo: nextProps.prazo
+      prazo: nextProps.prazo,
+      justificativa: nextProps.justificativa
     });
   }
   OnclickHande() {

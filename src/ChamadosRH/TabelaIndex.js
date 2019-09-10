@@ -229,7 +229,7 @@ class TabelaIndex extends Component {
                     setor={a.setor}
                     prazo={a.prazo}
                     anexoFile={_this.handleFile}
-                    justificativa={a.Justificativa}
+                    justificativa={a.justificativa}
                   />
                 );
               })}
