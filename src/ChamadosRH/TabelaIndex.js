@@ -60,10 +60,7 @@ class TabelaIndex extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.match.params.tipo !== this.props.match.params.tipo) {
-      api(
-        "api/values?tipo=" + nextProps.match.params.tipo,
-        {}
-      )
+      api("api/values?tipo=" + nextProps.match.params.tipo, {})
         .then(response => response.json())
         .then(data =>
           this.setState({
@@ -106,21 +103,19 @@ class TabelaIndex extends Component {
   }
 
   componentDidMount() {
-        api("api/values?tipo=" + this.state.tipo, {})
-          .then(response => response.json())
-          .then(data =>
-            {
-            this.setState({
-              dems: data.lista,
-              all: data.lista,
-              current: Math.floor(
-                data.registros % 10 > 0
-                  ? data.registros / 10 + 1
-                  : data.registros / 10
-              )
-            })
-          }
-          );
+    api("api/values?tipo=" + this.state.tipo, {})
+      .then(response => response.json())
+      .then(data => {
+        this.setState({
+          dems: data.lista,
+          all: data.lista,
+          current: Math.floor(
+            data.registros % 10 > 0
+              ? data.registros / 10 + 1
+              : data.registros / 10
+          )
+        });
+      });
   }
 
   render() {
@@ -238,6 +233,7 @@ class TabelaIndex extends Component {
                     setor={a.setor}
                     prazo={a.prazo}
                     anexoFile={_this.handleFile}
+                    justificativa={a.Justificativa}
                   />
                 );
               })}
