@@ -25,10 +25,13 @@ export class PageChamado extends Component {
       reabrirOpen: false,
       answered: [],
       listFile: [],
-      fileD: {}
+      fileD: {},
+      listaAssunto: [],
+      selectedAssunto:null
     };
     this.handleBack = this.handleBack.bind(this);
     this.handleAnswer = this.handleAnswer.bind(this);
+    this.handleAlterAssunto = this.handleAlterAssunto.bind(this);
     this.handleReabrir = this.handleReabrir.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
     this.chamadoReaberto = this.chamadoReaberto.bind(this);
@@ -45,11 +48,31 @@ export class PageChamado extends Component {
   handleBack() {
     this.props.history.goBack();
   }
+handleAlterAssunto(){
 
+  
+  this.setState({
+    selectedAssunto:{
+      ...this.state.selectedAssunto,
+      numChamado: this.state.numChamado
+    }
+  },api("api/chamado/",{
+    method:"post",
+    headers: { "Content-Type": "application/json;" },
+      body: JSON.stringify(this.state.selectedAssunto)
+  }))
+  
+}
   componentDidMount() {
     api("api/Resposta?formulario=" + this.state.numChamado, {})
       .then(resp => resp.json())
       .then(resp => this.setState({ ...resp }));
+
+      api("api/assunto",{})
+      .then(resp => resp.json())
+      .then(data=> this.setState({
+        listaAssunto: data
+      }));
   }
 
   chamadoReaberto(a) {
@@ -75,7 +98,8 @@ export class PageChamado extends Component {
     let _this = this;
 
     let buttons;
-
+    let assunto= this.state.assunto;
+    console.log(assunto)
     let itens = [
       { Name: "Art", lastName: "Blakey" },
       { Name: "Jimmy", lastName: "Cobb" },
@@ -241,13 +265,17 @@ export class PageChamado extends Component {
                   <label>Assunto</label>
                   <div class="input-group">
                     <Typeahead
-                      labelKey={option => `${option.Name}`}
+                      labelKey={option => `${option.assunto}`}
                       //Colocar Atendentes /*Esta com uma variavel para teste */
-                      options={itens}
-                      //onChange={}
+                      //options={itens}
+                      onChange={(s) => this.setState({selectedAssunto: s})}
+                      options={this.state.listaAssunto}
+                      //selected={}
+                      defaultInputValue={assunto}
+                      placeholder={assunto}
                     />
                     <div class="input-group-prepend">
-                      <Button variant="success">Alterar</Button>
+                      <Button variant="success" onClick={()=>this.handleAlterAssunto()}>Alterar</Button>
                     </div>
                   </div>
                 </Form.Group>
@@ -286,7 +314,9 @@ export class PageChamado extends Component {
                         //onChange={}
                       />
                       <div class="input-group-prepend">
-                        <Button variant="success">Alterar</Button>
+                        <Button variant="success"
+                        //onClick={}
+                        >Alterar</Button>
                       </div>
                     </div>
                   </Form.Group>
