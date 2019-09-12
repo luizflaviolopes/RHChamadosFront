@@ -27,7 +27,9 @@ export class PageChamado extends Component {
       listFile: [],
       fileD: {},
       listaAssunto: [],
-      selectedAssunto: null
+      selectedAssunto: null,
+      listaResponsavel: [],
+      selectedResponsavel: {}
     };
     this.handleBack = this.handleBack.bind(this);
     this.handleAnswer = this.handleAnswer.bind(this);
@@ -73,6 +75,12 @@ export class PageChamado extends Component {
       .then(data => this.setState({
         listaAssunto: data
       }));
+
+    api("api/Responsavel", {})
+      .then(resp => resp.json())
+      .then(data => this.setState({
+        listaResponsavel: data
+      }));
   }
 
   chamadoReaberto(a) {
@@ -99,14 +107,9 @@ export class PageChamado extends Component {
 
     let buttons;
     let assunto = this.state.assunto;
-    console.log(assunto)
-    let itens = [
-      { Name: "Art", lastName: "Blakey" },
-      { Name: "Jimmy", lastName: "Cobb" },
-      { Name: "Elvin", lastName: "Jones" },
-      { Name: "Max", lastName: "Roach" },
-      { Name: "Tony", lastName: "Williams" }
-    ];
+    let listaResponsavel = this.state.listaResponsavel;
+
+
 
     if (this.state.status !== "Encerrado")
       buttons = (
@@ -266,11 +269,8 @@ export class PageChamado extends Component {
                   <div class="input-group">
                     <Typeahead
                       labelKey={option => `${option.assunto}`}
-                      //Colocar Atendentes /*Esta com uma variavel para teste */
-                      //options={itens}
                       onChange={(s) => this.setState({ selectedAssunto: s })}
                       options={this.state.listaAssunto}
-                      //selected={}
                       defaultInputValue={assunto}
 
                     />
@@ -310,15 +310,17 @@ export class PageChamado extends Component {
                     <label>Atribudo á</label>
                     <div class="input-group">
                       <Typeahead
-                        labelKey={option => `${option.Name}`}
-                        //Colocar Atendentes /*Esta com uma variavel para teste */
-                        options={itens}
-                      //onChange={}
+                        labelKey={option => `${option.name}`}
+                        onChange={(s) => this.setState({ selectedResponsavel: s })}
+                        options={listaResponsavel}
+
                       />
                       <div class="input-group-prepend">
                         <Button variant="success"
                         //onClick={}
-                        >Alterar</Button>
+                        >
+                          Atribui
+                        </Button>
                       </div>
                     </div>
                   </Form.Group>
@@ -333,6 +335,13 @@ export class PageChamado extends Component {
                 </Can>
               </Col>
             </Row>
+          </div>
+          <div>
+            {this.state.listaResponsavel.map(function (a) {
+              return (
+                <div>{a.id}+{a.name}</div>
+              )
+            })}
           </div>
         </div>
 
