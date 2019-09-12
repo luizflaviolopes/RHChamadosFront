@@ -142,7 +142,7 @@ export class PageChamado extends Component {
           </Col>
           <Col sm={3} key={"b3"}>
             <Can politica="Responder Chamado">
-              <Button variant="success" onClick={this.handleAnswer}>
+              <Button variant="success" onClick={this.handleAnswer} {...this.state.alterAssunto !== true ? "disabled" : null}>
                 <FontAwesomeIcon icon="file-alt" /> Responder
               </Button>
             </Can>
@@ -272,7 +272,7 @@ export class PageChamado extends Component {
                       options={this.state.listaAssunto}
                       //selected={}
                       defaultInputValue={assunto}
-                      placeholder={assunto}
+
                     />
                     <div class="input-group-prepend">
                       <Button variant="success" onClick={() => this.handleAlterAssunto()}>Alterar</Button>
