@@ -27,7 +27,7 @@ export class PageChamado extends Component {
       listFile: [],
       fileD: {},
       listaAssunto: [],
-      selectedAssunto:null
+      selectedAssunto:{}
     };
     this.handleBack = this.handleBack.bind(this);
     this.handleAnswer = this.handleAnswer.bind(this);
@@ -50,17 +50,19 @@ export class PageChamado extends Component {
   }
 handleAlterAssunto(){
 
-  
-  this.setState({
-    selectedAssunto:{
-      ...this.state.selectedAssunto,
-      numChamado: this.state.numChamado
-    }
-  },api("api/chamado/",{
+  let numChamado = this.state.numChamado
+  let idAssunto = this.state.selectedAssunto.id
+  // this.setState({
+  //   selectedAssunto:{
+  //     idAssunto: this.state.selectedAssunto.id,
+  //     numChamado: this.state.numChamado
+  //   }
+    console.log(idAssunto)
+  api("api/chamado/",{
     method:"post",
     headers: { "Content-Type": "application/json;" },
-      body: JSON.stringify(this.state.selectedAssunto)
-  }))
+      body: JSON.stringify(numChamado,idAssunto)
+  })
   
 }
   componentDidMount() {
@@ -268,7 +270,7 @@ handleAlterAssunto(){
                       labelKey={option => `${option.assunto}`}
                       //Colocar Atendentes /*Esta com uma variavel para teste */
                       //options={itens}
-                      onChange={(s) => this.setState({selectedAssunto: s})}
+                      onChange={(s) => this.setState({selectedAssunto: {s}})}
                       options={this.state.listaAssunto}
                       //selected={}
                       defaultInputValue={assunto}
