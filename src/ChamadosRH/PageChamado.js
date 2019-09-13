@@ -294,12 +294,14 @@ handleAlterAssunto(){
             </label>
             <p>{this.state.desc}</p>
           </div>
-          <div className="form-group">
+          {this.state.justificativa !== "N/A" ? (<div className="form-group">
             <label>
               <span>Motivo da reabertura do chamado: </span>
             </label>
             <p>{this.state.justificativa}</p>
           </div>
+
+          ) : null}
           <div className="form-group">
             <Row>
               <Col sm={6}>
@@ -311,7 +313,7 @@ handleAlterAssunto(){
                         labelKey={option => `${option.Name}`}
                         //Colocar Atendentes /*Esta com uma variavel para teste */
                         options={itens}
-                        //onChange={}
+                      //onChange={}
                       />
                       <div class="input-group-prepend">
                         <Button variant="success"
@@ -324,7 +326,7 @@ handleAlterAssunto(){
                 <Can politica="Gerir Setor" reverse>
                   <Button
                     variant="outline-success"
-                    //onClick={}
+                  //onClick={}
                   >
                     Assumir Chamado
                   </Button>
@@ -335,7 +337,7 @@ handleAlterAssunto(){
         </div>
 
         <div className="anexo row">
-          {this.state.listFile.map(function(a, i) {
+          {this.state.listFile.map(function (a, i) {
             return (
               <Anexo
                 nome={a.textAnexo}
@@ -347,7 +349,7 @@ handleAlterAssunto(){
           })}
         </div>
 
-        {this.state.answered.map(function(a, i) {
+        {this.state.answered.map(function (a, i) {
           return (
             <div className="form-group">
               <Alert variant="dark">
