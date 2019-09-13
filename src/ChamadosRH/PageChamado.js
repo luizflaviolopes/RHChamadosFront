@@ -59,7 +59,7 @@ export class PageChamado extends Component {
   //     idAssunto: this.state.selectedAssunto.id,
   //     numChamado: this.state.numChamado
   //   }
-    console.log(idAssunto)
+  //console.log(idAssunto)
   api("api/chamado/",{
     method:"post",
     headers: { "Content-Type": "application/json;" },
