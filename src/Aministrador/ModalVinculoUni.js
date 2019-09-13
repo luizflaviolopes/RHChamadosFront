@@ -17,34 +17,36 @@ export class ModalVinculoUni extends Component {
     this.deletarVinculo = this.deletarVinculo.bind(this);
   }
   componentDidMount() {
+    api("api/Setores/BuscaSetores?Id=" + this.props.setor, {})
+      .then(response => response.json())
+      .then(data => this.setState({ setores: data }));
+
     api("api/Setores", {})
       .then(Response => Response.json())
-      .then(data =>
-        {
-          let setorV = data.find(xs => {
-            return xs.id == this.props.setor;
-          });
-          this.setState({
-            setores: data,
-            ListSetorVinculo: setorV.relacaoSetorSetor
-          })
-        })
-        // this.setState(
-        //   {
-        //     setores: data
-        //   },
-        //   () => {
-        //     let setorV = this.state.setores.find(xs => {
-        //       return xs.id == this.props.setor;
-        //     });
-        //     this.setState({
-        //       ListSetorVinculo: this.state.ListSetorVinculo.concat(
-        //         setorV.relacaoSetorSetor
-        //       )
-        //     });
-        //   }
-        // )
-      // );
+      .then(data => {
+        let setorV = data.find(xs => {
+          return xs.id == this.props.setor;
+        });
+        this.setState({
+          ListSetorVinculo: setorV.relacaoSetorSetor
+        });
+      });
+    // this.setState(
+    //   {
+    //     setores: data
+    //   },
+    //   () => {
+    //     let setorV = this.state.setores.find(xs => {
+    //       return xs.id == this.props.setor;
+    //     });
+    //     this.setState({
+    //       ListSetorVinculo: this.state.ListSetorVinculo.concat(
+    //         setorV.relacaoSetorSetor
+    //       )
+    //     });
+    //   }
+    // )
+    // );
   }
 
   AddVinculo = setor => {
@@ -52,7 +54,7 @@ export class ModalVinculoUni extends Component {
       return xs.id == setor;
     });
 
-    let newSetorV = { id: setorV.id, setorDestino: setorV.setor }
+    let newSetorV = { id: setorV.id, setorDestino: setorV.setor };
 
     this.setState({
       ListSetorVinculo: this.state.ListSetorVinculo.concat(newSetorV)
@@ -63,7 +65,6 @@ export class ModalVinculoUni extends Component {
       //   )
       // })
     });
-    console.log(this.state.ListSetorVinculo);
   };
 
   deletarVinculo = setor => {
@@ -82,42 +83,35 @@ export class ModalVinculoUni extends Component {
     });
   };
 
-  enviar = (evt)=>{
+  enviar = evt => {
     evt.preventDefault();
     let _this = this;
 
-    let list = this.state.ListSetorVinculo.map((a)=>{return {Destino: a.id, Origem: _this.props.setor}});
+    let list = this.state.ListSetorVinculo.map(a => {
+      return { Destino: a.id, Origem: _this.props.setor };
+    });
 
-    api("api/Setores/NovaRelacao",{
-      method:"post",
+    api("api/Setores/NovaRelacao", {
+      method: "post",
       body: JSON.stringify(list),
-      headers: { "Content-Type": "application/json;" },
+      headers: { "Content-Type": "application/json;" }
     })
-    .then(
-      resp => {
-        if (resp.status == 200)
-          return resp.json()
-        else
-          throw resp.json();
-      }
-    )
-    .then(data => {
-      this.props.AttListUndd(data);
-      toast.success(
-        "Setores Vinculados"
-      )
-    })
-    .catch(
-      a => a.then(e =>
-        toast.error(
-          e.message,
-          {
+      .then(resp => {
+        if (resp.status == 200) return resp.json();
+        else throw resp.json();
+      })
+      .then(data => {
+        this.props.AttListUndd(data);
+        toast.success("Setores Vinculados");
+      })
+      .catch(a =>
+        a.then(e =>
+          toast.error(e.message, {
             position: toast.POSITION.TOP_CENTER
-          }
+          })
         )
-      )
-    );
-  }
+      );
+  };
 
   render() {
     let _this = this;
@@ -141,7 +135,7 @@ export class ModalVinculoUni extends Component {
                 as="select"
               >
                 <option>Escolha um Setor</option>
-                {this.state.setores.map(function (a) {
+                {this.state.setores.map(function(a) {
                   return (
                     <option value={a.id} name={a.setor}>
                       {a.setor}
@@ -151,7 +145,7 @@ export class ModalVinculoUni extends Component {
               </Form.Control>
             </Form.Group>
             <Form.Group>
-              {this.state.ListSetorVinculo.map(function (a) {
+              {this.state.ListSetorVinculo.map(function(a) {
                 return (
                   <Vinculo
                     id={a.id}

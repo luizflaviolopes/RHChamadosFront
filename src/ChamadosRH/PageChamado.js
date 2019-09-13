@@ -27,7 +27,9 @@ export class PageChamado extends Component {
       listFile: [],
       fileD: {},
       listaAssunto: [],
-      selectedAssunto:{}
+      selectedAssunto: {},
+      listaResponsavel: [],
+      selectedResponsavel: {}
     };
     this.handleBack = this.handleBack.bind(this);
     this.handleAnswer = this.handleAnswer.bind(this);
@@ -48,7 +50,7 @@ export class PageChamado extends Component {
   handleBack() {
     this.props.history.goBack();
   }
-handleAlterAssunto(){
+  handleAlterAssunto() {
 
   let numChamado = this.state.numChamado
   let idAssunto = this.state.selectedAssunto.id
@@ -70,10 +72,16 @@ handleAlterAssunto(){
       .then(resp => resp.json())
       .then(resp => this.setState({ ...resp }));
 
-      api("api/assunto",{})
+    api("api/assunto", {})
       .then(resp => resp.json())
-      .then(data=> this.setState({
+      .then(data => this.setState({
         listaAssunto: data
+      }));
+
+    api("api/Responsavel", {})
+      .then(resp => resp.json())
+      .then(data => this.setState({
+        listaResponsavel: data
       }));
   }
 
@@ -100,15 +108,10 @@ handleAlterAssunto(){
     let _this = this;
 
     let buttons;
-    let assunto= this.state.assunto;
-    console.log(assunto)
-    let itens = [
-      { Name: "Art", lastName: "Blakey" },
-      { Name: "Jimmy", lastName: "Cobb" },
-      { Name: "Elvin", lastName: "Jones" },
-      { Name: "Max", lastName: "Roach" },
-      { Name: "Tony", lastName: "Williams" }
-    ];
+    let assunto = this.state.assunto;
+    let listaResponsavel = this.state.listaResponsavel;
+
+
 
     if (this.state.status !== "Encerrado")
       buttons = (
@@ -144,7 +147,7 @@ handleAlterAssunto(){
           </Col>
           <Col sm={3} key={"b3"}>
             <Can politica="Responder Chamado">
-              <Button variant="success" onClick={this.handleAnswer}>
+              <Button variant="success" onClick={this.handleAnswer} {...this.state.alterAssunto !== true ? "disabled" : null}>
                 <FontAwesomeIcon icon="file-alt" /> Responder
               </Button>
             </Can>
@@ -272,12 +275,11 @@ handleAlterAssunto(){
                       //options={itens}
                       onChange={(s) => this.setState({selectedAssunto: {s}})}
                       options={this.state.listaAssunto}
-                      //selected={}
                       defaultInputValue={assunto}
-                      placeholder={assunto}
+
                     />
                     <div class="input-group-prepend">
-                      <Button variant="success" onClick={()=>this.handleAlterAssunto()}>Alterar</Button>
+                      <Button variant="success" onClick={() => this.handleAlterAssunto()}>Alterar</Button>
                     </div>
                   </div>
                 </Form.Group>
@@ -296,12 +298,14 @@ handleAlterAssunto(){
             </label>
             <p>{this.state.desc}</p>
           </div>
-          <div className="form-group">
+          {this.state.justificativa !== "N/A" ? (<div className="form-group">
             <label>
               <span>Motivo da reabertura do chamado: </span>
             </label>
             <p>{this.state.justificativa}</p>
           </div>
+
+          ) : null}
           <div className="form-group">
             <Row>
               <Col sm={6}>
@@ -310,15 +314,17 @@ handleAlterAssunto(){
                     <label>Atribudo á</label>
                     <div class="input-group">
                       <Typeahead
-                        labelKey={option => `${option.Name}`}
-                        //Colocar Atendentes /*Esta com uma variavel para teste */
-                        options={itens}
-                        //onChange={}
+                        labelKey={option => `${option.name}`}
+                        onChange={(s) => this.setState({ selectedResponsavel: s })}
+                        options={listaResponsavel}
+
                       />
                       <div class="input-group-prepend">
                         <Button variant="success"
                         //onClick={}
-                        >Alterar</Button>
+                        >
+                          Atribui
+                        </Button>
                       </div>
                     </div>
                   </Form.Group>
@@ -326,7 +332,7 @@ handleAlterAssunto(){
                 <Can politica="Gerir Setor" reverse>
                   <Button
                     variant="outline-success"
-                    //onClick={}
+                  //onClick={}
                   >
                     Assumir Chamado
                   </Button>
@@ -334,10 +340,17 @@ handleAlterAssunto(){
               </Col>
             </Row>
           </div>
+          <div>
+            {this.state.listaResponsavel.map(function (a) {
+              return (
+                <div>{a.id}+{a.name}</div>
+              )
+            })}
+          </div>
         </div>
 
         <div className="anexo row">
-          {this.state.listFile.map(function(a, i) {
+          {this.state.listFile.map(function (a, i) {
             return (
               <Anexo
                 nome={a.textAnexo}
@@ -349,7 +362,7 @@ handleAlterAssunto(){
           })}
         </div>
 
-        {this.state.answered.map(function(a, i) {
+        {this.state.answered.map(function (a, i) {
           return (
             <div className="form-group">
               <Alert variant="dark">
