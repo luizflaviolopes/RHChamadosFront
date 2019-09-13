@@ -10,8 +10,11 @@ import ModalHistorico from "./ModalHistorico.js";
 import { Anexo } from "./Anexos";
 import api from "../APIs/DataApi";
 import { Can } from "../APIs/Can";
-import { Typeahead } from "react-bootstrap-typeahead";
+import { Typeahead, AsyncTypeahead } from "react-bootstrap-typeahead";
 import "react-bootstrap-typeahead/css/Typeahead.css";
+import { toast } from "react-toastify";
+
+
 
 export class PageChamado extends Component {
   constructor(props) {
@@ -27,17 +30,40 @@ export class PageChamado extends Component {
       listFile: [],
       fileD: {},
       listaAssunto: [],
-      selectedAssunto: null,
+      selectedAssunto: {},
       listaResponsavel: [],
       selectedResponsavel: {}
     };
     this.handleBack = this.handleBack.bind(this);
+    this.handleAssumirChamado = this.handleAssumirChamado.bind(this);
     this.handleAnswer = this.handleAnswer.bind(this);
     this.handleAlterAssunto = this.handleAlterAssunto.bind(this);
     this.handleReabrir = this.handleReabrir.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
     this.chamadoReaberto = this.chamadoReaberto.bind(this);
   }
+
+
+  componentDidMount() {
+    api("api/Resposta?formulario=" + this.state.numChamado, {})
+      .then(resp => resp.json())
+      .then(resp => this.setState({ ...resp }));
+
+    api("api/Responsavel", {})
+      .then(resp => resp.json())
+      .then(data => this.setState({
+        listaResponsavel: data
+      }));
+
+    api("api/assunto", {})
+      .then(resp => resp.json())
+      .then(data => this.setState({
+        listaAssunto: data
+      }));
+
+
+  }
+
 
   handleAnswer() {
     this.setState({ answerOpen: !this.state.answerOpen });
@@ -65,22 +91,36 @@ export class PageChamado extends Component {
     }))
 
   }
-  componentDidMount() {
-    api("api/Resposta?formulario=" + this.state.numChamado, {})
-      .then(resp => resp.json())
-      .then(resp => this.setState({ ...resp }));
 
-    api("api/assunto", {})
-      .then(resp => resp.json())
-      .then(data => this.setState({
-        listaAssunto: data
-      }));
+  handleAssumirChamado() {
 
-    api("api/Responsavel", {})
-      .then(resp => resp.json())
-      .then(data => this.setState({
-        listaResponsavel: data
-      }));
+    api("api/Responsavel/AssumirChamado", {
+      method: "post",
+      headers: { "Content-Type": "application/json;" },
+      body: JSON.stringify(this.state.numChamado)
+
+    })
+      .then(resp => {
+        if (resp.status == 200)
+          return resp.json()
+        else
+          throw resp.json();
+      })
+      .then(
+        toast.success(
+          "Confirmado"
+        )
+      )
+      .catch(
+        a => a.then(e =>
+          toast.error(
+            e.message,
+            {
+              position: toast.POSITION.TOP_CENTER
+            }
+          )
+        )
+      );
   }
 
   chamadoReaberto(a) {
@@ -201,7 +241,30 @@ export class PageChamado extends Component {
           </Col>
         </Row>
       );
+    var atribuicao;
+    if (this.state.listaResponsavel.length > 0) {
+      atribuicao = (<Can politica="Gerir Setor">
+        <Form.Group>
+          <label>Atribudo á</label>
+          <div class="input-group">
+            <Typeahead
+              labelKey={option => `${option.name}`}
+              onChange={(s) => this.setState({ selectedResponsavel: s })}
+              options={this.state.listaResponsavel}
 
+
+            />
+            <div class="input-group-prepend">
+              <Button variant="success"
+              //onClick={}
+              >
+                Atribui
+              </Button>
+            </div>
+          </div>
+        </Form.Group>
+      </Can>)
+    }
     return (
       <div className="PageChamados">
         <div className="form-group chamado">
@@ -305,30 +368,12 @@ export class PageChamado extends Component {
           <div className="form-group">
             <Row>
               <Col sm={6}>
-                <Can politica="Gerir Setor">
-                  <Form.Group>
-                    <label>Atribudo á</label>
-                    <div class="input-group">
-                      <Typeahead
-                        labelKey={option => `${option.name}`}
-                        onChange={(s) => this.setState({ selectedResponsavel: s })}
-                        options={listaResponsavel}
+                {atribuicao}
 
-                      />
-                      <div class="input-group-prepend">
-                        <Button variant="success"
-                        //onClick={}
-                        >
-                          Atribui
-                        </Button>
-                      </div>
-                    </div>
-                  </Form.Group>
-                </Can>
-                <Can politica="Gerir Setor" reverse>
+                <Can politica="Gerir Setor">
                   <Button
                     variant="outline-success"
-                  //onClick={}
+                    onClick={this.handleAssumirChamado}
                   >
                     Assumir Chamado
                   </Button>
