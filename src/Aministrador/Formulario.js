@@ -99,12 +99,12 @@ export class Formulario extends Component {
     }).then();
   }
   onDrop = acceptedFiles => {
-    console.log(acceptedFiles);
+
 
     this.setState({
       listFile: [...this.state.listFile, ...acceptedFiles]
     });
-    console.log(this.state.listFile);
+
   };
 
   handleRemoveFile(file) {

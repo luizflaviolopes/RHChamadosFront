@@ -27,7 +27,9 @@ export class PageChamado extends Component {
       listFile: [],
       fileD: {},
       listaAssunto: [],
-      selectedAssunto:null
+      selectedAssunto: {},
+      listaResponsavel: [],
+      selectedResponsavel: {}
     };
     this.handleBack = this.handleBack.bind(this);
     this.handleAnswer = this.handleAnswer.bind(this);
@@ -48,19 +50,21 @@ export class PageChamado extends Component {
   handleBack() {
     this.props.history.goBack();
   }
-handleAlterAssunto(){
+  handleAlterAssunto() {
 
-  
-  this.setState({
-    selectedAssunto:{
-      ...this.state.selectedAssunto,
-      numChamado: this.state.numChamado
-    }
-  },api("api/chamado/",{
+  let numChamado = this.state.numChamado
+  let idAssunto = this.state.selectedAssunto.id
+  // this.setState({
+  //   selectedAssunto:{
+  //     idAssunto: this.state.selectedAssunto.id,
+  //     numChamado: this.state.numChamado
+  //   }
+    console.log(idAssunto)
+  api("api/chamado/",{
     method:"post",
     headers: { "Content-Type": "application/json;" },
-      body: JSON.stringify(this.state.selectedAssunto)
-  }))
+      body: JSON.stringify(numChamado,idAssunto)
+  })
   
 }
   componentDidMount() {
@@ -68,10 +72,16 @@ handleAlterAssunto(){
       .then(resp => resp.json())
       .then(resp => this.setState({ ...resp }));
 
-      api("api/assunto",{})
+    api("api/assunto", {})
       .then(resp => resp.json())
-      .then(data=> this.setState({
+      .then(data => this.setState({
         listaAssunto: data
+      }));
+
+    api("api/Responsavel", {})
+      .then(resp => resp.json())
+      .then(data => this.setState({
+        listaResponsavel: data
       }));
   }
 
@@ -98,15 +108,10 @@ handleAlterAssunto(){
     let _this = this;
 
     let buttons;
-    let assunto= this.state.assunto;
-    console.log(assunto)
-    let itens = [
-      { Name: "Art", lastName: "Blakey" },
-      { Name: "Jimmy", lastName: "Cobb" },
-      { Name: "Elvin", lastName: "Jones" },
-      { Name: "Max", lastName: "Roach" },
-      { Name: "Tony", lastName: "Williams" }
-    ];
+    let assunto = this.state.assunto;
+    let listaResponsavel = this.state.listaResponsavel;
+
+
 
     if (this.state.status !== "Encerrado")
       buttons = (
@@ -142,7 +147,7 @@ handleAlterAssunto(){
           </Col>
           <Col sm={3} key={"b3"}>
             <Can politica="Responder Chamado">
-              <Button variant="success" onClick={this.handleAnswer}>
+              <Button variant="success" onClick={this.handleAnswer} {...this.state.alterAssunto !== true ? "disabled" : null}>
                 <FontAwesomeIcon icon="file-alt" /> Responder
               </Button>
             </Can>
@@ -268,14 +273,13 @@ handleAlterAssunto(){
                       labelKey={option => `${option.assunto}`}
                       //Colocar Atendentes /*Esta com uma variavel para teste */
                       //options={itens}
-                      onChange={(s) => this.setState({selectedAssunto: s})}
+                      onChange={(s) => this.setState({selectedAssunto: {s}})}
                       options={this.state.listaAssunto}
-                      //selected={}
                       defaultInputValue={assunto}
                       placeholder={assunto}
                     />
                     <div class="input-group-prepend">
-                      <Button variant="success" onClick={()=>this.handleAlterAssunto()}>Alterar</Button>
+                      <Button variant="success" onClick={() => this.handleAlterAssunto()}>Alterar</Button>
                     </div>
                   </div>
                 </Form.Group>
@@ -310,15 +314,17 @@ handleAlterAssunto(){
                     <label>Atribudo á</label>
                     <div class="input-group">
                       <Typeahead
-                        labelKey={option => `${option.Name}`}
-                        //Colocar Atendentes /*Esta com uma variavel para teste */
-                        options={itens}
-                      //onChange={}
+                        labelKey={option => `${option.name}`}
+                        onChange={(s) => this.setState({ selectedResponsavel: s })}
+                        options={listaResponsavel}
+
                       />
                       <div class="input-group-prepend">
                         <Button variant="success"
                         //onClick={}
-                        >Alterar</Button>
+                        >
+                          Atribui
+                        </Button>
                       </div>
                     </div>
                   </Form.Group>
@@ -333,6 +339,13 @@ handleAlterAssunto(){
                 </Can>
               </Col>
             </Row>
+          </div>
+          <div>
+            {this.state.listaResponsavel.map(function (a) {
+              return (
+                <div>{a.id}+{a.name}</div>
+              )
+            })}
           </div>
         </div>
 
