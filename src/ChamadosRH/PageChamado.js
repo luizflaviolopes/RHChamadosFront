@@ -29,7 +29,8 @@ export class PageChamado extends Component {
       listaAssunto: [],
       selectedAssunto: {},
       listaResponsavel: [],
-      selectedResponsavel: {}
+      selectedResponsavel: {},
+      assuntoEnviado:{}
     };
     this.handleBack = this.handleBack.bind(this);
     this.handleAnswer = this.handleAnswer.bind(this);
@@ -52,20 +53,29 @@ export class PageChamado extends Component {
   }
   handleAlterAssunto() {
 
-  let numChamado = this.state.numChamado
-  let idAssunto = this.state.selectedAssunto.id
-  // this.setState({
-  //   selectedAssunto:{
-  //     idAssunto: this.state.selectedAssunto.id,
-  //     numChamado: this.state.numChamado
-  //   }
-  //console.log(idAssunto)
-  api("api/chamado/",{
-    method:"post",
-    headers: { "Content-Type": "application/json;" },
-      body: JSON.stringify(numChamado,idAssunto)
-  })
+    var Assunto = this.state.selectedAssunto;
+    var chamado = this.state.numChamado;
+
+    console.log(chamado)
+
+    console.log(Assunto.id)
+
+  //  this.setState({
+  //    assuntoEnviado:{
+  //      idAssunto: this.state.selectedAssunto[0].id,
+  //      numChamado: this.state.numChamado
+  //    }},
+  //    api("api/chamado/",{
+  //     method:"post",
+  //     headers: { "Content-Type": "application/json;" },
+  //       body: JSON.stringify(this.state.assuntoEnviado)
+  //   })
+    
+  //  )
+  //  console.log(this.state.assuntoEnviado)
   
+
+   
 }
   componentDidMount() {
     api("api/Resposta?formulario=" + this.state.numChamado, {})
@@ -273,7 +283,12 @@ export class PageChamado extends Component {
                       labelKey={option => `${option.assunto}`}
                       //Colocar Atendentes /*Esta com uma variavel para teste */
                       //options={itens}
-                      onChange={(s) => this.setState({selectedAssunto: {s}})}
+                      onInputChange={
+                        (select) => 
+                        this.setState({
+                          selectedAssunto: select
+                        })}
+
                       options={this.state.listaAssunto}
                       defaultInputValue={assunto}
                       placeholder={assunto}
