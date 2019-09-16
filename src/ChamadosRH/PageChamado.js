@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "../css/PageChamado.css";
 import { Link } from "react-router-dom";
-import { Button, Col, Row, Alert, Form, InputGroup } from "react-bootstrap";
+import { Button, Col, Row, Alert, Form } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Respostas } from "./Respostas.js";
 import { ReabrirChamado } from "./ReabrirChamado";
@@ -10,9 +10,9 @@ import ModalHistorico from "./ModalHistorico.js";
 import { Anexo } from "./Anexos";
 import api from "../APIs/DataApi";
 import { Can } from "../APIs/Can";
-import { Typeahead, AsyncTypeahead } from "react-bootstrap-typeahead";
-import "react-bootstrap-typeahead/css/Typeahead.css";
 import { toast } from "react-toastify";
+import { Typeahead } from "react-bootstrap-typeahead";
+import 'react-bootstrap-typeahead/css/Typeahead.css';
 
 
 
@@ -36,6 +36,7 @@ export class PageChamado extends Component {
     };
     this.handleBack = this.handleBack.bind(this);
     this.handleAssumirChamado = this.handleAssumirChamado.bind(this);
+    this.handleAtribuirChamado = this.handleAtribuirChamado.bind(this);
     this.handleAnswer = this.handleAnswer.bind(this);
     this.handleAlterAssunto = this.handleAlterAssunto.bind(this);
     this.handleReabrir = this.handleReabrir.bind(this);
@@ -89,6 +90,44 @@ export class PageChamado extends Component {
       headers: { "Content-Type": "application/json;" },
       body: JSON.stringify(this.state.selectedAssunto)
     }))
+
+  }
+  handleAtribuirChamado() {
+
+    this.setState({
+      selectedResponsavel: {
+        ...this.state.selectedResponsavel,
+        numChamado: this.state.numChamado
+      }
+    }
+      , api("api/Responsavel/AtribuirChamado", {
+        method: "post",
+        headers: { "Content-Type": "application/json;" },
+        body: JSON.stringify(this.state.selectedResponsavel)
+      })
+        .then(resp => {
+          if (resp.status == 200)
+            return resp.json()
+          else
+            throw resp.json();
+        })
+        .then(
+          toast.success(
+            "Confirmado"
+          )
+        )
+        .catch(
+          a => a.then(e =>
+            toast.error(
+              e.message,
+              {
+                position: toast.POSITION.TOP_CENTER
+              }
+            )
+          )
+        )
+    )
+
 
   }
 
@@ -243,27 +282,34 @@ export class PageChamado extends Component {
       );
     var atribuicao;
     if (this.state.listaResponsavel.length > 0) {
-      atribuicao = (<Can politica="Gerir Setor">
-        <Form.Group>
-          <label>Atribudo á</label>
-          <div class="input-group">
-            <Typeahead
-              labelKey={option => `${option.name}`}
-              onChange={(s) => this.setState({ selectedResponsavel: s })}
-              options={this.state.listaResponsavel}
-
-
-            />
-            <div class="input-group-prepend">
-              <Button variant="success"
-              //onClick={}
-              >
-                Atribui
-              </Button>
-            </div>
-          </div>
-        </Form.Group>
-      </Can>)
+      atribuicao = (
+        <Can politica="Gerir Setor">
+          <Form.Group>
+            <Form.Label>
+              Atribuir Chamado
+            </Form.Label>
+            <Row>
+              <Col sm="9">
+                <Typeahead
+                  onChange={
+                    (evt) =>
+                      this.setState({
+                        selectedResponsavel: evt
+                      })
+                  }
+                  options={this.state.listaResponsavel}
+                  labelKey={option =>
+                    `${option.name}`}
+                />
+              </Col>
+              <Col sm="3">
+                <Button
+                  onClick={this.handleAtribuirChamado}
+                  variant="success">Atribuir à</Button>
+              </Col>
+            </Row>
+          </Form.Group>
+        </Can>)
     }
     return (
       <div className="PageChamados">
@@ -328,19 +374,31 @@ export class PageChamado extends Component {
               </Col>
               <Col sm={4}>
                 <Form.Group>
-                  <label>Assunto</label>
-                  <div class="input-group">
-                    <Typeahead
-                      labelKey={option => `${option.assunto}`}
-                      onChange={(s) => this.setState({ selectedAssunto: s })}
-                      options={this.state.listaAssunto}
-                      defaultInputValue={assunto}
+                  <Form.Label>
+                    Assunto
+                  </Form.Label>
+                  <Row>
+                    <Col sm="9">
+                      <Typeahead
+                        onChange={
+                          (evt) =>
+                            this.setState({
+                              selectedAssunto: evt
+                            })
+                        }
+                        options={this.state.listaAssunto}
+                        labelKey={option =>
+                          `${option.assunto}`}
+                      />
+                    </Col>
+                    <Col sm="3">
+                      <Button
+                        onClick={this.handleAlterAssunto}
+                        variant="success">Alterar</Button>
+                    </Col>
+                  </Row>
 
-                    />
-                    <div class="input-group-prepend">
-                      <Button variant="success" onClick={() => this.handleAlterAssunto()}>Alterar</Button>
-                    </div>
-                  </div>
+
                 </Form.Group>
               </Col>
               <Col sm={4}>
