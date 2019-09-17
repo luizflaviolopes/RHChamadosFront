@@ -81,25 +81,33 @@ export class PageChamado extends Component {
   handleAlterAssunto() {
 
    
-      api("api/chamado/",{
-       method:"post",
-       headers: { "Content-Type": "application/json;" },
-         body: JSON.stringify(this.state.selectedAssunto)
-     })
-   
-    
-  
-
-    this.setState({
-      selectedAssunto: {
-        ...this.state.selectedAssunto,
-        numChamado: this.state.numChamado
-      }
-    }, api("api/chamado/", {
+    api("api/chamado", {
       method: "post",
       headers: { "Content-Type": "application/json;" },
       body: JSON.stringify(this.state.selectedAssunto)
-    }))
+    })
+    .then(resp => {
+        if (resp.status == 200)
+          return resp.json()
+        else
+          throw resp.json();
+      })
+      .then(a =>
+        toast.success(
+          "Confirmado"
+        )
+      )
+      .catch(
+        a => a.then(e =>
+          toast.error(
+            e.message,
+            {
+              position: toast.POSITION.TOP_CENTER
+            }
+          )
+        )
+
+      )
 
   }
   handleAtribuirChamado() {
@@ -294,6 +302,13 @@ export class PageChamado extends Component {
             </Form.Label>
             <Row>
               <Col sm="9">
+
+
+
+
+
+
+
                 <Typeahead
                   onChange={
                     (evt) =>
@@ -389,16 +404,34 @@ export class PageChamado extends Component {
                   </Form.Label>
                   <Row>
                     <Col sm="9">
+
+
+
+
+
+
+
+
+
+
+
+
+
                       <Typeahead
                         onChange={
                           (evt) =>
                             this.setState({
-                              selectedAssunto: evt
+                              selectedAssunto: {
+                                id: evt[0].id,
+                                assunto: evt[0].assunto,
+                                numChamado: this.state.numChamado
+                              }
                             })
                         }
                         options={this.state.listaAssunto}
                         labelKey={option =>
                           `${option.assunto}`}
+                          defaultInputValue={this.state.assunto}
                       />
                     </Col>
                     <Col sm="3">
