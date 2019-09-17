@@ -94,39 +94,33 @@ export class PageChamado extends Component {
   }
   handleAtribuirChamado() {
 
-    this.setState({
-      selectedResponsavel: {
-        ...this.state.selectedResponsavel,
-        numChamado: this.state.numChamado
-      }
-    }
-      , api("api/Responsavel/AtribuirChamado", {
-        method: "post",
-        headers: { "Content-Type": "application/json;" },
-        body: JSON.stringify(this.state.selectedResponsavel)
+    api("api/Responsavel/AtribuirChamado", {
+      method: "post",
+      headers: { "Content-Type": "application/json;" },
+      body: JSON.stringify(this.state.selectedResponsavel)
+    })
+      .then(resp => {
+        if (resp.status == 200)
+          return resp.json()
+        else
+          throw resp.json();
       })
-        .then(resp => {
-          if (resp.status == 200)
-            return resp.json()
-          else
-            throw resp.json();
-        })
-        .then(
-          toast.success(
-            "Confirmado"
+      .then(
+        toast.success(
+          "Confirmado"
+        )
+      )
+      .catch(
+        a => a.then(e =>
+          toast.error(
+            e.message,
+            {
+              position: toast.POSITION.TOP_CENTER
+            }
           )
         )
-        .catch(
-          a => a.then(e =>
-            toast.error(
-              e.message,
-              {
-                position: toast.POSITION.TOP_CENTER
-              }
-            )
-          )
-        )
-    )
+
+      )
 
 
   }
@@ -294,7 +288,11 @@ export class PageChamado extends Component {
                   onChange={
                     (evt) =>
                       this.setState({
-                        selectedResponsavel: evt
+                        selectedResponsavel: {
+                          id: evt[0].id,
+                          name: evt[0].name,
+                          numChamado: this.state.numChamado
+                        }
                       })
                   }
                   options={this.state.listaResponsavel}
