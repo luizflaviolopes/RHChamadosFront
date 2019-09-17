@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "../css/PageChamado.css";
 import { Link } from "react-router-dom";
-import { Button, Col, Row, Alert, Form, InputGroup } from "react-bootstrap";
+import { Button, Col, Row, Alert, Form } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Respostas } from "./Respostas.js";
 import { ReabrirChamado } from "./ReabrirChamado";
@@ -10,8 +10,11 @@ import ModalHistorico from "./ModalHistorico.js";
 import { Anexo } from "./Anexos";
 import api from "../APIs/DataApi";
 import { Can } from "../APIs/Can";
+import { toast } from "react-toastify";
 import { Typeahead } from "react-bootstrap-typeahead";
-import "react-bootstrap-typeahead/css/Typeahead.css";
+import 'react-bootstrap-typeahead/css/Typeahead.css';
+
+
 
 export class PageChamado extends Component {
   constructor(props) {
@@ -33,12 +36,36 @@ export class PageChamado extends Component {
       assuntoEnviado:{}
     };
     this.handleBack = this.handleBack.bind(this);
+    this.handleAssumirChamado = this.handleAssumirChamado.bind(this);
+    this.handleAtribuirChamado = this.handleAtribuirChamado.bind(this);
     this.handleAnswer = this.handleAnswer.bind(this);
     this.handleAlterAssunto = this.handleAlterAssunto.bind(this);
     this.handleReabrir = this.handleReabrir.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
     this.chamadoReaberto = this.chamadoReaberto.bind(this);
   }
+
+
+  componentDidMount() {
+    api("api/Resposta?formulario=" + this.state.numChamado, {})
+      .then(resp => resp.json())
+      .then(resp => this.setState({ ...resp }));
+
+    api("api/Responsavel", {})
+      .then(resp => resp.json())
+      .then(data => this.setState({
+        listaResponsavel: data
+      }));
+
+    api("api/assunto", {})
+      .then(resp => resp.json())
+      .then(data => this.setState({
+        listaAssunto: data
+      }));
+
+
+  }
+
 
   handleAnswer() {
     this.setState({ answerOpen: !this.state.answerOpen });
@@ -63,24 +90,80 @@ export class PageChamado extends Component {
     
   
 
-   
-}
-  componentDidMount() {
-    api("api/Resposta?formulario=" + this.state.numChamado, {})
-      .then(resp => resp.json())
-      .then(resp => this.setState({ ...resp }));
+    this.setState({
+      selectedAssunto: {
+        ...this.state.selectedAssunto,
+        numChamado: this.state.numChamado
+      }
+    }, api("api/chamado/", {
+      method: "post",
+      headers: { "Content-Type": "application/json;" },
+      body: JSON.stringify(this.state.selectedAssunto)
+    }))
 
-    api("api/assunto", {})
-      .then(resp => resp.json())
-      .then(data => this.setState({
-        listaAssunto: data
-      }));
+  }
+  handleAtribuirChamado() {
 
-    api("api/Responsavel", {})
-      .then(resp => resp.json())
-      .then(data => this.setState({
-        listaResponsavel: data
-      }));
+    api("api/Responsavel/AtribuirChamado", {
+      method: "post",
+      headers: { "Content-Type": "application/json;" },
+      body: JSON.stringify(this.state.selectedResponsavel)
+    })
+      .then(resp => {
+        if (resp.status == 200)
+          return resp.json()
+        else
+          throw resp.json();
+      })
+      .then(a =>
+        toast.success(
+          "Confirmado"
+        )
+      )
+      .catch(
+        a => a.then(e =>
+          toast.error(
+            e.message,
+            {
+              position: toast.POSITION.TOP_CENTER
+            }
+          )
+        )
+
+      )
+
+
+  }
+
+  handleAssumirChamado() {
+
+    api("api/Responsavel/AssumirChamado", {
+      method: "post",
+      headers: { "Content-Type": "application/json;" },
+      body: JSON.stringify(this.state.numChamado)
+
+    })
+      .then(resp => {
+        if (resp.status == 200)
+          return resp.json()
+        else
+          throw resp.json();
+      })
+      .then(a =>
+        toast.success(
+          "Confirmado"
+        )
+      )
+      .catch(
+        a => a.then(e =>
+          toast.error(
+            e.message,
+            {
+              position: toast.POSITION.TOP_CENTER
+            }
+          )
+        )
+      );
   }
 
   chamadoReaberto(a) {
@@ -107,7 +190,7 @@ export class PageChamado extends Component {
 
     let buttons;
     let assunto = this.state.assunto;
-    let listaResponsavel = this.state.listaResponsavel;
+    let Responsavel = this.state.atendenteResponsavel;
 
 
 
@@ -201,7 +284,43 @@ export class PageChamado extends Component {
           </Col>
         </Row>
       );
-
+    var atribuicao;
+    if (this.state.listaResponsavel.length > 0) {
+      atribuicao = (
+        <Can politica="Gerir Setor">
+          <Form.Group>
+            <Form.Label>
+              Atribuir Chamado
+            </Form.Label>
+            <Row>
+              <Col sm="9">
+                <Typeahead
+                  onChange={
+                    (evt) =>
+                      this.setState({
+                        selectedResponsavel: {
+                          id: evt[0].id,
+                          name: evt[0].name,
+                          numChamado: this.state.numChamado
+                        }
+                      })
+                  }
+                  options={this.state.listaResponsavel}
+                  labelKey={option =>
+                    `${option.name}`
+                  }
+                  defaultInputValue={Responsavel}
+                />
+              </Col>
+              <Col sm="3">
+                <Button
+                  onClick={this.handleAtribuirChamado}
+                  variant="success">Atribuir à</Button>
+              </Col>
+            </Row>
+          </Form.Group>
+        </Can>)
+    }
     return (
       <div className="PageChamados">
         <div className="form-group chamado">
@@ -265,32 +384,31 @@ export class PageChamado extends Component {
               </Col>
               <Col sm={4}>
                 <Form.Group>
-                  <label>Assunto</label>
-                  <div class="input-group">
-                    <Typeahead
-                      labelKey={option => `${option.assunto}`}
-                      //Colocar Atendentes /*Esta com uma variavel para teste */
-                      //options={itens}
-                      onChange={
-                        (select) => 
-                        this.setState({
-                          selectedAssunto: {
-                            id: select[0].id,
-                            assunto: select[0].assunto,
-                            HierarquiaAssunto: select[0].HierarquiaAssunto,
-                            numChamado: this.state.numChamado
-                          
-                          }
-                        })}
+                  <Form.Label>
+                    Assunto
+                  </Form.Label>
+                  <Row>
+                    <Col sm="9">
+                      <Typeahead
+                        onChange={
+                          (evt) =>
+                            this.setState({
+                              selectedAssunto: evt
+                            })
+                        }
+                        options={this.state.listaAssunto}
+                        labelKey={option =>
+                          `${option.assunto}`}
+                      />
+                    </Col>
+                    <Col sm="3">
+                      <Button
+                        onClick={this.handleAlterAssunto}
+                        variant="success">Alterar</Button>
+                    </Col>
+                  </Row>
 
-                      options={this.state.listaAssunto}
-                      defaultInputValue={assunto}
-                      placeholder={assunto}
-                    />
-                    <div class="input-group-prepend">
-                      <Button variant="success" onClick={() => this.handleAlterAssunto()}>Alterar</Button>
-                    </div>
-                  </div>
+
                 </Form.Group>
               </Col>
               <Col sm={4}>
@@ -318,30 +436,12 @@ export class PageChamado extends Component {
           <div className="form-group">
             <Row>
               <Col sm={6}>
-                <Can politica="Gerir Setor">
-                  <Form.Group>
-                    <label>Atribudo á</label>
-                    <div class="input-group">
-                      <Typeahead
-                        labelKey={option => `${option.name}`}
-                        onChange={(s) => this.setState({ selectedResponsavel: s })}
-                        options={listaResponsavel}
+                {atribuicao}
 
-                      />
-                      <div class="input-group-prepend">
-                        <Button variant="success"
-                        //onClick={}
-                        >
-                          Atribui
-                        </Button>
-                      </div>
-                    </div>
-                  </Form.Group>
-                </Can>
                 <Can politica="Gerir Setor" reverse>
                   <Button
                     variant="outline-success"
-                  //onClick={}
+                    onClick={this.handleAssumirChamado}
                   >
                     Assumir Chamado
                   </Button>
@@ -349,13 +449,7 @@ export class PageChamado extends Component {
               </Col>
             </Row>
           </div>
-          <div>
-            {this.state.listaResponsavel.map(function (a) {
-              return (
-                <div>{a.id}+{a.name}</div>
-              )
-            })}
-          </div>
+
         </div>
 
         <div className="anexo row">
