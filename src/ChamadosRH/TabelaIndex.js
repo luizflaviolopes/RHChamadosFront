@@ -231,6 +231,7 @@ class TabelaIndex extends Component {
                     anexoFile={_this.handleFile}
                     justificativa={a.justificativa}
                     IsAutenticado={a.IsAutenticado}
+                    atendenteResponsavel={a.atendenteResponsavel}
                   />
                 );
               })}

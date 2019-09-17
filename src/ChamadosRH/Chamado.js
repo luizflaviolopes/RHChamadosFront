@@ -21,7 +21,8 @@ class Chamado extends Component {
       prioridade: props.prioridade,
       mc: props.mc,
       prazo: props.prazo,
-      justificativa: props.justificativa
+      justificativa: props.justificativa,
+      atendenteResponsavel: props.atendenteResponsavel
     };
     this.OnclickHande = this.OnclickHande.bind(this);
   }
@@ -41,7 +42,8 @@ class Chamado extends Component {
       prioridade: nextProps.prioridade,
       mc: nextProps.mc,
       prazo: nextProps.prazo,
-      justificativa: nextProps.justificativa
+      justificativa: nextProps.justificativa,
+      atendenteResponsavel: nextProps.atendenteResponsavel
     });
   }
   OnclickHande() {

@@ -105,7 +105,7 @@ export class PageChamado extends Component {
         else
           throw resp.json();
       })
-      .then(
+      .then(a =>
         toast.success(
           "Confirmado"
         )
@@ -139,7 +139,7 @@ export class PageChamado extends Component {
         else
           throw resp.json();
       })
-      .then(
+      .then(a =>
         toast.success(
           "Confirmado"
         )
@@ -180,7 +180,7 @@ export class PageChamado extends Component {
 
     let buttons;
     let assunto = this.state.assunto;
-    let listaResponsavel = this.state.listaResponsavel;
+    let Responsavel = this.state.atendenteResponsavel;
 
 
 
@@ -297,7 +297,9 @@ export class PageChamado extends Component {
                   }
                   options={this.state.listaResponsavel}
                   labelKey={option =>
-                    `${option.name}`}
+                    `${option.name}`
+                  }
+                  defaultInputValue={Responsavel}
                 />
               </Col>
               <Col sm="3">
@@ -426,7 +428,7 @@ export class PageChamado extends Component {
               <Col sm={6}>
                 {atribuicao}
 
-                <Can politica="Gerir Setor">
+                <Can politica="Gerir Setor" reverse>
                   <Button
                     variant="outline-success"
                     onClick={this.handleAssumirChamado}
@@ -437,13 +439,7 @@ export class PageChamado extends Component {
               </Col>
             </Row>
           </div>
-          <div>
-            {this.state.listaResponsavel.map(function (a) {
-              return (
-                <div>{a.id}+{a.name}</div>
-              )
-            })}
-          </div>
+
         </div>
 
         <div className="anexo row">
