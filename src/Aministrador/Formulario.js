@@ -6,7 +6,8 @@ import { Link } from "react-router-dom";
 import { Anexos } from "../ChamadosRH/Anexos";
 import Dropzone from "react-dropzone";
 import api from "../APIs/DataApi";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
+import { Typeahead } from "react-bootstrap-typeahead";
 
 export class Formulario extends Component {
   constructor(props) {
@@ -28,43 +29,30 @@ export class Formulario extends Component {
     const _this = this;
 
     if (this.state.newChamado !== undefined) {
-      Object.keys(this.state.newChamado).forEach(function (a, i) {
+      Object.keys(this.state.newChamado).forEach(function(a, i) {
         if (a !== undefined) formData.append(a, _this.state.newChamado[a]);
       });
 
-      this.state.listFile.forEach(function (j, r) {
+      this.state.listFile.forEach(function(j, r) {
         formData.append("file" + r, j);
       });
 
       api("api/NovoChamado", {
         method: "post",
         body: formData
-      }).then(
-        resp => {
-          if (resp.status == 200)
-            return resp.json()
-          else
-            throw resp.json();
+      })
+        .then(resp => {
+          if (resp.status == 200) return resp.json();
+          else throw resp.json();
         })
-        .then(data =>
-          toast.success(
-            data.message
-          )
-        )
-        .catch(
-          a => a.then(e =>
-            Object.keys(e).forEach(
-              function (a, i) {
-                toast.error(
-                  e[a],
-                  {
-                    position: toast.POSITION.TOP_CENTER
-                  }
-                )
-
-              }
-            )
-
+        .then(data => toast.success(data.message))
+        .catch(a =>
+          a.then(e =>
+            Object.keys(e).forEach(function(a, i) {
+              toast.error(e[a], {
+                position: toast.POSITION.TOP_CENTER
+              });
+            })
           )
         );
 
@@ -79,9 +67,9 @@ export class Formulario extends Component {
   }
 
   openModal() {
-    api("api/NovoChamado", {})
+    api("api/Assunto", {})
       .then(response => response.json())
-      .then(data => this.setState({ assuntos: data.assuntos }));
+      .then(data => this.setState({ assuntos: data }));
   }
 
   handleFile() {
@@ -99,12 +87,9 @@ export class Formulario extends Component {
     }).then();
   }
   onDrop = acceptedFiles => {
-
-
     this.setState({
       listFile: [...this.state.listFile, ...acceptedFiles]
     });
-
   };
 
   handleRemoveFile(file) {
@@ -140,7 +125,6 @@ export class Formulario extends Component {
         </Modal.Header>
         <Modal.Body>
           <Form>
-
             <Form.Group>
               <Form.Label>E-Mail</Form.Label>
               <Form.Control
@@ -156,41 +140,36 @@ export class Formulario extends Component {
                 }
               />
             </Form.Group>
-            <Form.Group as={Row}>
-              <Col sm="6">
-                <Form.Label>Assunto</Form.Label>
-                <Form.Control
-                  as="select"
-                  onChange={evt =>
-                    this.setState({
-                      newChamado: {
-                        ...this.state.newChamado,
-                        Assunto: evt.target.value
-                      }
-                    })
-                  }
-                >
-                  <option value="0">Selecione um Assunto</option>;
-                  {this.state.assuntos.map(function (a, i) {
-                    return <option value={a.id}>{a.value}</option>;
-                  })}
-                </Form.Control>
-              </Col>
-              <Col sm="6">
-                <Form.Label>Telefone</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="(00) 0 0000-0000"
-                  onChange={evt =>
-                    this.setState({
-                      newChamado: {
-                        ...this.state.newChamado,
-                        Telefone: evt.target.value
-                      }
-                    })
-                  }
-                />
-              </Col>
+            <Form.Group>
+              <Form.Label>Assunto</Form.Label>
+
+              <Typeahead
+                onChange={evt =>
+                  this.setState({
+                    newChamado: {
+                      ...this.state.newChamado,
+                      Assunto: evt[0].id
+                    }
+                  })
+                }
+                options={this.state.assuntos}
+                labelKey={option => `${option.assunto}`}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Telefone</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="(00) 0 0000-0000"
+                onChange={evt =>
+                  this.setState({
+                    newChamado: {
+                      ...this.state.newChamado,
+                      Telefone: evt.target.value
+                    }
+                  })
+                }
+              />
             </Form.Group>
             <Form.Group>
               <Form.Label>Descrição</Form.Label>
@@ -219,7 +198,7 @@ export class Formulario extends Component {
 
                 <div className="anexo">
                   <Row>
-                    {this.state.listFile.map(function (a, i) {
+                    {this.state.listFile.map(function(a, i) {
                       return (
                         <Anexos
                           nome={a.name}
