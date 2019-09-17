@@ -53,26 +53,14 @@ export class PageChamado extends Component {
   }
   handleAlterAssunto() {
 
-    var Assunto = this.state.selectedAssunto;
-    var chamado = this.state.numChamado;
-
-    console.log(chamado)
-
-    console.log(Assunto.id)
-
-  //  this.setState({
-  //    assuntoEnviado:{
-  //      idAssunto: this.state.selectedAssunto[0].id,
-  //      numChamado: this.state.numChamado
-  //    }},
-  //    api("api/chamado/",{
-  //     method:"post",
-  //     headers: { "Content-Type": "application/json;" },
-  //       body: JSON.stringify(this.state.assuntoEnviado)
-  //   })
+   
+      api("api/chamado/",{
+       method:"post",
+       headers: { "Content-Type": "application/json;" },
+         body: JSON.stringify(this.state.selectedAssunto)
+     })
+   
     
-  //  )
-  //  console.log(this.state.assuntoEnviado)
   
 
    
@@ -283,10 +271,16 @@ export class PageChamado extends Component {
                       labelKey={option => `${option.assunto}`}
                       //Colocar Atendentes /*Esta com uma variavel para teste */
                       //options={itens}
-                      onInputChange={
+                      onChange={
                         (select) => 
                         this.setState({
-                          selectedAssunto: select
+                          selectedAssunto: {
+                            id: select[0].id,
+                            assunto: select[0].assunto,
+                            HierarquiaAssunto: select[0].HierarquiaAssunto,
+                            numChamado: this.state.numChamado
+                          
+                          }
                         })}
 
                       options={this.state.listaAssunto}
