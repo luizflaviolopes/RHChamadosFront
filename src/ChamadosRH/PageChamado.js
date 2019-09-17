@@ -77,11 +77,23 @@ export class PageChamado extends Component {
     this.props.history.goBack();
   }
   handleAlterAssunto() {
-    api("api/chamado/", {
+    api("api/chamado", {
       method: "post",
       headers: { "Content-Type": "application/json;" },
       body: JSON.stringify(this.state.selectedAssunto)
-    });
+    })
+      .then(resp => {
+        if (resp.status == 200) return resp.json();
+        else throw resp.json();
+      })
+      .then(a => toast.success("Confirmado"))
+      .catch(a =>
+        a.then(e =>
+          toast.error(e.message, {
+            position: toast.POSITION.TOP_CENTER
+          })
+        )
+      );
 
     this.setState(
       {
@@ -351,12 +363,43 @@ export class PageChamado extends Component {
                 </label>
                 {this.state.setor}
               </Col>
-
               <Col sm={4}>
-                <label>
-                  <span>Data de Abertura: </span>
-                </label>
-                {this.state.data}
+                <Form.Group>
+                  <Form.Label>Assunto</Form.Label>
+                  <Row>
+                    <Col sm="9">
+                      <Typeahead
+                        onChange={evt =>
+                          this.setState({
+                            selectedAssunto: {
+                              id: evt[0].id,
+                              assunto: evt[0].assunto,
+                              numChamado: this.state.numChamado
+                            }
+                          })
+                        }
+                        options={this.state.listaAssunto}
+                        labelKey={option => `${option.assunto}`}
+                        defaultInputValue={this.state.assunto}
+                      />
+                    </Col>
+                    <Col sm="3">
+                      <Button
+                        onClick={this.handleAlterAssunto}
+                        variant="success"
+                      >
+                        Alterar
+                      </Button>
+                    </Col>
+                  </Row>
+
+                  <Col sm={4}>
+                    <label>
+                      <span>Data de Abertura: </span>
+                    </label>
+                    {this.state.data}
+                  </Col>
+                </Form.Group>
               </Col>
             </Row>
           </div>
@@ -401,7 +444,6 @@ export class PageChamado extends Component {
             <Row>
               <Col sm={6}>
                 {atribuicao}
-
                 <Can politica="Gerir Setor" reverse>
                   <Button
                     variant="outline-success"
@@ -414,7 +456,6 @@ export class PageChamado extends Component {
             </Row>
           </div>
         </div>
-
         <div className="anexo row">
           {this.state.listFile.map(function(a, i) {
             return (
