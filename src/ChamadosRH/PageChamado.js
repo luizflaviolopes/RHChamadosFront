@@ -94,20 +94,6 @@ export class PageChamado extends Component {
           })
         )
       );
-
-    this.setState(
-      {
-        selectedAssunto: {
-          ...this.state.selectedAssunto,
-          numChamado: this.state.numChamado
-        }
-      },
-      api("api/chamado/", {
-        method: "post",
-        headers: { "Content-Type": "application/json;" },
-        body: JSON.stringify(this.state.selectedAssunto)
-      })
-    );
   }
   handleAtribuirChamado() {
     api("api/Responsavel/AtribuirChamado", {
@@ -382,11 +368,16 @@ export class PageChamado extends Component {
                 <Typeahead
                   onChange={evt =>
                     this.setState({
-                      selectedAssunto: evt
+                      selectedAssunto: {
+                        id: evt[0].id,
+                        assunto: evt[0].assunto,
+                        numChamado: this.state.numChamado
+                      }
                     })
                   }
                   options={this.state.listaAssunto}
                   labelKey={option => `${option.assunto}`}
+                  defaultInputValue={this.state.assunto}
                 />
               </Col>
               <Col sm="1">
