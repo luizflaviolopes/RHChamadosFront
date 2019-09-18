@@ -365,40 +365,10 @@ export class PageChamado extends Component {
               </Col>
               <Col sm={4}>
                 <Form.Group>
-                  <Form.Label>Assunto</Form.Label>
-                  <Row>
-                    <Col sm="9">
-                      <Typeahead
-                        onChange={evt =>
-                          this.setState({
-                            selectedAssunto: {
-                              id: evt[0].id,
-                              assunto: evt[0].assunto,
-                              numChamado: this.state.numChamado
-                            }
-                          })
-                        }
-                        options={this.state.listaAssunto}
-                        labelKey={option => `${option.assunto}`}
-                        defaultInputValue={this.state.assunto}
-                      />
-                    </Col>
-                    <Col sm="3">
-                      <Button
-                        onClick={this.handleAlterAssunto}
-                        variant="success"
-                      >
-                        Alterar
-                      </Button>
-                    </Col>
-                  </Row>
-
-                  <Col sm={4}>
-                    <label>
-                      <span>Data de Abertura: </span>
-                    </label>
-                    {this.state.data}
-                  </Col>
+                  <label>
+                    <span>Data de Abertura: </span>
+                  </label>
+                  {this.state.data}
                 </Form.Group>
               </Col>
             </Row>
@@ -457,7 +427,7 @@ export class PageChamado extends Component {
           </div>
         </div>
         <div className="anexo row">
-          {this.state.listFile.map(function(a, i) {
+          {this.state.listFile.map(function (a, i) {
             return (
               <Anexo
                 nome={a.textAnexo}
@@ -469,7 +439,7 @@ export class PageChamado extends Component {
           })}
         </div>
 
-        {this.state.answered.map(function(a, i) {
+        {this.state.answered.map(function (a, i) {
           return (
             <div className="form-group">
               <Alert variant="dark">
