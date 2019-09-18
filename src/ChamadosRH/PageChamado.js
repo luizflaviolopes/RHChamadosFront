@@ -255,6 +255,40 @@ export class PageChamado extends Component {
           </Col>
         </Row>
       );
+    var Assuntos;
+    if (this.state.listaAssunto.length > 0) {
+
+      Assuntos = (
+        <Can politica="Alterar Assunto">
+          <Col sm="10">
+            <Typeahead
+              onChange={evt =>
+                this.setState({
+                  selectedAssunto: {
+                    id: evt[0].id,
+                    assunto: evt[0].assunto,
+                    numChamado: this.state.numChamado
+                  }
+                })
+              }
+              options={this.state.listaAssunto}
+              labelKey={option => `${option.assunto}`}
+              defaultInputValue={this.state.assunto}
+            />
+          </Col>
+          <Col sm="1">
+            <Button onClick={this.handleAlterAssunto} variant="success">
+              Alterar
+                  </Button>
+          </Col>
+        </Can>
+
+
+      )
+    }
+
+
+
     var atribuicao;
     if (this.state.listaResponsavel.length > 0) {
       atribuicao = (
@@ -362,29 +396,7 @@ export class PageChamado extends Component {
           <Form.Group>
             <Row>
 
-              <Can politica="Alterar Assunto">
-                <Col sm="10">
-                  <Typeahead
-                    onChange={evt =>
-                      this.setState({
-                        selectedAssunto: {
-                          id: evt[0].id,
-                          assunto: evt[0].assunto,
-                          numChamado: this.state.numChamado
-                        }
-                      })
-                    }
-                    options={this.state.listaAssunto}
-                    labelKey={option => `${option.assunto}`}
-                    defaultInputValue={this.state.assunto}
-                  />
-                </Col>
-                <Col sm="1">
-                  <Button onClick={this.handleAlterAssunto} variant="success">
-                    Alterar
-                  </Button>
-                </Col>
-              </Can>
+              {Assuntos}
               <Can politica="Alterar Assunto" reverse>
                 <Col sm="1">
                   <Form.Label>Assunto</Form.Label>
