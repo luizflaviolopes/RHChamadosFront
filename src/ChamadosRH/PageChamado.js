@@ -361,30 +361,38 @@ export class PageChamado extends Component {
           </div>
           <Form.Group>
             <Row>
-              <Col sm="1">
-                <Form.Label>Assunto</Form.Label>
-              </Col>
-              <Col sm="10">
-                <Typeahead
-                  onChange={evt =>
-                    this.setState({
-                      selectedAssunto: {
-                        id: evt[0].id,
-                        assunto: evt[0].assunto,
-                        numChamado: this.state.numChamado
-                      }
-                    })
-                  }
-                  options={this.state.listaAssunto}
-                  labelKey={option => `${option.assunto}`}
-                  defaultInputValue={this.state.assunto}
-                />
-              </Col>
-              <Col sm="1">
-                <Button onClick={this.handleAlterAssunto} variant="success">
-                  Alterar
-                </Button>
-              </Col>
+
+              <Can politica="Alterar Assunto">
+                <Col sm="10">
+                  <Typeahead
+                    onChange={evt =>
+                      this.setState({
+                        selectedAssunto: {
+                          id: evt[0].id,
+                          assunto: evt[0].assunto,
+                          numChamado: this.state.numChamado
+                        }
+                      })
+                    }
+                    options={this.state.listaAssunto}
+                    labelKey={option => `${option.assunto}`}
+                    defaultInputValue={this.state.assunto}
+                  />
+                </Col>
+                <Col sm="1">
+                  <Button onClick={this.handleAlterAssunto} variant="success">
+                    Alterar
+                  </Button>
+                </Col>
+              </Can>
+              <Can politica="Alterar Assunto" reverse>
+                <Col sm="1">
+                  <Form.Label>Assunto</Form.Label>
+                </Col>
+                <Col sm="11">
+                  {this.state.assunto}
+                </Col>
+              </Can>
             </Row>
           </Form.Group>
           <div className="form-group">
@@ -430,23 +438,25 @@ export class PageChamado extends Component {
           })}
         </div>
 
-        {this.state.answered.map(function (a, i) {
-          return (
-            <div className="form-group">
-              <Alert variant="dark">
-                <label>
-                  <span>Resposta</span>
-                </label>
-                <p>
-                  {a.respostaAutomatica !== null
-                    ? a.respostaAutomatica
-                    : a.resposta}
-                  <p>{a.horaResposta}</p>
-                </p>
-              </Alert>
-            </div>
-          );
-        })}
+        {
+          this.state.answered.map(function (a, i) {
+            return (
+              <div className="form-group">
+                <Alert variant="dark">
+                  <label>
+                    <span>Resposta</span>
+                  </label>
+                  <p>
+                    {a.respostaAutomatica !== null
+                      ? a.respostaAutomatica
+                      : a.resposta}
+                    <p>{a.horaResposta}</p>
+                  </p>
+                </Alert>
+              </div>
+            );
+          })
+        }
 
         <div className="form-group">
           {buttons}
@@ -463,7 +473,7 @@ export class PageChamado extends Component {
             />
           ) : null}
         </div>
-      </div>
+      </div >
     );
   }
 }
