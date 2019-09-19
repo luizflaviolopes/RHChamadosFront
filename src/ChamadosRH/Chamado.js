@@ -61,11 +61,16 @@ class Chamado extends Component {
     }
 
     return (
-      <tr onClick={this.OnclickHande} {...this.props.IsAutenticado == true ? ('className = "autenticado"') : null}>
+      <tr
+        onClick={this.OnclickHande}
+        {...(this.props.IsAutenticado == true
+          ? 'className = "autenticado"'
+          : null)}
+      >
         <td title={this.state.numChamado}>{this.state.numChamado}</td>
         <td title={this.state.solicitante}>{this.state.solicitante}</td>
         <td title={this.state.masp}>
-          {this.state.masp !== null ? this.state.masp : this.state.cpf}
+          {this.state.masp !== null ? this.state.cpf : this.state.masp}
         </td>
         <td title={this.state.assunto}>{this.state.assunto}</td>
         <td title={this.state.data}>{this.state.data}</td>
