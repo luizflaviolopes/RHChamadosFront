@@ -69,8 +69,8 @@ class Chamado extends Component {
       >
         <td title={this.state.numChamado}>{this.state.numChamado}</td>
         <td title={this.state.solicitante}>{this.state.solicitante}</td>
-        <td title={this.state.masp}>
-          {this.state.masp !== null ? this.state.cpf : this.state.masp}
+        <td title={this.state.cpf}>
+          {this.state.cpf !== null ? this.state.cpf : this.state.masp}
         </td>
         <td title={this.state.assunto}>{this.state.assunto}</td>
         <td title={this.state.data}>{this.state.data}</td>
