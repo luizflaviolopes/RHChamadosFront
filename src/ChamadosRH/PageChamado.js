@@ -262,15 +262,13 @@ export class PageChamado extends Component {
         <Can politica="Alterar Assunto">
           <Col sm="10">
             <Typeahead
-              onChange={evt =>
-                this.setState({
-                  selectedAssunto: {
-                    id: evt[0].id,
-                    assunto: evt[0].assunto,
-                    numChamado: this.state.numChamado
-                  }
-                })
-              }
+              onChange={
+                (evt) =>{
+                  if(evt.length !== 0)
+                    this.setState({ selectedAssunto: {id: evt[0].id,assunto: evt[0].assunto, numChamado: this.state.numChamado} })
+                }
+}
+              
               options={this.state.listaAssunto}
               labelKey={option => `${option.assunto}`}
               defaultInputValue={this.state.assunto}
