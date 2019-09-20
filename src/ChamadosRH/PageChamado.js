@@ -279,7 +279,7 @@ export class PageChamado extends Component {
           <Col sm="1">
             <Button onClick={this.handleAlterAssunto} variant="success">
               Alterar
-                  </Button>
+            </Button>
           </Col>
         </Can>
 
