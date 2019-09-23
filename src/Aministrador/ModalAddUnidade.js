@@ -67,7 +67,7 @@ export class ModalAddUnidade extends Component {
     return (
       <Modal size="lg" show={this.state.show} onHide={() => this.props.close()}>
         <Modal.Header closeButton>
-          <Modal.Title id="newUnidade">Novo Atendente</Modal.Title>
+          <Modal.Title id="newUnidade">Novo Setor</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form

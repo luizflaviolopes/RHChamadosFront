@@ -118,7 +118,7 @@ export class ModalVinculoUni extends Component {
     return (
       <Modal size="lg" show={this.props.show} onHide={() => this.props.close()}>
         <Modal.Header closeButton>
-          <Modal.Title id="newUnidade" />
+          <Modal.Title id="newUnidade" >Vincular Setores</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form
@@ -135,7 +135,7 @@ export class ModalVinculoUni extends Component {
                 as="select"
               >
                 <option>Escolha um Setor</option>
-                {this.state.setores.map(function(a) {
+                {this.state.setores.map(function (a) {
                   return (
                     <option value={a.id} name={a.setor}>
                       {a.setor}
@@ -145,7 +145,7 @@ export class ModalVinculoUni extends Component {
               </Form.Control>
             </Form.Group>
             <Form.Group>
-              {this.state.ListSetorVinculo.map(function(a) {
+              {this.state.ListSetorVinculo.map(function (a) {
                 return (
                   <Vinculo
                     id={a.id}
