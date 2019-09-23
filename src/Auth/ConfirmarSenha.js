@@ -4,6 +4,8 @@ import "../css/logon.css";
 import logo from "../img/logo_rhresponde_form-branco.svg";
 import { Form } from "react-bootstrap";
 import api from "../APIs/DataApi";
+import { toast } from "react-toastify"
+
 
 export class ConfirmarSenha extends Component {
   constructor(props) {
@@ -33,7 +35,22 @@ export class ConfirmarSenha extends Component {
           method: "post",
           headers: { "Content-Type": "application/json;" },
           body: JSON.stringify(this.state.Password)
-        });
+        })
+          .then(resp => {
+            if (resp.status == 200) return resp.json();
+            else throw resp.json();
+          })
+          .then(a =>
+            toast.success("Confirmado")
+
+          )
+          .catch(a =>
+            a.then(e =>
+              toast.error(e.message, {
+                position: toast.POSITION.TOP_CENTER
+              })
+            )
+          );;
       }
     );
   };
