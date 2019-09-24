@@ -8,6 +8,7 @@ import Dropzone from "react-dropzone";
 import api from "../APIs/DataApi";
 import { toast } from "react-toastify";
 import { Typeahead } from "react-bootstrap-typeahead";
+import InputMask from "react-input-mask";
 
 export class Formulario extends Component {
   constructor(props) {

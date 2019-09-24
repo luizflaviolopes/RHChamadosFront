@@ -32,25 +32,18 @@ export class ModalEditarAntende extends Component {
       body: JSON.stringify(this.state.updateAtendente)
     })
       .then(resp => {
-        if (resp.status == 200)
-          return resp.json()
-        else
-          throw resp.json();
+        if (resp.status == 200) return resp.json();
+        else throw resp.json();
       })
       .then(data => {
         this.props.attAtendente(data.setores);
-        toast.success(
-          "Usuario Editado"
-        )
+        toast.success("Usuario Editado");
       })
-      .catch(
-        a => a.then(e =>
-          toast.error(
-            e.message,
-            {
-              position: toast.POSITION.TOP_CENTER
-            }
-          )
+      .catch(a =>
+        a.then(e =>
+          toast.error(e.message, {
+            position: toast.POSITION.TOP_CENTER
+          })
         )
       );
 
@@ -105,19 +98,11 @@ export class ModalEditarAntende extends Component {
 
               <Col sm="6">
                 <Form.Group>
-                  <Form.Label>Masp</Form.Label>
+                  <Form.Label>CPF</Form.Label>
                   <Form.Control
+                    disabled
                     type="text"
-                    value={this.state.updateAtendente.masp}
-                    placeholder="Masp do Usuário"
-                    onChange={evt =>
-                      this.setState({
-                        updateAtendente: {
-                          ...this.state.updateAtendente,
-                          masp: evt.target.value
-                        }
-                      })
-                    }
+                    value={this.state.updateAtendente.cpf}
                   />
                 </Form.Group>
               </Col>
@@ -157,7 +142,7 @@ export class ModalEditarAntende extends Component {
                     }
                   >
                     <option>Selecione um Setor</option>
-                    {this.state.listSetores.map(function (a, i) {
+                    {this.state.listSetores.map(function(a, i) {
                       return <option value={a.id}>{a.setor}</option>;
                     })}
                   </Form.Control>
@@ -167,7 +152,7 @@ export class ModalEditarAntende extends Component {
               <Col sm="12">
                 <Form.Group>
                   <Form.Label>Permissões</Form.Label>
-                  {this.state.listaPol.map(function (a, i) {
+                  {this.state.listaPol.map(function(a, i) {
                     return (
                       <Politicas
                         namePol={a.nome}
@@ -177,7 +162,7 @@ export class ModalEditarAntende extends Component {
                           if (politicas == null) {
                             politicas = [];
                           }
-                          let exist = politicas.find(function (j, h) {
+                          let exist = politicas.find(function(j, h) {
                             return j.id === a.id;
                           });
                           if (exist) {
@@ -211,7 +196,7 @@ export class ModalEditarAntende extends Component {
                 </Form.Group>
                 <Button variant="primary" type="submit">
                   Salvar
-                  </Button>
+                </Button>
               </Col>
             </Form.Row>
           </Form>
