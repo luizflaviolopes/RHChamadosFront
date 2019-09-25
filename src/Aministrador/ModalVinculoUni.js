@@ -6,6 +6,7 @@ import { Modal, Button, Form } from "react-bootstrap";
 import api from "../APIs/DataApi";
 import { Vinculo } from "./Vinculo";
 import { toast } from "react-toastify";
+import { error } from "util";
 
 export class ModalVinculoUni extends Component {
   constructor(props) {
@@ -96,21 +97,13 @@ export class ModalVinculoUni extends Component {
       body: JSON.stringify(list),
       headers: { "Content-Type": "application/json;" }
     })
-      .then(resp => {
-        if (resp.status == 200) return resp.json();
-        else throw resp.json();
-      })
       .then(data => {
-        this.props.AttListUndd(data);
+        if (!data) this.props.AttListUndd(data);
         toast.success("Setores Vinculados");
+
+        throw error; // retorna as duas pop-ups de mensagem  e não dá refresh na página
       })
-      .catch(a =>
-        a.then(e =>
-          toast.error(e.message, {
-            position: toast.POSITION.TOP_CENTER
-          })
-        )
-      );
+      .catch(a => toast.error("Dados inconsistentes"));
   };
 
   render() {
@@ -118,7 +111,7 @@ export class ModalVinculoUni extends Component {
     return (
       <Modal size="lg" show={this.props.show} onHide={() => this.props.close()}>
         <Modal.Header closeButton>
-          <Modal.Title id="newUnidade" >Vincular Setores</Modal.Title>
+          <Modal.Title id="newUnidade">Vincular Setores</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form
@@ -135,7 +128,7 @@ export class ModalVinculoUni extends Component {
                 as="select"
               >
                 <option>Escolha um Setor</option>
-                {this.state.setores.map(function (a) {
+                {this.state.setores.map(function(a) {
                   return (
                     <option value={a.id} name={a.setor}>
                       {a.setor}
@@ -145,7 +138,7 @@ export class ModalVinculoUni extends Component {
               </Form.Control>
             </Form.Group>
             <Form.Group>
-              {this.state.ListSetorVinculo.map(function (a) {
+              {this.state.ListSetorVinculo.map(function(a) {
                 return (
                   <Vinculo
                     id={a.id}

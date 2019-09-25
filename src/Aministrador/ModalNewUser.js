@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { Politicas } from "./Politicas";
 import api from "../APIs/DataApi";
 import { toast } from "react-toastify";
+import InputMask from "react-input-mask";
 
 export class NewUser extends Component {
   constructor(props) {
@@ -42,7 +43,7 @@ export class NewUser extends Component {
         newAtendente: {
           Usuario: this.state.newAtendente.Usuario,
           Email: this.state.newAtendente.Email,
-          Masp: this.state.newAtendente.Masp,
+          CPF: this.state.newAtendente.CPF,
           Politicas: this.state.newAtendente.politicas,
           IdSetor: this.props.IdSetor
         }
@@ -54,32 +55,21 @@ export class NewUser extends Component {
           body: JSON.stringify(this.state.newAtendente)
         })
           .then(resp => {
-            if (resp.status == 200)
-              return resp.json()
-            else
-              throw resp.json();
+            if (resp.status == 200) return resp.json();
+            else throw resp.json();
           })
           .then(data => {
             this.props.attAtendente(data.setores);
             this.props.close();
-            toast.success(
-              "Usuario Criado"
-            )
+            toast.success("Usuario Criado");
           })
-          .catch(
-            a => a.then(e =>
-              Object.keys(e).forEach(
-                function(a,i){
-                  toast.error(
-                    Array.isArray(e[a])? e[a][0] : e[a],
-                    {
-                      position: toast.POSITION.TOP_CENTER
-                    }
-                  )
-                 
-                }
-              )
-              
+          .catch(a =>
+            a.then(e =>
+              Object.keys(e).forEach(function(a, i) {
+                toast.error(Array.isArray(e[a]) ? e[a][0] : e[a], {
+                  position: toast.POSITION.TOP_CENTER
+                });
+              })
             )
           );
       }
@@ -118,24 +108,31 @@ export class NewUser extends Component {
             </Col>
             <Col sm="6">
               <Form.Group>
-                <Form.Label>Masp</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Masp do Atendente"
+                <Form.Label>CPF</Form.Label>
+                <InputMask
+                  mask="999.999.999-99"
                   onChange={evt =>
                     this.setState({
                       newAtendente: {
                         ...this.state.newAtendente,
-                        Masp: evt.target.value
+                        CPF: evt.target.value
                       }
                     })
                   }
-                />
+                >
+                  {inputprop => (
+                    <Form.Control
+                      type="text"
+                      placeholder="Digite o CPF do Atendente "
+                    />
+                  )}
+                </InputMask>
               </Form.Group>
             </Col>
             <Col sm="6">
               <Form.Group>
                 <Form.Label>E-mail</Form.Label>
+
                 <Form.Control
                   type="text"
                   placeholder="E-Mail do Atendente"
@@ -152,7 +149,7 @@ export class NewUser extends Component {
             </Col>
             <Col sm="12">
               <Form.Group>
-                {this.state.listaPol.map(function (a, i) {
+                {this.state.listaPol.map(function(a, i) {
                   return (
                     <Politicas
                       namePol={a.nome}
@@ -162,7 +159,7 @@ export class NewUser extends Component {
                         if (politicas == null) {
                           politicas = [];
                         }
-                        let exist = politicas.find(function (j, h) {
+                        let exist = politicas.find(function(j, h) {
                           return j.id === a.id;
                         });
                         if (exist) {
@@ -189,8 +186,7 @@ export class NewUser extends Component {
 
               <Button variant="primary" onClick={this.handleNovoAtendente}>
                 Enviar
-                </Button>
-
+              </Button>
             </Col>
           </Form.Row>
         </Modal.Body>
