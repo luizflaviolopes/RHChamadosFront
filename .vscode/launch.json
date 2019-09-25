@@ -10,13 +10,6 @@
       "name": "Launch Chrome against localhost",
       "url": "http://localhost:3000",
       "webRoot": "${workspaceFolder}"
-    },
-    {
-      "type": "chrome",
-      "request": "launch",
-      "name": "novasenha",
-      "url": "http://localhost:3000/NovaSenha?token=CfDJ8Fw2FfyKkHtJgamju6vr3xg82m1XrnZH2j2lj2QxS0OPNH6cBhm2PYi0EW0TsbOouwXNMIHlDBjJcWqLqyClul0qa5Y+qeJPsjPDQlDAsXJ1v2nQ5uGOrbpFGFt1hQoDh3UUNtumdtUcZ3tLgf0ZayAw7SVcHOvJDuF54xNnbN3aDOb3eZ/x8CVmxQ2hVMZWXitOQphvp25xmp5VQaa6XPq3H4D1Gk176ynuu3vl2X82&user=73918388026",
-      "webRoot": "${workspaceFolder}"
     }
   ]
 }

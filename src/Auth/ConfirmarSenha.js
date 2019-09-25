@@ -36,13 +36,11 @@ export class ConfirmarSenha extends Component {
           body: JSON.stringify(this.state.Password)
         })
           .then(resp => {
-            if (resp.status === 200) { return resp.json(); }
-
-            else { throw resp.json(); }
-          })
-          .then(a => {
-            toast.success("Confirmado.");
-            window.location.replace("/");
+            if (resp.status === 200) {
+              toast.success("Confirmado.");
+              window.location.replace("/");
+            }
+            else throw resp.json();
           })
           .catch(a =>
             a.then(e => {
