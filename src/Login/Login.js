@@ -5,7 +5,7 @@ import logo from "../img/logo_rhresponde_form-branco.svg";
 import { Form } from "react-bootstrap";
 import api from "../APIs/DataApi";
 import InputMask from "react-input-mask";
-
+import { toast, ToastContainer } from "react-toastify";
 
 export class Login extends Component {
   constructor(props) {
@@ -23,15 +23,36 @@ export class Login extends Component {
       body: JSON.stringify(this.state.loginUser),
       headers: { "Content-Type": "application/json;" },
       credentials: "include"
-    }).then(resp => {
-      localStorage.setItem("Politica", resp);
-      window.location.reload();
-    });
+    })
+      .then(resp => {
+        if (resp.status == 200) {
+          return resp.json();
+        }
+        else {
+          throw resp;
+        }
+      }
+      )
+      .then(data => {
+
+        //this.props.AttListUndd(data);
+        localStorage.setItem("Politica", data);
+
+      }
+      )
+      .catch(a => {
+        toast.error("Usuário ou senha inválidos");
+      }
+
+      )
   }
 
   render() {
     return (
       <Container fluid className="padding-zero">
+        <ToastContainer
+          position="top-center"
+          closeOnClick />
         <div className="background-logon">
           <div className="formLogin">
             <div className="apresentacao">
