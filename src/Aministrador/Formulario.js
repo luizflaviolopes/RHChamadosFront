@@ -8,7 +8,6 @@ import Dropzone from "react-dropzone";
 import api from "../APIs/DataApi";
 import { toast } from "react-toastify";
 import { Typeahead } from "react-bootstrap-typeahead";
-import InputMask from "react-input-mask";
 
 export class Formulario extends Component {
   constructor(props) {
@@ -30,11 +29,11 @@ export class Formulario extends Component {
     const _this = this;
 
     if (this.state.newChamado !== undefined) {
-      Object.keys(this.state.newChamado).forEach(function(a, i) {
+      Object.keys(this.state.newChamado).forEach(function (a, i) {
         if (a !== undefined) formData.append(a, _this.state.newChamado[a]);
       });
 
-      this.state.listFile.forEach(function(j, r) {
+      this.state.listFile.forEach(function (j, r) {
         formData.append("file" + r, j);
       });
 
@@ -49,7 +48,7 @@ export class Formulario extends Component {
         .then(data => toast.success(data.message))
         .catch(a =>
           a.then(e =>
-            Object.keys(e).forEach(function(a, i) {
+            Object.keys(e).forEach(function (a, i) {
               toast.error(e[a], {
                 position: toast.POSITION.TOP_CENTER
               });
@@ -199,7 +198,7 @@ export class Formulario extends Component {
 
                 <div className="anexo">
                   <Row>
-                    {this.state.listFile.map(function(a, i) {
+                    {this.state.listFile.map(function (a, i) {
                       return (
                         <Anexos
                           nome={a.name}
