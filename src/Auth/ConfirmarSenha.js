@@ -40,14 +40,16 @@ export class ConfirmarSenha extends Component {
               return resp.json();
             else throw resp.json();
           })
-          .then(a =>
-            toast.success("Confirmado."),
-            window.location.replace("/")
+          .then(a =>{
 
+            toast.success("Confirmado.");
+            window.location.replace("/");
+          }
           )
           .catch(a =>
             a.then(e => {
 
+              console.log(e)
               toast.error(e.message, {
                 position: toast.POSITION.TOP_CENTER
               })
