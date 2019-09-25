@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Politicas } from "./Politicas";
 import api from "../APIs/DataApi";
 import { toast } from "react-toastify";
+import InputMask from "react-input-mask";
 
 export class ModalEditarAntende extends Component {
   constructor(props) {
@@ -99,11 +100,13 @@ export class ModalEditarAntende extends Component {
               <Col sm="6">
                 <Form.Group>
                   <Form.Label>CPF</Form.Label>
-                  <Form.Control
-                    disabled
-                    type="text"
+                  <InputMask
+                    mask="999.999.999-99"
                     value={this.state.updateAtendente.cpf}
-                  />
+                    readOnly
+                  >
+                    {inputprop => <Form.Control type="text" />}
+                  </InputMask>
                 </Form.Group>
               </Col>
               <Col sm="6">
@@ -136,7 +139,7 @@ export class ModalEditarAntende extends Component {
                       this.setState({
                         updateAtendente: {
                           ...this.state.updateAtendente,
-                          setor: evt.target.value
+                          idSetores: evt.target.value
                         }
                       })
                     }
