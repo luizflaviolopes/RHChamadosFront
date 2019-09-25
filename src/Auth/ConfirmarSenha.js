@@ -37,15 +37,11 @@ export class ConfirmarSenha extends Component {
         })
           .then(resp => {
             if (resp.status === 200)
-              return resp.json();
+            {toast.success("Confirmado.");
+            window.location.replace("/");}
             else throw resp.json();
           })
-          .then(a =>{
-
-            toast.success("Confirmado.");
-            window.location.replace("/");
-          }
-          )
+         
           .catch(a =>
             a.then(e => {
 

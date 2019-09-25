@@ -16,7 +16,7 @@
       "type": "chrome",
       "request": "launch",
       "name": "novasenha",
-      "url": "http://localhost:3000/NovaSenha?token=CfDJ8Es/PM+0k19CnJlRaGqM7g7giuJp1YFAa+8OQVFaT+oo7yd4MTkTmCD/+JGOdegr92iN/U1n10CpF8rvB1E9scoLwzNlGxDb/iy23OLZODUveya08TQsX7KqE/YGwwuR+PzgxtPL4DSfEDinR5NOFzTIVeXsAN04nzzY2SMj1Z1FkDUjgpAgRq9OBwyCNUxdgCwksQnRp5e2q5UI5F7g8+EQ5Egyz5PUs5O4eVOZCdK9&user=123654",
+      "url": "http://localhost:3000/NovaSenha?token=CfDJ8Es/PM+0k19CnJlRaGqM7g6AiBdJ3yo4b72AXn2TmRmRhXhm61KvOoR1dG43fkIcbVX5ZdUpS1eQXpJFbng79bj1wcPpXgLjMmZRY2iXDNmSJVFqoJ4vhhES8cTDbjFI4u7V4e/YY8W9v1g2TH9ArrwrBpQGelu7Gq8zimyTSHXg6y23OXwSek0JwV2ZFU0wlh3hKXqwgLLi+LNQmtK0lUtb1d+c33LZbUs7CA6Joinv&user=36461918051",
       "webRoot": "${workspaceFolder}"
     }
 
