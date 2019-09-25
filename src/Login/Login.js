@@ -26,18 +26,12 @@ export class Login extends Component {
     })
       .then(resp => {
         if (resp.status == 200) {
-          return resp.json();
+          localStorage.setItem("Politica", resp);
+          window.location.reload();
         }
         else {
           throw resp;
         }
-      }
-      )
-      .then(data => {
-
-        //this.props.AttListUndd(data);
-        localStorage.setItem("Politica", data);
-
       }
       )
       .catch(a => {
