@@ -4,7 +4,6 @@
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
-
     {
       "type": "chrome",
       "request": "launch",
@@ -16,11 +15,8 @@
       "type": "chrome",
       "request": "launch",
       "name": "novasenha",
-      "url": "http://localhost:3000/NovaSenha?token=CfDJ8Es/PM+0k19CnJlRaGqM7g7giuJp1YFAa+8OQVFaT+oo7yd4MTkTmCD/+JGOdegr92iN/U1n10CpF8rvB1E9scoLwzNlGxDb/iy23OLZODUveya08TQsX7KqE/YGwwuR+PzgxtPL4DSfEDinR5NOFzTIVeXsAN04nzzY2SMj1Z1FkDUjgpAgRq9OBwyCNUxdgCwksQnRp5e2q5UI5F7g8+EQ5Egyz5PUs5O4eVOZCdK9&user=123654",
+      "url": "http://localhost:3000/NovaSenha?token=CfDJ8Fw2FfyKkHtJgamju6vr3xg82m1XrnZH2j2lj2QxS0OPNH6cBhm2PYi0EW0TsbOouwXNMIHlDBjJcWqLqyClul0qa5Y+qeJPsjPDQlDAsXJ1v2nQ5uGOrbpFGFt1hQoDh3UUNtumdtUcZ3tLgf0ZayAw7SVcHOvJDuF54xNnbN3aDOb3eZ/x8CVmxQ2hVMZWXitOQphvp25xmp5VQaa6XPq3H4D1Gk176ynuu3vl2X82&user=73918388026",
       "webRoot": "${workspaceFolder}"
     }
-
-
-    
   ]
 }
