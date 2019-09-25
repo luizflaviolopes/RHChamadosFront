@@ -4,6 +4,8 @@ import "../css/logon.css";
 import logo from "../img/logo_rhresponde_form-branco.svg";
 import { Form } from "react-bootstrap";
 import api from "../APIs/DataApi";
+import InputMask from "react-input-mask";
+
 
 export class Login extends Component {
   constructor(props) {
@@ -49,11 +51,9 @@ export class Login extends Component {
                     <Form.Label>Entrar</Form.Label>
                   </Form.Group>
                   <Form.Group>
-                    <Form.Label>Login</Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder="Login de Acesso"
-                      name="Login"
+                    <Form.Label>CPF</Form.Label>
+                    <InputMask
+                      mask="999.999.999-99"
                       onChange={evt =>
                         this.setState({
                           loginUser: {
@@ -62,7 +62,15 @@ export class Login extends Component {
                           }
                         })
                       }
-                    />
+                    >
+                      {inputprop => (
+                        <Form.Control
+                          type="text"
+                          placeholder="Digite seu CPF do Atendente "
+                        />
+                      )}
+                    </InputMask>
+
                   </Form.Group>
                   <Form.Group>
                     <Form.Label>Senha</Form.Label>
