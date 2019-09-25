@@ -4,6 +4,7 @@ import "../css/logon.css";
 import logo from "../img/logo_rhresponde_form-branco.svg";
 import { Form } from "react-bootstrap";
 import api from "../APIs/DataApi";
+import { toast, ToastContainer } from "react-toastify";
 
 export class EsqueciSenha extends Component {
   constructor(props) {
@@ -19,12 +20,35 @@ export class EsqueciSenha extends Component {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(this.state)
-    });
+    })
+      .then(resp => {
+        if (resp.status == 200) {
+          return resp.json();
+        }
+        else {
+          throw resp;
+        }
+      }
+      )
+      .then(data => {
+
+        //this.props.AttListUndd(data);
+        toast.success("Solicitalção Encaminhada para o e-mail.");
+
+      }
+      )
+      .catch(a => {
+        toast.success("Solicitalção Encaminhada para o e-mail");
+
+      })
   };
 
   render() {
     return (
       <Container fluid className="padding-zero">
+        <ToastContainer
+          position="top-center"
+          closeOnClick />
         <div className="background-logon">
           <div className="formLogin">
             <div className="apresentacao">
