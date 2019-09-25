@@ -100,22 +100,21 @@ export class ModalVinculoUni extends Component {
       .then(resp => {
         if (resp.status == 200) {
           return resp.json();
-        }
-        else {
+        } else {
           throw resp;
         }
-      }
-      )
+      })
       .then(data => {
-
         //this.props.AttListUndd(data);
         toast.success("As alterações foram salvas.");
-
-      }
-      )
-      .catch(a => {
-        toast.error("Não foi possivel realizar esta operação. Por Favor Tente novamente!");
+        this.props.close();
+        window.location.reload();
       })
+      .catch(a => {
+        toast.error(
+          "Não foi possivel realizar esta operação. Por Favor Tente novamente!"
+        );
+      });
   };
 
   render() {
@@ -140,7 +139,7 @@ export class ModalVinculoUni extends Component {
                 as="select"
               >
                 <option>Escolha um Setor</option>
-                {this.state.setores.map(function (a) {
+                {this.state.setores.map(function(a) {
                   return (
                     <option value={a.id} name={a.setor}>
                       {a.setor}
@@ -150,7 +149,7 @@ export class ModalVinculoUni extends Component {
               </Form.Control>
             </Form.Group>
             <Form.Group>
-              {this.state.ListSetorVinculo.map(function (a) {
+              {this.state.ListSetorVinculo.map(function(a) {
                 return (
                   <Vinculo
                     id={a.id}
