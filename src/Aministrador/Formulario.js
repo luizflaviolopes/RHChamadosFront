@@ -144,13 +144,16 @@ export class Formulario extends Component {
               <Form.Label>Assunto</Form.Label>
 
               <Typeahead
-                onChange={evt =>
-                  this.setState({
-                    newChamado: {
-                      ...this.state.newChamado,
-                      Assunto: evt[0].id
-                    }
-                  })
+                onChange={(evt) => {
+                  if (evt.length !== 0) {
+                    this.setState({
+                      newChamado: {
+                        ...this.state.newChamado,
+                        Assunto: evt[0].id
+                      }
+                    })
+                  }
+                }
                 }
                 options={this.state.assuntos}
                 labelKey={option => `${option.assunto}`}

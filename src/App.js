@@ -21,6 +21,7 @@ import api from "./APIs/DataApi.js";
 import { Can } from "./APIs/Can.jsx";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { Filter } from "./ChamadosRH/Filter.js";
 
 library.add(fas);
 
@@ -86,6 +87,13 @@ class App extends Component {
               </Button>
               </Link>
             </Can>
+            <Can politica="Visualizar Chamado">
+              <Link to="/CallFilter">
+                <Button className="btn-menu" onClick={this.OnclickHande}>
+                  Filtrar Chamados
+              </Button>
+              </Link>
+            </Can>
             <Can politica="Gerir Usuario">
               <Link to="/User">
                 <Button className="btn-menu" onClick={this.OnclickHande}>
@@ -143,14 +151,12 @@ class App extends Component {
               </div>
               <Switch>
                 <Route path="/chamados" exact={true} component={TabelaIndex} />
+                <Route path="/CallFilter" component={Filter} />
                 <Route path="/Chamados/:tipo" component={TabelaIndex} />
                 <Route path="/DetalhamentoChamado" component={PageChamado} />
                 <Route path="/User" component={User} />
                 <Route path="/ConfiguracaoDeSetores" component={Setores} />
-                <Route
-                  path="/RastreioChamado/:tag"
-                  component={RastreioChamado}
-                />
+                <Route path="/RastreioChamado/:tag" component={RastreioChamado} />
               </Switch>
             </div>
           </Container>
