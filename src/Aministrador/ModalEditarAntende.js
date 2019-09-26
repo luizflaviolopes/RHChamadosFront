@@ -27,28 +27,37 @@ export class ModalEditarAntende extends Component {
   }
 
   handleEditarAtendente() {
-    api("api/Atendente/AtualizarAtendente", {
-      method: "put",
-      headers: { "Content-Type": "application/json;" },
-      body: JSON.stringify(this.state.updateAtendente)
-    })
-      .then(resp => {
-        if (resp.status == 200) return resp.json();
-        else throw resp.json();
-      })
-      .then(data => {
-        this.props.attAtendente(data.setores);
-        toast.success("Usuario Editado");
-      })
-      .catch(a =>
-        a.then(e =>
-          toast.error(e.message, {
-            position: toast.POSITION.TOP_CENTER
-          })
-        )
-      );
+    let cpfFormatado = this.state.updateAtendente.cpf.replace(
+      /(\d{3})?(\d{3})?(\d{3})?(\d{2})/,
+      "$1.$2.$3-$4"
+    );
 
-    this.props.close();
+    this.setState(
+      {
+        updateAtendente: {
+          ...this.state.updateAtendente,
+          cpf: cpfFormatado
+        }
+      },
+      function() {
+        console.log(this.state.updateAtendente);
+        api("api/Atendente/AtualizarAtendente", {
+          method: "put",
+          headers: { "Content-Type": "application/json;" },
+          body: JSON.stringify(this.state.updateAtendente)
+        })
+          .then(resp => {
+            if (resp.status == 200) return resp.json();
+            else throw resp.json();
+          })
+          .then(data => {
+            this.props.attAtendente(data.setores);
+            toast.success("Usuario Editado");
+            this.props.close();
+          })
+          .catch(a => a.then(e => toast.error(e.message)));
+      }
+    );
   }
 
   render() {
@@ -104,6 +113,14 @@ export class ModalEditarAntende extends Component {
                     mask="999.999.999-99"
                     value={this.state.updateAtendente.cpf}
                     readOnly
+                    onChange={evt =>
+                      this.setState({
+                        updateAtendente: {
+                          ...this.state.updateAtendente,
+                          cpf: evt.target.value
+                        }
+                      })
+                    }
                   >
                     {inputprop => <Form.Control type="text" />}
                   </InputMask>
@@ -139,7 +156,7 @@ export class ModalEditarAntende extends Component {
                       this.setState({
                         updateAtendente: {
                           ...this.state.updateAtendente,
-                          idSetores: evt.target.value
+                          idSetor: evt.target.value
                         }
                       })
                     }
