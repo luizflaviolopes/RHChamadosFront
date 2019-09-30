@@ -39,7 +39,7 @@ export class ModalEditarAntende extends Component {
           cpf: cpfFormatado
         }
       },
-      function() {
+      function () {
         console.log(this.state.updateAtendente);
         api("api/Atendente/AtualizarAtendente", {
           method: "put",
@@ -151,18 +151,18 @@ export class ModalEditarAntende extends Component {
                   <Form.Label>Setor</Form.Label>
                   <Form.Control
                     as="select"
-                    value={this.state.updateAtendente.idSetor}
+                    value={this.state.updateAtendente.idSetores}
                     onChange={evt =>
                       this.setState({
                         updateAtendente: {
                           ...this.state.updateAtendente,
-                          idSetor: evt.target.value
+                          idSetores: evt.target.value
                         }
                       })
                     }
                   >
                     <option>Selecione um Setor</option>
-                    {this.state.listSetores.map(function(a, i) {
+                    {this.state.listSetores.map(function (a, i) {
                       return <option value={a.id}>{a.setor}</option>;
                     })}
                   </Form.Control>
@@ -172,7 +172,7 @@ export class ModalEditarAntende extends Component {
               <Col sm="12">
                 <Form.Group>
                   <Form.Label>Permissões</Form.Label>
-                  {this.state.listaPol.map(function(a, i) {
+                  {this.state.listaPol.map(function (a, i) {
                     return (
                       <Politicas
                         namePol={a.nome}
@@ -182,7 +182,7 @@ export class ModalEditarAntende extends Component {
                           if (politicas == null) {
                             politicas = [];
                           }
-                          let exist = politicas.find(function(j, h) {
+                          let exist = politicas.find(function (j, h) {
                             return j.id === a.id;
                           });
                           if (exist) {
