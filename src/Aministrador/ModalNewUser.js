@@ -69,7 +69,7 @@ export class NewUser extends Component {
           })
           .catch(a =>
             a.then(e =>
-              Object.keys(e).forEach(function (a, i) {
+              Object.keys(e).forEach(function(a, i) {
                 toast.error(Array.isArray(e[a]) ? e[a][0] : e[a], {
                   position: toast.POSITION.TOP_CENTER
                 });
@@ -153,7 +153,7 @@ export class NewUser extends Component {
             </Col>
             <Col sm="12">
               <Form.Group>
-                {this.state.listaPol.map(function (a, i) {
+                {this.state.listaPol.map(function(a, i) {
                   return (
                     <Politicas
                       namePol={a.nome}
@@ -163,7 +163,7 @@ export class NewUser extends Component {
                         if (politicas == null) {
                           politicas = [];
                         }
-                        let exist = politicas.find(function (j, h) {
+                        let exist = politicas.find(function(j, h) {
                           return j.id === a.id;
                         });
                         if (exist) {
