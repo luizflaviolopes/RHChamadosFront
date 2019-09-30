@@ -269,7 +269,9 @@ export class PageChamado extends Component {
                     this.setState({ selectedAssunto: { id: evt[0].id, assunto: evt[0].assunto, numChamado: this.state.numChamado } })
                 }
               }
-
+              onFocus={(evt) => {
+                evt.target.select();
+              }}
               options={this.state.listaAssunto}
               labelKey={option => `${option.assunto}`}
               defaultInputValue={this.state.assunto}
@@ -306,6 +308,9 @@ export class PageChamado extends Component {
                       }
                     })
                   }
+                  onFocus={(evt) => {
+                    evt.target.select();
+                  }}
                   options={this.state.listaResponsavel}
                   labelKey={option => `${option.name}`}
                   defaultInputValue={Responsavel}

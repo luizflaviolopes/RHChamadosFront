@@ -11,7 +11,8 @@ export class Filter extends Component {
         this.state = {
             filter: {},
             listaAssunto: [],
-            listFilter: []
+            listFilter: [],
+            listaSetor: []
         };
 
     }
@@ -23,6 +24,11 @@ export class Filter extends Component {
                     listaAssunto: data
                 })
             );
+        api("api/setores", {})
+            .then(data => data.json())
+            .then(data => this.setState({
+                listaSetor: data
+            }))
     }
 
     handleFiltroChamado = () => {
@@ -118,6 +124,37 @@ export class Filter extends Component {
                     </Col>
                     <Col sm="4">
                         <Form.Group>
+                            <Form.Label>Setor</Form.Label>
+                            <Form.Control
+                                as='select'
+                            >
+                                <option>Selecione um Setor</option>
+                                {this.state.listaSetor.map(function (a, i) {
+                                    return <option value={a.id}>{a.setor}</option>
+                                }
+                                )}
+                            </Form.Control>
+                        </Form.Group>
+                    </Col>
+                    <Col sm="4">
+                        <Form.Group>
+                            <Form.Label>Nª Chamado</Form.Label>
+                            <Form.Control
+                                type="text"
+                                onChange={evt =>
+                                    this.setState({
+                                        filter: {
+                                            ...this.state.filter,
+                                            NumChamado: evt.target.value
+                                        }
+                                    })
+                                } />
+                        </Form.Group>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col sm="12">
+                        <Form.Group>
                             <Form.Label>Assunto</Form.Label>
                             <Typeahead
                                 onChange={(evt) => {
@@ -134,21 +171,6 @@ export class Filter extends Component {
                                 options={this.state.listaAssunto}
                                 labelKey={option => `${option.assunto}`}
                             />
-                        </Form.Group>
-                    </Col>
-                    <Col sm="4">
-                        <Form.Group>
-                            <Form.Label>Nª Chamado</Form.Label>
-                            <Form.Control
-                                type="text"
-                                onChange={evt =>
-                                    this.setState({
-                                        filter: {
-                                            ...this.state.filter,
-                                            NumChamado: evt.target.value
-                                        }
-                                    })
-                                } />
                         </Form.Group>
                     </Col>
                 </Row>
