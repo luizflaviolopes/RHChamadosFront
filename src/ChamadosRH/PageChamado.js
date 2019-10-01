@@ -430,12 +430,13 @@ export class PageChamado extends Component {
               <Col sm={6}>
                 {atribuicao}
                 <Can politica="Gerir Setor" reverse>
-                  <Button
+                  {this.state.atendenteResponsavel == "Não Atribuido" ? (<Button
                     variant="outline-success"
                     onClick={this.handleAssumirChamado}
                   >
                     Assumir Chamado
-                  </Button>
+                  </Button>) : this.state.atendenteResponsavel}
+
                 </Can>
               </Col>
             </Row>

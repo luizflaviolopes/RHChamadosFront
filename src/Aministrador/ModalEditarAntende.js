@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Modal, Button, Col, Form } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import { Politicas } from "./Politicas";
 import api from "../APIs/DataApi";
 import { toast } from "react-toastify";
@@ -19,7 +18,6 @@ export class ModalEditarAntende extends Component {
     };
     this.handleEditarAtendente = this.handleEditarAtendente.bind(this);
   }
-  //Claudinho seu bosta
 
   componentDidMount() {
     api("api/Atendente", {})
@@ -28,7 +26,11 @@ export class ModalEditarAntende extends Component {
   }
 
   handleEditarAtendente() {
-    let cpfFormatado = this.state.updateAtendente.cpf.replace(
+
+    let cpf = this.state.updateAtendente.cpf.replace(/[^a-z0-9]/gi,
+      "");
+
+    let cpfFormatado = cpf.replace(
       /(\d{3})?(\d{3})?(\d{3})?(\d{2})/,
       "$1.$2.$3-$4"
     );
