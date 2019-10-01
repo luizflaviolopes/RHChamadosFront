@@ -19,7 +19,6 @@ export class ModalEditarAntende extends Component {
     };
     this.handleEditarAtendente = this.handleEditarAtendente.bind(this);
   }
-  //Claudinho seu bosta
 
   componentDidMount() {
     api("api/Atendente", {})
