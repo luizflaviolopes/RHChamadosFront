@@ -31,17 +31,32 @@ export class Setores extends Component {
       .then(response => response.json())
       .then(data =>
         this.setState({
-          listaSetores: data.map(function (a) {
-            return {
-              id: a.id,
-              sigla: a.setor,
-              pai: a.hierarquia,
-              delete: _this.handleDesativarUnidade,
-              add: _this.handleOpenModal,
-              vinculo: _this.handleOpenModalVinculo,
-              SetoresVinculados: a.relacaoSetorSetor
+          listaSetores: data.map(function (a, i) {
+            if (i == 0) {
+              return {
+                id: a.id,
+                sigla: a.setor,
+                pai: null,
+                delete: _this.handleDesativarUnidade,
+                add: _this.handleOpenModal,
+                vinculo: _this.handleOpenModalVinculo,
+                SetoresVinculados: a.relacaoSetorSetor
+              };
+            }
+            else {
+              return {
 
-            };
+                id: a.id,
+                sigla: a.setor,
+                pai: a.hierarquia,
+                delete: _this.handleDesativarUnidade,
+                add: _this.handleOpenModal,
+                vinculo: _this.handleOpenModalVinculo,
+                SetoresVinculados: a.relacaoSetorSetor
+
+              };
+            }
+
           })
         })
       );
@@ -92,6 +107,7 @@ export class Setores extends Component {
   handleOpenModal(obj) {
     this.setState({ modalAddUnidade: obj });
   }
+
   handleOpenModalVinculo(idSetor) {
 
     this.setState({
