@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Menu, { Cabecalho, Rodape } from "./Layout/Menu.js";
-import { Col, Row } from "react-bootstrap";
+import { Col, Row, Alert } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import "@trendmicro/react-sidenav/dist/react-sidenav.css";
 import "./css/App.css";
@@ -21,13 +21,11 @@ class AppRastreio extends Component {
   }
   componentDidMount() {
 
-    let search = window.location.search;
-    let params = new URLSearchParams(search);
-    let tag = params.get('tag');
+    let tag = this.props.match.params.tag
 
     if (tag)
       api(
-        "api/auth/pesquisa-chamado?tag=" + tag
+        "api/rastreio/pesquisa-chamado?tag=" + tag
       )
         .then(rastreio => rastreio.json())
         .then(rastreio =>
@@ -126,6 +124,26 @@ class AppRastreio extends Component {
                       <span>Descrição: </span>
                     </label>
                     <p>{this.state.descricao}</p>
+                  </div>
+                  <div className="resp">
+                    {this.state.respostas.map(function(a,i){
+                       return (
+                        <div className="form-group">
+                          <Alert variant="dark">
+                            <label>
+                              <span>Resposta</span>
+                            </label>
+                            <p>
+                              {a.idRespostasAutomaticas !== null
+                                ? a.idRespostasAutomaticas
+                                : a.resposta}
+                              <p>{a.horaResposta}</p>
+                            </p>
+                          </Alert>
+                        </div>
+                      );
+                   
+                    })}
                   </div>
                 </div>
               </div>
