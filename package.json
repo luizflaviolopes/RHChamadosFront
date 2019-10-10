@@ -19,7 +19,8 @@
     "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0",
     "react-scripts": "2.1.8",
-    "react-toastify": "^5.3.2"
+    "react-toastify": "^5.3.2",
+    "react-vis": "^1.11.7"
   },
   "scripts": {
     "start": "react-scripts start",

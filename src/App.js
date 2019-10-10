@@ -22,6 +22,7 @@ import { Can } from "./APIs/Can.jsx";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { Filter } from "./ChamadosRH/Filter.js";
+import { GraphicStart } from "./Dashboard/GraphicStart.js";
 
 library.add(fas);
 
@@ -80,6 +81,13 @@ class App extends Component {
         <BrowserRouter>
           <Cabecalho />
           <Menu>
+            <Can politica="Visualizar Chamado">
+              <Link to="/dashboard">
+                <Button className="btn-menu" onClick={this.OnclickHande}>
+                  Inicio
+              </Button>
+              </Link>
+            </Can>
             <Can politica="Visualizar Chamado">
               <Link to="/chamados">
                 <Button className="btn-menu" onClick={this.OnclickHande}>
@@ -150,6 +158,7 @@ class App extends Component {
                 </Switch>
               </div>
               <Switch>
+                <Route path="/dashboard" exact={true} component={GraphicStart} />
                 <Route path="/chamados" exact={true} component={TabelaIndex} />
                 <Route path="/CallFilter" component={Filter} />
                 <Route path="/Chamados/:tipo" component={TabelaIndex} />
