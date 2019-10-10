@@ -97,8 +97,7 @@ export class DashDate extends Component {
                     <YAxis />
 
                     <VerticalBarSeries data={this.state.all} />
-                    {/* <MarkSeries data={this.state.all} />
-                    */}
+                    {/* <MarkSeries data={this.state.all} />*/}
 
 
                     <VerticalBarSeries
