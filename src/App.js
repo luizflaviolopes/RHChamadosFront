@@ -20,7 +20,7 @@ import "./css/Botoes.css";
 import api from "./APIs/DataApi.js";
 import { Can } from "./APIs/Can.jsx";
 import { ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 import { Filter } from "./ChamadosRH/Filter.js";
 import { GraphicStart } from "./Dashboard/GraphicStart.js";
 
@@ -67,39 +67,39 @@ class App extends Component {
 
     let modalans;
     if (this.state.answerModal)
-      modalans = (<ModalAnswer
-        show={this.state.answerModal}
-        modalName="answerModal"
-        close={this.handleCloseModal}
-      />)
+      modalans = (
+        <ModalAnswer
+          show={this.state.answerModal}
+          modalName="answerModal"
+          close={this.handleCloseModal}
+        />
+      );
 
     return (
       <div className="body">
-        <ToastContainer
-          position="top-center"
-          closeOnClick />
+        <ToastContainer position="top-center" closeOnClick />
         <BrowserRouter>
           <Cabecalho />
           <Menu>
             <Can politica="Visualizar Chamado">
               <Link to="/dashboard">
                 <Button className="btn-menu" onClick={this.OnclickHande}>
-                  Inicio
-              </Button>
+                  Início <span>📊📈</span>
+                </Button>
               </Link>
             </Can>
             <Can politica="Visualizar Chamado">
               <Link to="/chamados">
                 <Button className="btn-menu" onClick={this.OnclickHande}>
                   Chamados
-              </Button>
+                </Button>
               </Link>
             </Can>
             <Can politica="Visualizar Chamado">
               <Link to="/CallFilter">
                 <Button className="btn-menu" onClick={this.OnclickHande}>
                   Filtrar Chamados
-              </Button>
+                </Button>
               </Link>
             </Can>
             <Can politica="Gerir Usuario">
@@ -158,14 +158,21 @@ class App extends Component {
                 </Switch>
               </div>
               <Switch>
-                <Route path="/dashboard" exact={true} component={GraphicStart} />
+                <Route
+                  path="/dashboard"
+                  exact={true}
+                  component={GraphicStart}
+                />
                 <Route path="/chamados" exact={true} component={TabelaIndex} />
                 <Route path="/CallFilter" component={Filter} />
                 <Route path="/Chamados/:tipo" component={TabelaIndex} />
                 <Route path="/DetalhamentoChamado" component={PageChamado} />
                 <Route path="/User" component={User} />
                 <Route path="/ConfiguracaoDeSetores" component={Setores} />
-                <Route path="/RastreioChamado/:tag" component={RastreioChamado} />
+                <Route
+                  path="/RastreioChamado/:tag"
+                  component={RastreioChamado}
+                />
               </Switch>
             </div>
           </Container>
