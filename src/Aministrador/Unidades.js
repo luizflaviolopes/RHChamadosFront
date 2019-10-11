@@ -16,11 +16,11 @@ export class Unidades extends Component {
     };
   }
 
-  componentDidMount() {
+  /*componentDidMount() {
     api("api/Setores", {})
       .then(response => response.json())
       .then(data => this.setState({ listaSetores: data.setores }));
-  }
+  }*/
 
   handleDesativarUnidade = () => {
     this.props.obj.delete(this.props.id);
@@ -30,7 +30,7 @@ export class Unidades extends Component {
     return (
       <div className="unidades" idSetor={this.props.id}>
         <div className="headUni">
-          <span className="ttl">{this.props.text}</span>
+          <span className="ttl"> {this.props.text} </span>{" "}
           <Can politica="Gerir Setor">
             <span
               className="vinculo"
@@ -38,33 +38,33 @@ export class Unidades extends Component {
               title="Vincular Unidade"
             >
               <FontAwesomeIcon icon="exchange-alt" />
-            </span>
-          </Can>
-        </div>
+            </span>{" "}
+          </Can>{" "}
+        </div>{" "}
         <div className="bodyUni">
-            <div>
-              <Button
-                variant="success"
-                size="sm"
-                onClick={() => this.props.obj.add(this.props.obj)}
-              >
-                <FontAwesomeIcon icon="plus-circle" />
-              </Button>
-
-              <Button
-                variant="danger"
-                size="sm"
-                onClick={this.handleDesativarUnidade}
-              >
-                <FontAwesomeIcon icon="minus-circle" />
-              </Button>
-            </div>
-            <div className="vinculos">
-              {this.props.obj.SetoresVinculados.map(function (a) {
-                return <div className="setVin">{a.setorDestino}</div>;
-              })}
-            </div>
-        </div>
+          <div>
+            <Button
+              variant="success"
+              size="sm"
+              onClick={() => this.props.obj.add(this.props.obj)}
+            >
+              <FontAwesomeIcon icon="plus-circle" />
+            </Button>
+            <Button
+              variant="danger"
+              size="sm"
+              onClick={this.handleDesativarUnidade}
+            >
+              <FontAwesomeIcon icon="minus-circle" />
+            </Button>{" "}
+          </div>{" "}
+          <div className="vinculos">
+            {" "}
+            {this.props.obj.SetoresVinculados.map(function(a) {
+              return <div className="setVin"> {a.setorDestino} </div>;
+            })}{" "}
+          </div>{" "}
+        </div>{" "}
       </div>
     );
   }
