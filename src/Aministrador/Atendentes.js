@@ -3,9 +3,10 @@ import "../css/bootstrap.css";
 import "../css/Botoes.css";
 import { Button, Table } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 import api from "../APIs/DataApi";
 import { Can } from "../APIs/Can";
+import { ModalConfirmacao } from "../Confirmation/ModalConfirmacao";
 
 export class Atendentes extends Component {
   constructor(props) {
@@ -15,49 +16,69 @@ export class Atendentes extends Component {
       Masp: props.masp,
       Nome: props.nome,
       WinUser: props.winUser,
-      Politicas: props.politicas
+      Politicas: props.politicas,
+      modalConfirmar: false
     };
     this.handleDesativarAtendente = this.handleDesativarAtendente.bind(this);
+    this.handleCloseModal = this.handleCloseModal.bind(this);
+    this.handleOpenModal = this.handleOpenModal.bind(this);
   }
 
-  componentDidUpdate(a, b) {
+  handleOpenModal(id) {
+    this.setState({
+      modalConfirmar: true,
+      idSetorModal: id
+    });
+  }
 
+  handleCloseModal() {
+    this.setState({
+      modalConfirmar: false
+    });
   }
 
   handleDesativarAtendente(id) {
     api("api/Atendente/ExcluirAtendete?id=" + id, {
       method: "delete"
     })
-      .then(
-        resp => {
-          if (resp.status == 200)
-            return resp.json()
-          else
-            throw resp.json();
-        }
-      )
+      .then(resp => {
+        if (resp.status == 200) return resp.json();
+        else throw resp.json();
+      })
       .then(data => {
         this.props.obj.att(data.setores);
-        toast.success(
-          "Usuario Excluido"
-        )
+        toast.success("Usuario Excluido");
+        this.handleCloseModal();
       })
-      .catch(
-        a => a.then(e =>
-          toast.error(
-            e.message,
-            {
-              position: toast.POSITION.TOP_CENTER
-            }
-          )
+      .catch(a =>
+        a.then(e =>
+          toast.error(e.message, {
+            position: toast.POSITION.TOP_CENTER
+          })
         )
       );
   }
 
   render() {
     const _this = this;
+    let modalConfirmar;
+
+    if (this.state.modalConfirmar) {
+      modalConfirmar = (
+        <ModalConfirmacao
+          message="Deseja excluir o atendente?"
+          show={true}
+          close={_this.handleCloseModal}
+          confirmar={() =>
+            _this.handleDesativarAtendente(_this.state.idSetorModal)
+          }
+        />
+      );
+    }
+
     return (
       <div className="atendente" idSetor={this.props.id}>
+        {modalConfirmar}
         <div className="headAtendente">
           <div className="ttl">{this.props.text}</div>
           <div
@@ -70,7 +91,7 @@ export class Atendentes extends Component {
         <div className="bodyAtendente">
           <Table>
             <tbody>
-              {this.props.obj.atendentes.map(function (a, b) {
+              {this.props.obj.atendentes.map(function(a, b) {
                 return (
                   <tr>
                     <td className="nameUser">{a.nome}</td>
@@ -94,18 +115,16 @@ export class Atendentes extends Component {
                         {a.ativo === true ? (
                           <Button
                             variant="danger"
-                            onClick={() => _this.handleDesativarAtendente(a.id)}
+                            onClick={() => _this.handleOpenModal(a.id)}
+                            //onClick={() => _this.handleDesativarAtendente(a.id)}
                           >
                             <FontAwesomeIcon icon="times" color="white" />
                           </Button>
                         ) : (
-                            <Button
-                              variant="success"
-                              onClick={() => _this.handleDesativarAtendente(a.id)}
-                            >
-                              <FontAwesomeIcon icon="check" color="white" />
-                            </Button>
-                          )}
+                          <Button variant="success">
+                            <FontAwesomeIcon icon="check" color="white" />
+                          </Button>
+                        )}
                       </Can>
                     </td>
                   </tr>

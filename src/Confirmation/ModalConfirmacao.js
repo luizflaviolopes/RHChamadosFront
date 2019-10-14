@@ -6,7 +6,8 @@ export class ModalConfirmacao extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      message: props.message
+      message: props.message,
+      show: true
     };
   }
 

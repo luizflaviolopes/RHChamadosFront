@@ -84,7 +84,7 @@ class App extends Component {
             <Can politica="Visualizar Chamado">
               <Link to="/dashboard">
                 <Button className="btn-menu" onClick={this.OnclickHande}>
-                  Início <span>📊📈</span>
+                  Início
                 </Button>
               </Link>
             </Can>
