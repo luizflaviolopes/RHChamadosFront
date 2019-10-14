@@ -16,12 +16,6 @@ export class Unidades extends Component {
     };
   }
 
-  componentDidMount() {
-    api("api/Setores", {})
-      .then(response => response.json())
-      .then(data => this.setState({ listaSetores: data.setores }));
-  }
-
   handleDesativarUnidade = () => {
     this.props.obj.delete(this.props.id);
   };
@@ -42,28 +36,28 @@ export class Unidades extends Component {
           </Can>
         </div>
         <div className="bodyUni">
-            <div>
-              <Button
-                variant="success"
-                size="sm"
-                onClick={() => this.props.obj.add(this.props.obj)}
-              >
-                <FontAwesomeIcon icon="plus-circle" />
-              </Button>
+          <div>
+            <Button
+              variant="success"
+              size="sm"
+              onClick={() => this.props.obj.add(this.props.obj)}
+            >
+              <FontAwesomeIcon icon="plus-circle" />
+            </Button>
 
-              <Button
-                variant="danger"
-                size="sm"
-                onClick={this.handleDesativarUnidade}
-              >
-                <FontAwesomeIcon icon="minus-circle" />
-              </Button>
-            </div>
-            <div className="vinculos">
-              {this.props.obj.SetoresVinculados.map(function (a) {
-                return <div className="setVin">{a.setorDestino}</div>;
-              })}
-            </div>
+            <Button
+              variant="danger"
+              size="sm"
+              onClick={this.handleDesativarUnidade}
+            >
+              <FontAwesomeIcon icon="minus-circle" />
+            </Button>
+          </div>
+          <div className="vinculos">
+            {this.props.obj.SetoresVinculados.map(function (a) {
+              return <div className="setVin">{a.setorDestino}</div>;
+            })}
+          </div>
         </div>
       </div>
     );

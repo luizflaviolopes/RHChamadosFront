@@ -1,7 +1,7 @@
 
 import React, { Component } from "react";
 import api from "../APIs/DataApi.js";
-import { RadialChart, XYPlot, VerticalGridLines, HorizontalGridLines, XAxis, YAxis, VerticalBarSeries, MarkSeries, LineSeries, DiscreteColorLegend, DecorativeAxis, LabelSeries } from "react-vis";
+import { RadialChart, XYPlot, VerticalGridLines, HorizontalGridLines, XAxis, YAxis, VerticalBarSeries, LineMarkSeries, MarkSeries, LineSeries, DiscreteColorLegend, DecorativeAxis, LabelSeries } from "react-vis";
 import 'react-vis/dist/style.css';
 import { Legenda } from "./Legenda.js";
 
@@ -90,14 +90,14 @@ export class DashDate extends Component {
 
             <div>
                 <Legenda legendas={legendas} />
-                <XYPlot margin={{ bottom: 100 }} xType="ordinal" width={1000} height={400}>
+                <XYPlot margin={{ bottom: 100 }} xType="ordinal" width={1000} height={600}>
                     <VerticalGridLines />
                     <HorizontalGridLines />
                     <XAxis tickLabelAngle={-45} />
                     <YAxis />
 
-                    <VerticalBarSeries data={this.state.all} />
-                    {/* <MarkSeries data={this.state.all} />*/}
+                    <LineMarkSeries data={this.state.all} />
+                    {/* <MarkSeries data={this.state.all} /> */}
 
 
                     <VerticalBarSeries

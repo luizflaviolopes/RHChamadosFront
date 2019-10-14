@@ -9,9 +9,7 @@ export class DashSituacao extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            all: [],
-            tipo: null,
-            assuntos: []
+
         };
     }
 
@@ -23,12 +21,10 @@ export class DashSituacao extends Component {
                     response.json())
             .then(data => {
                 this.setState({
-                    abertos: data.map(function (a) {
-                        return {
-                            x: a.propriedade,
-                            y: a.quantidade
-                        };
-                    })
+                    abertos: {
+                        x: data.propriedade,
+                        y: data.quantidade
+                    }
                 });
             });
 
@@ -41,12 +37,10 @@ export class DashSituacao extends Component {
                     response.json())
             .then(data => {
                 this.setState({
-                    fechados: data.map(function (a) {
-                        return {
-                            x: a.propriedade,
-                            y: a.quantidade
-                        };
-                    })
+                    fechados: {
+                        x: data.propriedade,
+                        y: data.quantidade
+                    }
                 });
             });
 
@@ -57,34 +51,31 @@ export class DashSituacao extends Component {
                     response.json())
             .then(data => {
                 this.setState({
-                    atendimento: data.map(function (a) {
-                        return {
-                            x: a.propriedade,
-                            y: a.quantidade
-                        };
-                    })
+                    atendimento: {
+                        x: data.propriedade,
+                        y: data.quantidade
+                    }
                 });
             });
-
-
-
-
     }
 
     render() {
-        const legendas = [
-            'Options',
-            'Buttons',
-            'Select boxes',
-            'Date inputs',
-            'Password inputs',
-            'Forms',
-            'Other'
-        ];
-        return (
+        let RadilGraphic;
 
+
+        if (this.state.fechados && this.state.abertos && this.state.atendimento) {
+            const myData = [{ angle: this.state.fechados.y }, { angle: this.state.abertos.y }, { angle: this.state.atendimento.y }];
+            RadilGraphic = (
+                <RadialChart
+                    //data={}
+                    data={myData}
+                    width={300}
+                    height={300} />
+            )
+        }
+        return (
             <div>
-                <Legenda legendas={legendas} />
+                {RadilGraphic}
                 <XYPlot margin={{ bottom: 100 }} xType="ordinal" width={1000} height={400}>
                     <VerticalGridLines />
                     <HorizontalGridLines />
@@ -92,7 +83,7 @@ export class DashSituacao extends Component {
                     <YAxis />
 
 
-                    <VerticalBarSeries
+                    {/* <VerticalBarSeries
                         data={this.state.fechados}
                     />
 
@@ -102,7 +93,7 @@ export class DashSituacao extends Component {
 
                     <VerticalBarSeries
                         data={this.state.atendimento}
-                    />
+                    /> */}
                 </XYPlot>
 
             </div>
