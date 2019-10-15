@@ -76,25 +76,6 @@ export class DashSituacao extends Component {
         return (
             <div>
                 {RadilGraphic}
-                <XYPlot margin={{ bottom: 100 }} xType="ordinal" width={1000} height={400}>
-                    <VerticalGridLines />
-                    <HorizontalGridLines />
-                    <XAxis tickLabelAngle={-45} />
-                    <YAxis />
-
-
-                    {/* <VerticalBarSeries
-                        data={this.state.fechados}
-                    />
-
-                    <VerticalBarSeries
-                        data={this.state.abertos}
-                    />
-
-                    <VerticalBarSeries
-                        data={this.state.atendimento}
-                    /> */}
-                </XYPlot>
 
             </div>
 
