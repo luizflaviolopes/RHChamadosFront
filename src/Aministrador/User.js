@@ -34,16 +34,28 @@ export class User extends Component {
       .then(response => response.json())
       .then(data =>
         this.setState({
-          listaSetoresAtendentes: data.setores.map(function (a) {
-            return {
-              sigla: a.setor,
-              id: a.id,
-              pai: a.hierarquia,
-              atendentes: a.atendente,
-              add: _this.handleOpenModalAdd,
-              edit: _this.handleOpenModalEdit,
-              att: _this.handlAttAtendentes
-            };
+          listaSetoresAtendentes: data.setores.map(function(a, i) {
+            if (i == 0) {
+              return {
+                sigla: a.nome,
+                id: a.id,
+                pai: null,
+                atendentes: a.atendentes,
+                add: _this.handleOpenModalAdd,
+                edit: _this.handleOpenModalEdit,
+                att: _this.handlAttAtendentes
+              };
+            } else {
+              return {
+                sigla: a.nome,
+                id: a.id,
+                pai: a.hierarquia,
+                atendentes: a.atendentes,
+                add: _this.handleOpenModalAdd,
+                edit: _this.handleOpenModalEdit,
+                att: _this.handlAttAtendentes
+              };
+            }
           }),
 
           listaPoliticas: data.politicas
@@ -65,16 +77,28 @@ export class User extends Component {
   handlAttAtendentes(attAtendente) {
     let _this = this;
     this.setState({
-      listaSetoresAtendentes: attAtendente.map(function (a) {
-        return {
-          sigla: a.setor,
-          id: a.id,
-          pai: a.hierarquia,
-          atendentes: a.atendente,
-          add: _this.handleOpenModalAdd,
-          edit: _this.handleOpenModalEdit,
-          att: _this.handlAttAtendentes
-        };
+      listaSetoresAtendentes: attAtendente.map(function(a, i) {
+        if (i == 0) {
+          return {
+            sigla: a.nome,
+            id: a.id,
+            pai: null,
+            atendentes: a.atendentes,
+            add: _this.handleOpenModalAdd,
+            edit: _this.handleOpenModalEdit,
+            att: _this.handlAttAtendentes
+          };
+        } else {
+          return {
+            sigla: a.nome,
+            id: a.id,
+            pai: a.hierarquia,
+            atendentes: a.atendentes,
+            add: _this.handleOpenModalAdd,
+            edit: _this.handleOpenModalEdit,
+            att: _this.handlAttAtendentes
+          };
+        }
       })
     });
   }
