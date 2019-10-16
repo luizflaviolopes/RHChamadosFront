@@ -85,7 +85,7 @@ export class Unidades extends Component {
             </Button>
           </div>
           <div className="vinculos">
-            {this.props.obj.SetoresVinculados.map(function (a) {
+            {this.props.obj.SetoresVinculados.map(function(a) {
               return <div className="setVin"> {a.setorDestino} </div>;
             })}
           </div>
