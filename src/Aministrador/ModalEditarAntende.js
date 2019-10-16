@@ -20,15 +20,22 @@ export class ModalEditarAntende extends Component {
   }
 
   componentDidMount() {
-    api("api/Atendente", {})
+    api("api/Setores", {})
       .then(response => response.json())
-      .then(data => this.setState({ listSetores: data.listaSetores }));
+      .then(data =>
+        this.setState({
+          listSetores: data.map(function(a, i) {
+            return {
+              id: a.id,
+              setor: a.setor
+            };
+          })
+        })
+      );
   }
 
   handleEditarAtendente() {
-
-    let cpf = this.state.updateAtendente.cpf.replace(/[^a-z0-9]/gi,
-      "");
+    let cpf = this.state.updateAtendente.cpf.replace(/[^a-z0-9]/gi, "");
 
     let cpfFormatado = cpf.replace(
       /(\d{3})?(\d{3})?(\d{3})?(\d{2})/,
@@ -42,7 +49,7 @@ export class ModalEditarAntende extends Component {
           cpf: cpfFormatado
         }
       },
-      function () {
+      function() {
         console.log(this.state.updateAtendente);
         api("api/Atendente/AtualizarAtendente", {
           method: "put",
@@ -165,7 +172,7 @@ export class ModalEditarAntende extends Component {
                     }
                   >
                     <option>Selecione um Setor</option>
-                    {this.state.listSetores.map(function (a, i) {
+                    {this.state.listSetores.map(function(a, i) {
                       return <option value={a.id}>{a.setor}</option>;
                     })}
                   </Form.Control>
@@ -175,7 +182,7 @@ export class ModalEditarAntende extends Component {
               <Col sm="12">
                 <Form.Group>
                   <Form.Label>Permissões</Form.Label>
-                  {this.state.listaPol.map(function (a, i) {
+                  {this.state.listaPol.map(function(a, i) {
                     return (
                       <Politicas
                         namePol={a.nome}
@@ -185,7 +192,7 @@ export class ModalEditarAntende extends Component {
                           if (politicas == null) {
                             politicas = [];
                           }
-                          let exist = politicas.find(function (j, h) {
+                          let exist = politicas.find(function(j, h) {
                             return j.id === a.id;
                           });
                           if (exist) {

@@ -18,7 +18,7 @@ export class ModalVinculoUni extends Component {
     this.deletarVinculo = this.deletarVinculo.bind(this);
   }
   componentDidMount() {
-    api("api/Setores/BuscaSetores?Id=" + this.props.setor, {})
+    api("api/Setores/NoChildren?Id=" + this.props.setor, {})
       .then(response => response.json())
       .then(data => this.setState({ setores: data }));
 
