@@ -39,23 +39,25 @@ export class DashAssunto extends Component {
     render() {
 
         return (
-
             <div>
+                <div className="text-center">
+                    <span className='ttl'>Quantidade de Chamados por Assunto</span>
+                </div>
+                <div>
+                    <XYPlot margin={{ bottom: 300 }} xType="ordinal" width={900} height={700}>
+                        <VerticalGridLines />
+                        <HorizontalGridLines />
+                        <XAxis tickLabelAngle={-45} />
+                        <YAxis />
 
-                <XYPlot margin={{ bottom: 300 }} xType="ordinal" width={900} height={700}>
-                    <VerticalGridLines />
-                    <HorizontalGridLines />
-                    <XAxis tickLabelAngle={-45} />
-                    <YAxis />
+                        <VerticalBarSeries
+                            curve={'curveMonotoneX'}
+                            data={this.state.assuntos}
+                        />
+                    </XYPlot>
 
-                    <VerticalBarSeries
-                        curve={'curveMonotoneX'}
-                        data={this.state.assuntos}
-                    />
-                </XYPlot>
-
+                </div>
             </div>
-
 
         );
     }

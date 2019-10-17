@@ -61,6 +61,7 @@ export class DashSituacao extends Component {
 
     render() {
         let RadilGraphic;
+        const legendas = ['Fechados', 'Abertos', 'Em Atendimento'];
 
 
         if (this.state.fechados && this.state.abertos && this.state.atendimento) {
@@ -73,10 +74,16 @@ export class DashSituacao extends Component {
                     height={300} />
             )
         }
+
         return (
             <div>
-                {RadilGraphic}
-
+                <div className="text-center">
+                    <span className='ttl'>Quantidade de Chamados Por Situação</span>
+                </div>
+                <div>
+                    <Legenda legendas={legendas} />
+                    {RadilGraphic}
+                </div>
             </div>
 
 
