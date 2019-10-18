@@ -31,9 +31,9 @@ class TabelaIndex extends Component {
     let newFilter = this.state.filters;
     newFilter[a.propertie] = a.value;
     window.teste = newFilter;
-    var checkFilter = function (element) {
+    var checkFilter = function(element) {
       let retorno = true;
-      Object.keys(newFilter).forEach(function (p, i) {
+      Object.keys(newFilter).forEach(function(p, i) {
         if (!isNaN(element[p])) {
           if (
             newFilter[p] !== "" &&
@@ -52,7 +52,7 @@ class TabelaIndex extends Component {
       });
       return retorno;
     };
-    let newDems = this.state.all.filter(function (a, i) {
+    let newDems = this.state.all.filter(function(a, i) {
       return checkFilter(a);
     });
 
@@ -101,7 +101,7 @@ class TabelaIndex extends Component {
   render() {
     let filterObj = this.state.filters;
     let _this = this;
-    var checkFilter = function (element) {
+    var checkFilter = function(element) {
       for (var p in Object.keys(filterObj)) {
         if (filterObj[p] !== "" && element[p] !== filterObj[p]) return false;
       }
@@ -142,6 +142,15 @@ class TabelaIndex extends Component {
                     label="Nº"
                     icone="list-ol"
                     FilterParam="numChamado"
+                    sizeInput="w-25"
+                    onFilter={this.handleFiltering}
+                  />
+                </th>
+                <th>
+                  <Cabecalho
+                    label="Protocolo"
+                    icone="list-ol"
+                    FilterParam="protocolo"
                     sizeInput="w-25"
                     onFilter={this.handleFiltering}
                   />
@@ -212,7 +221,7 @@ class TabelaIndex extends Component {
               </tr>
             </thead>
             <tbody>
-              {getPageDems().map(function (a, i) {
+              {getPageDems().map(function(a, i) {
                 return (
                   <Chamado
                     numChamado={a.numChamado}
@@ -232,6 +241,7 @@ class TabelaIndex extends Component {
                     justificativa={a.justificativa}
                     IsAutenticado={a.IsAutenticado}
                     atendenteResponsavel={a.atendenteResponsavel}
+                    protocolo={a.protocolo}
                   />
                 );
               })}
