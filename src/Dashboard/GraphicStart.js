@@ -5,6 +5,7 @@ import 'react-vis/dist/style.css';
 import { DashDate } from "./DashDate.js";
 import { DashSituacao } from "./DashSituacao.js";
 import { DashAssunto } from "./DashAssunto.js";
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
 export class GraphicStart extends Component {
     constructor(props) {
@@ -39,9 +40,19 @@ export class GraphicStart extends Component {
         return (
 
             <div>
-                <DashDate />
-                <DashSituacao />
-                <DashAssunto />
+
+                <div className>
+                    <DashDate />
+                </div>
+                <div>
+                    <DashSituacao />
+                </div>
+                <div>
+                    <DashAssunto />
+                </div>
+
+
+
 
 
             </div>

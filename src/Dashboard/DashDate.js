@@ -88,35 +88,39 @@ export class DashDate extends Component {
         //[{ x: _this.state.fechadosData.x, y: _this.state.fechadosData.y, label: _this.state.fechadosData.y, style: { fontSize: 10 } }]
         return (
 
-            <div>
-                <Legenda legendas={legendas} />
-                <XYPlot margin={{ bottom: 100 }} xType="ordinal" width={1000} height={600}>
-                    <VerticalGridLines />
-                    <HorizontalGridLines />
-                    <XAxis tickLabelAngle={-45} />
-                    <YAxis />
+            <div className="">
+                <div className="text-center">
+                    <span className='ttl'>Quantidade de Chamados por Data</span>
+                </div>
+                <div>
+                    <Legenda legendas={legendas} />
+                    <XYPlot margin={{ bottom: 100 }} xType="ordinal" width={1000} height={600}>
+                        <VerticalGridLines />
+                        <HorizontalGridLines />
+                        <XAxis tickLabelAngle={-45} />
+                        <YAxis />
 
-                    <LineMarkSeries data={this.state.all} />
-                    {/* <MarkSeries data={this.state.all} /> */}
-
-
-                    <VerticalBarSeries
-                        curve={'curveMonotoneX'}
-                        data={this.state.fechadosData}
-                    />
-                    <VerticalBarSeries
-                        curve={'curveMonotoneX'}
-                        data={this.state.abertosData}
-                    />
-                    <VerticalBarSeries
-                        curve={'curveMonotoneX'}
-                        data={this.state.atendimentoData}
-                    />
+                        <LineMarkSeries data={this.state.all} />
+                        {/* <MarkSeries data={this.state.all} /> */}
 
 
-                </XYPlot>
+                        <VerticalBarSeries
+                            curve={'curveMonotoneX'}
+                            data={this.state.fechadosData}
+                        />
+                        <VerticalBarSeries
+                            curve={'curveMonotoneX'}
+                            data={this.state.abertosData}
+                        />
+                        <VerticalBarSeries
+                            curve={'curveMonotoneX'}
+                            data={this.state.atendimentoData}
+                        />
 
-            </div>
+
+                    </XYPlot>
+                </div>
+            </div >
 
 
         );
