@@ -2,8 +2,8 @@
 import React, { Component } from "react";
 import api from "../APIs/DataApi.js";
 import 'react-vis/dist/style.css';
-import { RadialChart, XYPlot, VerticalGridLines, HorizontalGridLines, XAxis, YAxis, VerticalBarSeries, MarkSeries, LineSeries, DiscreteColorLegend, DecorativeAxis, LabelSeries } from "react-vis";
-import verticalGridLines from "react-vis/dist/plot/vertical-grid-lines";
+import { XYPlot, VerticalGridLines, HorizontalGridLines, XAxis, YAxis, VerticalBarSeries } from "react-vis";
+
 
 
 export class DashAssunto extends Component {
@@ -47,7 +47,7 @@ export class DashAssunto extends Component {
                     <XYPlot margin={{ bottom: 300 }} xType="ordinal" width={900} height={700}>
                         <VerticalGridLines />
                         <HorizontalGridLines />
-                        <XAxis tickLabelAngle={-45} />
+                        <XAxis tickLabelAngle={-65} />
                         <YAxis />
 
                         <VerticalBarSeries
