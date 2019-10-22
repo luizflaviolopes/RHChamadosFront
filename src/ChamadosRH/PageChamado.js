@@ -14,8 +14,6 @@ import { toast } from "react-toastify";
 import { Typeahead } from "react-bootstrap-typeahead";
 import "react-bootstrap-typeahead/css/Typeahead.css";
 
-
-
 export class PageChamado extends Component {
   constructor(props) {
     super(props);
@@ -263,13 +261,17 @@ export class PageChamado extends Component {
         <Can politica="Alterar Assunto">
           <Col sm="10">
             <Typeahead
-              onChange={
-                (evt) => {
-                  if (evt.length !== 0)
-                    this.setState({ selectedAssunto: { id: evt[0].id, assunto: evt[0].assunto, numChamado: this.state.numChamado } })
-                }
-              }
-              onFocus={(evt) => {
+              onChange={evt => {
+                if (evt.length !== 0)
+                  this.setState({
+                    selectedAssunto: {
+                      id: evt[0].id,
+                      assunto: evt[0].assunto,
+                      numChamado: this.state.numChamado
+                    }
+                  });
+              }}
+              onFocus={evt => {
                 evt.target.select();
               }}
               options={this.state.listaAssunto}
@@ -283,12 +285,8 @@ export class PageChamado extends Component {
             </Button>
           </Col>
         </Can>
-
-
-      )
+      );
     }
-
-
 
     var atribuicao;
     if (this.state.listaResponsavel.length > 0) {
@@ -308,7 +306,7 @@ export class PageChamado extends Component {
                       }
                     })
                   }
-                  onFocus={(evt) => {
+                  onFocus={evt => {
                     evt.target.select();
                   }}
                   options={this.state.listaResponsavel}
@@ -333,6 +331,12 @@ export class PageChamado extends Component {
             <label>
               <span>Chamado: </span>
               {this.state.numChamado}
+            </label>
+          </div>
+          <div className="form-group text-center">
+            <label>
+              <span>Protocolo: </span>
+              {this.state.protocolo}
             </label>
           </div>
           <div className="form-group">
@@ -399,15 +403,12 @@ export class PageChamado extends Component {
           </div>
           <Form.Group>
             <Row>
-
               {Assuntos}
               <Can politica="Alterar Assunto" reverse>
                 <Col sm="1">
                   <Form.Label>Assunto</Form.Label>
                 </Col>
-                <Col sm="11">
-                  {this.state.assunto}
-                </Col>
+                <Col sm="11">{this.state.assunto}</Col>
               </Can>
             </Row>
           </Form.Group>
@@ -430,20 +431,23 @@ export class PageChamado extends Component {
               <Col sm={6}>
                 {atribuicao}
                 <Can politica="Gerir Setor" reverse>
-                  {this.state.atendenteResponsavel == "Não Atribuido" ? (<Button
-                    variant="outline-success"
-                    onClick={this.handleAssumirChamado}
-                  >
-                    Assumir Chamado
-                  </Button>) : this.state.atendenteResponsavel}
-
+                  {this.state.atendenteResponsavel == "Não Atribuido" ? (
+                    <Button
+                      variant="outline-success"
+                      onClick={this.handleAssumirChamado}
+                    >
+                      Assumir Chamado
+                    </Button>
+                  ) : (
+                    this.state.atendenteResponsavel
+                  )}
                 </Can>
               </Col>
             </Row>
           </div>
         </div>
         <div className="anexo row">
-          {this.state.listFile.map(function (a, i) {
+          {this.state.listFile.map(function(a, i) {
             return (
               <Anexo
                 nome={a.textAnexo}
@@ -455,25 +459,23 @@ export class PageChamado extends Component {
           })}
         </div>
 
-        {
-          this.state.answered.map(function (a, i) {
-            return (
-              <div className="form-group">
-                <Alert variant="dark">
-                  <label>
-                    <span>Resposta</span>
-                  </label>
-                  <p>
-                    {a.respostaAutomatica !== null
-                      ? a.respostaAutomatica
-                      : a.resposta}
-                    <p>{a.horaResposta}</p>
-                  </p>
-                </Alert>
-              </div>
-            );
-          })
-        }
+        {this.state.answered.map(function(a, i) {
+          return (
+            <div className="form-group">
+              <Alert variant="dark">
+                <label>
+                  <span>Resposta</span>
+                </label>
+                <p>
+                  {a.respostaAutomatica !== null
+                    ? a.respostaAutomatica
+                    : a.resposta}
+                  <p>{a.horaResposta}</p>
+                </p>
+              </Alert>
+            </div>
+          );
+        })}
 
         <div className="form-group">
           {buttons}
@@ -490,7 +492,7 @@ export class PageChamado extends Component {
             />
           ) : null}
         </div>
-      </div >
+      </div>
     );
   }
 }

@@ -22,7 +22,8 @@ class Chamado extends Component {
       mc: props.mc,
       prazo: props.prazo,
       justificativa: props.justificativa,
-      atendenteResponsavel: props.atendenteResponsavel
+      atendenteResponsavel: props.atendenteResponsavel,
+      protocolo: props.protocolo
     };
     this.OnclickHande = this.OnclickHande.bind(this);
   }
@@ -43,7 +44,8 @@ class Chamado extends Component {
       mc: nextProps.mc,
       prazo: nextProps.prazo,
       justificativa: nextProps.justificativa,
-      atendenteResponsavel: nextProps.atendenteResponsavel
+      atendenteResponsavel: nextProps.atendenteResponsavel,
+      protocolo: nextProps.protocolo
     });
   }
   OnclickHande() {
@@ -68,6 +70,7 @@ class Chamado extends Component {
           : null)}
       >
         <td title={this.state.numChamado}>{this.state.numChamado}</td>
+        <td title={this.state.protocolo}>{this.state.protocolo}</td>
         <td title={this.state.solicitante}>{this.state.solicitante}</td>
         <td title={this.state.cpf}>
           {this.state.cpf !== null ? this.state.cpf : this.state.masp}
