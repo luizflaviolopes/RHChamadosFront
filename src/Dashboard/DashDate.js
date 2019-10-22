@@ -1,7 +1,7 @@
 
 import React, { Component } from "react";
 import api from "../APIs/DataApi.js";
-import { RadialChart, XYPlot, VerticalGridLines, HorizontalGridLines, XAxis, YAxis, VerticalBarSeries, LineMarkSeries, MarkSeries, LineSeries, DiscreteColorLegend, DecorativeAxis, LabelSeries } from "react-vis";
+import { XYPlot, VerticalGridLines, HorizontalGridLines, XAxis, YAxis, VerticalBarSeries, LineMarkSeries } from "react-vis";
 import 'react-vis/dist/style.css';
 import { Legenda } from "./Legenda.js";
 
@@ -83,7 +83,7 @@ export class DashDate extends Component {
     }
     render() {
         const legendas = ['Total de Chamados', 'Chamados Fechados', 'Chamados Abertos', 'Chamados Em Atendimento'];
-        const _this = this;
+
 
         //[{ x: _this.state.fechadosData.x, y: _this.state.fechadosData.y, label: _this.state.fechadosData.y, style: { fontSize: 10 } }]
         return (

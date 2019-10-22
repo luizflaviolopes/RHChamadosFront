@@ -1,7 +1,7 @@
 
 import React, { Component } from "react";
 import api from "../APIs/DataApi.js";
-import { RadialChart, XYPlot, VerticalGridLines, HorizontalGridLines, XAxis, YAxis, VerticalBarSeries, MarkSeries, LineSeries } from "react-vis";
+import { RadialChart } from "react-vis";
 import 'react-vis/dist/style.css';
 import { Legenda } from "./Legenda.js";
 
@@ -61,7 +61,7 @@ export class DashSituacao extends Component {
 
     render() {
         let RadilGraphic;
-        const legendas = ['Fechados', 'Abertos', 'Em Atendimento'];
+        const legendas = ['Em Atendimento', 'Fechados', 'Abertos'];
 
 
         if (this.state.fechados && this.state.abertos && this.state.atendimento) {
