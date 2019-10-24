@@ -72,20 +72,22 @@ export class Unidades extends Component {
           </Can>
         </div>
         <div className="bodyUni">
-          <div>
-            <Button
-              variant="success"
-              size="sm"
-              onClick={() => this.props.obj.add(this.props.obj)}
-            >
-              <FontAwesomeIcon icon="plus-circle" />
-            </Button>
-            <Button variant="danger" size="sm" onClick={this.handleOpenModal}>
-              <FontAwesomeIcon icon="minus-circle" />
-            </Button>
-          </div>
+          <Can politica="Gestor Setor">
+            <div>
+              <Button
+                variant="success"
+                size="sm"
+                onClick={() => this.props.obj.add(this.props.obj)}
+              >
+                <FontAwesomeIcon icon="plus-circle" />
+              </Button>
+              <Button variant="danger" size="sm" onClick={this.handleOpenModal}>
+                <FontAwesomeIcon icon="minus-circle" />
+              </Button>
+            </div>
+          </Can>
           <div className="vinculos">
-            {this.props.obj.SetoresVinculados.map(function(a) {
+            {this.props.obj.SetoresVinculados.map(function (a) {
               return <div className="setVin"> {a.setorDestino} </div>;
             })}
           </div>

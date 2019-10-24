@@ -90,7 +90,8 @@ export class Setores extends Component {
           }),
         toast.success(
           "Setor Excluido"
-        )
+        ),
+        this.handleCloseModal()
       )
       .catch(
         a => a.then(e =>
