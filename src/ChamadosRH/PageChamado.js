@@ -199,7 +199,7 @@ export class PageChamado extends Component {
               <Button
                 variant="success"
                 onClick={this.handleAnswer}
-                {...(this.state.alterAssunto !== "true" ? "disabled" : null)}
+                {...this.state.alterAssunto !== "true" ? "disabled" : null}
               >
                 <FontAwesomeIcon icon="file-alt" /> Responder
               </Button>
