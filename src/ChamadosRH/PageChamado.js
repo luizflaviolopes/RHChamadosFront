@@ -181,6 +181,7 @@ export class PageChamado extends Component {
                     transferModal: true
                   })
                 }
+                {...(this.state.alterAssunto !== "true" ? "disabled" : null)}
               >
                 <FontAwesomeIcon icon="exchange-alt" /> Redirecionar
               </Button>
@@ -198,7 +199,7 @@ export class PageChamado extends Component {
               <Button
                 variant="success"
                 onClick={this.handleAnswer}
-                {...(this.state.alterAssunto !== true ? "disabled" : null)}
+                {...this.state.alterAssunto !== "true" ? "disabled" : null}
               >
                 <FontAwesomeIcon icon="file-alt" /> Responder
               </Button>
@@ -430,7 +431,7 @@ export class PageChamado extends Component {
             <Row>
               <Col sm={6}>
                 {atribuicao}
-                <Can politica="Gerir Setor" reverse>
+                <Can politica="Gestor Setor" reverse>
                   {this.state.atendenteResponsavel == "Não Atribuido" ? (
                     <Button
                       variant="outline-success"
@@ -439,15 +440,15 @@ export class PageChamado extends Component {
                       Assumir Chamado
                     </Button>
                   ) : (
-                    this.state.atendenteResponsavel
-                  )}
+                      this.state.atendenteResponsavel
+                    )}
                 </Can>
               </Col>
             </Row>
           </div>
         </div>
         <div className="anexo row">
-          {this.state.listFile.map(function(a, i) {
+          {this.state.listFile.map(function (a, i) {
             return (
               <Anexo
                 nome={a.textAnexo}
@@ -459,7 +460,7 @@ export class PageChamado extends Component {
           })}
         </div>
 
-        {this.state.answered.map(function(a, i) {
+        {this.state.answered.map(function (a, i) {
           return (
             <div className="form-group">
               <Alert variant="dark">

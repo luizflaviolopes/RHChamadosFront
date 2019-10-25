@@ -23,7 +23,8 @@ class Chamado extends Component {
       prazo: props.prazo,
       justificativa: props.justificativa,
       atendenteResponsavel: props.atendenteResponsavel,
-      protocolo: props.protocolo
+      protocolo: props.protocolo,
+      alterAssunto: props.alterAssunto
     };
     this.OnclickHande = this.OnclickHande.bind(this);
   }
@@ -45,7 +46,8 @@ class Chamado extends Component {
       prazo: nextProps.prazo,
       justificativa: nextProps.justificativa,
       atendenteResponsavel: nextProps.atendenteResponsavel,
-      protocolo: nextProps.protocolo
+      protocolo: nextProps.protocolo,
+      alterAssunto: nextProps.alterAssunto
     });
   }
   OnclickHande() {

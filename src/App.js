@@ -109,7 +109,7 @@ class App extends Component {
                 </Button>
               </Link>
             </Can>
-            <Can politica="Gerir Setor">
+            <Can politica={["Gerir Setor"], ["Gestor Setor"]}>
               <Link to="/ConfiguracaoDeSetores">
                 <Button className="btn-menu" onClick={this.OnclickHande}>
                   Setores
