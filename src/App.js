@@ -89,7 +89,7 @@ class App extends Component {
               </Link>
             </Can>
             <Can politica="Visualizar Chamado">
-              <Link to="/chamados">
+              <Link to="/">
                 <Button className="btn-menu" onClick={this.OnclickHande}>
                   Chamados
                 </Button>
@@ -150,11 +150,11 @@ class App extends Component {
               <div className="menu-l">
                 <Switch>
                   <Route
-                    path="/chamados"
+                    path="/"
                     exact={true}
                     component={SideMenuIndex}
                   />
-                  <Route path="/Chamados" component={SideMenuIndex} />
+                  <Route path="/" component={SideMenuIndex} />
                 </Switch>
               </div>
               <Switch>
@@ -163,7 +163,7 @@ class App extends Component {
                   exact={true}
                   component={GraphicStart}
                 />
-                <Route path="/chamados" exact={true} component={TabelaIndex} />
+                <Route path="/" exact={true} component={TabelaIndex} />
                 <Route path="/CallFilter" component={Filter} />
                 <Route path="/Chamados/:tipo" component={TabelaIndex} />
                 <Route path="/DetalhamentoChamado" component={PageChamado} />
