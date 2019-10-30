@@ -14,6 +14,7 @@ import { toast } from "react-toastify";
 import { Typeahead } from "react-bootstrap-typeahead";
 import "react-bootstrap-typeahead/css/Typeahead.css";
 
+
 export class PageChamado extends Component {
   constructor(props) {
     super(props);
@@ -66,7 +67,12 @@ export class PageChamado extends Component {
   }
 
   handleAnswer() {
-    this.setState({ answerOpen: !this.state.answerOpen });
+    if (this.state.alterAssunto == "true")
+      this.setState({ answerOpen: !this.state.answerOpen });
+    else {
+      this.setState({ answerOpen: false });
+      toast.error("Não é possivel realizar operação, favor alterar assunto para continuar.")
+    }
   }
 
   handleReabrir() {
@@ -176,10 +182,16 @@ export class PageChamado extends Component {
             <Can politica="Encaminhar Chamado">
               <Button
                 variant="primary"
-                onClick={() =>
-                  this.setState({
-                    transferModal: true
-                  })
+                onClick={() => {
+                  if (this.state.alterAssunto == "true") {
+                    this.setState({
+                      transferModal: true
+                    })
+                  } else {
+                    this.setState({ transferModal: false });
+                    toast.error("Não é possivel realizar operação, favor alterar assunto para continuar.")
+                  }
+                }
                 }
                 {...(this.state.alterAssunto !== "true" ? "disabled" : null)}
               >
