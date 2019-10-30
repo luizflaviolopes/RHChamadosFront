@@ -73,10 +73,10 @@ export class ModalTransferir extends Component {
         show={this.state.show}
         onHide={() => this.props.close(this.state.modalName)}
         onEnter={this.openModal}
-        aria-labelledby="example-modal-sizes-title-lg"
+        aria-labelledby=""
       >
         <Modal.Header closeButton>
-          <Modal.Title id="example-modal-sizes-title-lg">
+          <Modal.Title id="">
             Transferir Chamado {this.state.transf.formulario}
           </Modal.Title>
         </Modal.Header>
