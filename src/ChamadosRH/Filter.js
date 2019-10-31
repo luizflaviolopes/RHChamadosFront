@@ -4,6 +4,7 @@ import { Typeahead } from "react-bootstrap-typeahead";
 import api from "../APIs/DataApi";
 import InputMask from "react-input-mask";
 import { FilterCall } from "./FilterCall";
+import { toast } from 'react-toastify';
 
 export class Filter extends Component {
   constructor(props) {
@@ -38,11 +39,26 @@ export class Filter extends Component {
       headers: { "Content-Type": "application/json;" },
       body: JSON.stringify(this.state.filter)
     })
-      .then(a => a.json())
-      .then(data =>
+      .then(resp => {
+        if (resp.status == 200)
+          return resp.json()
+        else
+          throw resp.json();
+      })
+      .then(data => {
         this.setState({
           listFilter: data
         })
+      })
+      .catch(
+        a => a.then(e =>
+          toast.error(
+            e.message,
+            {
+              position: toast.POSITION.TOP_CENTER
+            }
+          )
+        )
       );
   };
   render() {
@@ -123,7 +139,7 @@ export class Filter extends Component {
               <Form.Label>Setor</Form.Label>
               <Form.Control as="select">
                 <option>Selecione um Setor</option>
-                {this.state.listaSetor.map(function(a, i) {
+                {this.state.listaSetor.map(function (a, i) {
                   return <option value={a.id}>{a.setor}</option>;
                 })}
               </Form.Control>
