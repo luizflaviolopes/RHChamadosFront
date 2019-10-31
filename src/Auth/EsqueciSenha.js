@@ -5,6 +5,7 @@ import logo from "../img/logo_rhresponde_form-branco.svg";
 import { Form } from "react-bootstrap";
 import api from "../APIs/DataApi";
 import { toast, ToastContainer } from "react-toastify";
+import { Link } from 'react-router-dom';
 
 export class EsqueciSenha extends Component {
   constructor(props) {
@@ -80,10 +81,15 @@ export class EsqueciSenha extends Component {
                       }
                     />
                   </Form.Group>
-
+                  <Link to="/">
+                    <Button className="btn-menu">
+                      Voltar
+                  </Button>
+                  </Link>
                   <Button className="btn-menu" type="submit">
                     Solicitar Senha
                   </Button>
+
                 </Form>
               </div>
             </div>

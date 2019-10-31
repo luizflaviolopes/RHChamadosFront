@@ -89,16 +89,22 @@ export class PageChamado extends Component {
       body: JSON.stringify(this.state.selectedAssunto)
     })
       .then(resp => {
-        if (resp.status == 200) return resp.json();
+        if (resp.status === 200) {
+
+          toast.success("Assunto Aleterado.");
+          this.setState({
+            alterAssunto: "true"
+          })
+        }
         else throw resp.json();
       })
-      .then(a => toast.success("Confirmado"))
       .catch(a =>
-        a.then(e =>
+        a.then(e => {
+          console.log(e)
           toast.error(e.message, {
             position: toast.POSITION.TOP_CENTER
           })
-        )
+        })
       );
   }
   handleAtribuirChamado() {
