@@ -63,7 +63,7 @@ export class FilterCall extends Component {
               return (
                 <Chamado
                   numChamado={a.numChamado}
-                  solicitante={a.nome}
+                  solicitante={a.solicitante}
                   assunto={a.assunto}
                   data={a.data}
                   status={a.status}
