@@ -78,11 +78,11 @@ export class ConfirmarSenha extends Component {
                   <Form.Group>
                     <Form.Label>A senha deve conter no mínimo:</Form.Label>
                   </Form.Group>
-                  <Form.Group>- Seis dígitos</Form.Group>
-                  <Form.Group>- Uma letra maiúscula</Form.Group>
-                  <Form.Group>- Um número</Form.Group>
+                  <Form.Group>• Seis dígitos</Form.Group>
+                  <Form.Group>• Uma letra maiúscula</Form.Group>
+                  <Form.Group>• Um número</Form.Group>
                   <Form.Group>
-                    - Um caractere especial (ex: !,@,#, etc...)
+                    • Um caractere especial (ex: !,@,#, etc...)
                   </Form.Group>
                   <Form.Group className="ttl">
                     <Form.Label>Criar Senha</Form.Label>
