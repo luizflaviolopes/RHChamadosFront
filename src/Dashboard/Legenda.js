@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { DiscreteColorLegend } from "react-vis";
-import 'react-vis/dist/style.css';
+
 
 export class Legenda extends Component {
     constructor(props) {
@@ -14,7 +13,7 @@ export class Legenda extends Component {
 
         return (
             <div className="float-right">
-                <DiscreteColorLegend height={300} width={300} items={this.props.legendas} />
+
             </div>
 
         );

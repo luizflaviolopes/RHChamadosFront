@@ -110,7 +110,7 @@ export class Respostas extends Component {
       );
     } */
 
-    this.state.listFile.forEach(function(j, r) {
+    this.state.listFile.forEach(function (j, r) {
       formData.append("file" + r, j);
     });
 
@@ -194,13 +194,13 @@ export class Respostas extends Component {
                 {({ getRootProps, getInputProps }) => (
                   <div {...getRootProps()}>
                     <input {...getInputProps()} />
-                    <Form.Label>Adicionar Documentos ao Chamado</Form.Label>
+                    <Form.Label className="pointer">Adicionar Documentos ao Chamado <FontAwesomeIcon icon="file-upload" /></Form.Label>
                   </div>
                 )}
               </Dropzone>
               <div className="anexo">
                 <Row>
-                  {this.state.listFile.map(function(a, i) {
+                  {this.state.listFile.map(function (a, i) {
                     return (
                       <Anexos nome={a.name} eliminar={_this.handleRemoveFile} />
                     );

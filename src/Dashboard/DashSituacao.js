@@ -1,9 +1,17 @@
-
 import React, { Component } from "react";
 import api from "../APIs/DataApi.js";
-import { RadialChart } from "react-vis";
-import 'react-vis/dist/style.css';
-import { Legenda } from "./Legenda.js";
+import {
+    BarChart,
+    XAxis,
+    YAxis,
+    Tooltip,
+    Bar,
+    Legend,
+    CartesianGrid,
+    PieChart,
+    Pie,
+    Cell
+} from "recharts";
 
 export class DashSituacao extends Component {
     constructor(props) {
@@ -61,28 +69,69 @@ export class DashSituacao extends Component {
 
     render() {
         let RadilGraphic;
-        const legendas = ['Em Atendimento', 'Fechados', 'Abertos'];
+        const COLORS = [
+            "#011C40",
+            "#A60303",
+            "#F27B13",
 
+        ];
+        let myData;
+        let all;
+        let grafic;
 
         if (this.state.fechados && this.state.abertos && this.state.atendimento) {
-            const myData = [{ angle: this.state.fechados.y }, { angle: this.state.abertos.y }, { angle: this.state.atendimento.y }];
-            RadilGraphic = (
-                <RadialChart
-                    //data={}
-                    data={myData}
-                    width={300}
-                    height={300} />
+            myData = [{ quantidade: this.state.fechados.y, name: this.state.fechados.x, }, { quantidade: this.state.abertos.y, name: this.state.abertos.x }, { quantidade: this.state.atendimento.y, name: this.state.atendimento.x }];
+            all = [{ quantidade: this.state.fechados.y + this.state.abertos.y + this.state.atendimento.y, name: "Total" }];
+            grafic = (
+                <PieChart
+                    width={window.innerWidth - 90}
+                    height={550}
+                    margin={{
+                        top: 20,
+                        right: 30,
+                        left: 20,
+                        bottom: 10
+                    }}
+                >
+                    <Pie
+                        data={myData}
+                        dataKey="quantidade"
+                        nameKey="name"
+                        innerRadius={190}
+                        fill="#841E19"
+                        cy="50%"
+                        label
+                        startAngle={180}
+                        endAngle={0}
+                        outerRadius={230}
+                        paddingAngle={1}
+                    >
+                        {myData.map((entry, index) => (
+                            <Cell fill={COLORS[index % COLORS.length]} />
+                        ))}
+                    </Pie>
+                    <Pie data={all}
+                        dataKey="quantidade"
+                        nameKey="name"
+                        fill="#841E19"
+                        cy="50%"
+                        startAngle={180}
+                        endAngle={0}
+                        outerRadius={180}
+                    />
+                    />
+                    <Tooltip />
+                </PieChart>
             )
         }
 
         return (
-            <div>
+            <div className="zebraA">
                 <div className="text-center">
                     <span className='ttl'>Quantidade de Chamados Por Situação</span>
                 </div>
                 <div>
-                    <Legenda legendas={legendas} />
-                    {RadilGraphic}
+                    {grafic}
                 </div>
             </div>
 

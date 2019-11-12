@@ -8,6 +8,8 @@ import Dropzone from "react-dropzone";
 import api from "../APIs/DataApi";
 import { toast } from "react-toastify";
 import { Typeahead } from "react-bootstrap-typeahead";
+import InputMask from "react-input-mask";
+
 
 export class Formulario extends Component {
   constructor(props) {
@@ -49,7 +51,7 @@ export class Formulario extends Component {
         .catch(a =>
           a.then(e =>
             Object.keys(e).forEach(function (a, i) {
-              toast.error(e[a], {
+              toast.error(e[a][0], {
                 position: toast.POSITION.TOP_CENTER
               });
             })
@@ -161,9 +163,9 @@ export class Formulario extends Component {
             </Form.Group>
             <Form.Group>
               <Form.Label>Telefone</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="(00) 0 0000-0000"
+
+              <InputMask
+                mask="(99) 99999-9999"
                 onChange={evt =>
                   this.setState({
                     newChamado: {
@@ -172,7 +174,14 @@ export class Formulario extends Component {
                     }
                   })
                 }
-              />
+              >
+                {inputprop => (
+                  <Form.Control
+                    type="text"
+                    placeholder="(00) 0 0000-0000"
+                  />
+                )}
+              </InputMask>
             </Form.Group>
             <Form.Group>
               <Form.Label>Descrição</Form.Label>
