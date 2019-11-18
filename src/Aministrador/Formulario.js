@@ -26,7 +26,11 @@ export class Formulario extends Component {
     this.handleFile = this.handleFile.bind(this);
     this.handleRemoveFile = this.handleRemoveFile.bind(this);
   }
-
+  componentDidMount() {
+    this.setState({
+      desativado: false
+    })
+  }
   handleNovoChamado() {
     if (!this.state.desativado) {
       this.setState({
@@ -55,9 +59,9 @@ export class Formulario extends Component {
           })
           .then(
             data => toast.success(data.message),
-            this.setState(this.props.close(this.state.modalName, {
+            this.setState({
               desativado: false
-            }))
+            }, this.props.close(this.state.modalName))
           )
           .catch(a =>
             a.then(e =>

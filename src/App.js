@@ -23,6 +23,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Filter } from "./ChamadosRH/Filter.js";
 import { GraphicStart } from "./Dashboard/GraphicStart.js";
+import { hostname } from "os";
 
 library.add(fas);
 
@@ -140,6 +141,16 @@ class App extends Component {
               </Button>
             </Can>
             {modalans} */}
+            <Can politica="Administrador">
+              <Button
+                className="btn-menu"
+                onClick={() => {
+                  window.location = "http://" + window.location.hostname + "/admin"
+                }}
+              >
+                Administrativo
+              </Button>
+            </Can>
 
             <Button className="btn-menu logout" onClick={this.handleLogout}>
               Sair.
