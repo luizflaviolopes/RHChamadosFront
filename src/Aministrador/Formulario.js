@@ -8,6 +8,8 @@ import Dropzone from "react-dropzone";
 import api from "../APIs/DataApi";
 import { toast } from "react-toastify";
 import { Typeahead } from "react-bootstrap-typeahead";
+import InputMask from "react-input-mask";
+
 
 export class Formulario extends Component {
   constructor(props) {
@@ -16,47 +18,62 @@ export class Formulario extends Component {
       show: props.show,
       assuntos: [],
       modalName: props.modalName,
-      listFile: []
+      listFile: [],
+      desativado: false
     };
     this.openModal = this.openModal.bind(this);
     this.handleNovoChamado = this.handleNovoChamado.bind(this);
     this.handleFile = this.handleFile.bind(this);
     this.handleRemoveFile = this.handleRemoveFile.bind(this);
   }
-
+  componentDidMount() {
+    this.setState({
+      desativado: false
+    })
+  }
   handleNovoChamado() {
-    const formData = new FormData();
-    const _this = this;
-
-    if (this.state.newChamado !== undefined) {
-      Object.keys(this.state.newChamado).forEach(function (a, i) {
-        if (a !== undefined) formData.append(a, _this.state.newChamado[a]);
-      });
-
-      this.state.listFile.forEach(function (j, r) {
-        formData.append("file" + r, j);
-      });
-
-      api("api/NovoChamado", {
-        method: "post",
-        body: formData
+    if (!this.state.desativado) {
+      this.setState({
+        desativado: true
       })
-        .then(resp => {
-          if (resp.status == 200) return resp.json();
-          else throw resp.json();
-        })
-        .then(data => toast.success(data.message))
-        .catch(a =>
-          a.then(e =>
-            Object.keys(e).forEach(function (a, i) {
-              toast.error(e[a], {
-                position: toast.POSITION.TOP_CENTER
-              });
-            })
-          )
-        );
 
-      this.props.close(this.state.modalName);
+      const formData = new FormData();
+      const _this = this;
+
+      if (this.state.newChamado !== undefined) {
+        Object.keys(this.state.newChamado).forEach(function (a, i) {
+          if (a !== undefined) formData.append(a, _this.state.newChamado[a]);
+        });
+
+        this.state.listFile.forEach(function (j, r) {
+          formData.append("file" + r, j);
+        });
+
+        api("api/NovoChamado", {
+          method: "post",
+          body: formData
+        })
+          .then(resp => {
+            if (resp.status == 200) return resp.json();
+            else throw resp.json();
+          })
+          .then(
+            data => toast.success(data.message),
+            this.setState({
+              desativado: false
+            }, this.props.close(this.state.modalName))
+          )
+          .catch(a =>
+            a.then(e =>
+              Object.keys(e).forEach(function (a, i) {
+                toast.error(e[a][0], {
+                  position: toast.POSITION.TOP_CENTER
+                });
+              }),
+
+            )
+          );
+      }
     }
   }
 
@@ -117,7 +134,7 @@ export class Formulario extends Component {
         size="lg"
         show={this.state.show}
         onEnter={this.openModal}
-        onHide={() => this.props.close(this.state.modalName)}
+        onHide={() => { this.props.close(this.state.modalName); this.setState({ desativado: false }); }}
         aria-labelledby="Respostas-Chamados"
       >
         <Modal.Header closeButton>
@@ -161,9 +178,9 @@ export class Formulario extends Component {
             </Form.Group>
             <Form.Group>
               <Form.Label>Telefone</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="(00) 0 0000-0000"
+
+              <InputMask
+                mask="(99) 99999-9999"
                 onChange={evt =>
                   this.setState({
                     newChamado: {
@@ -172,7 +189,14 @@ export class Formulario extends Component {
                     }
                   })
                 }
-              />
+              >
+                {inputprop => (
+                  <Form.Control
+                    type="text"
+                    placeholder="(00) 0 0000-0000"
+                  />
+                )}
+              </InputMask>
             </Form.Group>
             <Form.Group>
               <Form.Label>Descrição</Form.Label>
@@ -213,11 +237,11 @@ export class Formulario extends Component {
                 </div>
               </div>
             </Form.Group>
-            <Link to="/Chamados">
-              <Button className="btn-menu" onClick={this.handleNovoChamado}>
-                Criar
-              </Button>
-            </Link>
+
+            <Button id="criarMenu" className="btn-menu" onClick={this.handleNovoChamado} >
+              Criar
+            </Button>
+
           </Form>
         </Modal.Body>
       </Modal>

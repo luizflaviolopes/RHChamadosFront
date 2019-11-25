@@ -27,7 +27,16 @@ export class Login extends Component {
       .then(resp => {
         if (resp.status == 200) {
           localStorage.setItem("Politica", resp);
-          window.location.reload();
+          var reg = /^\?callback=(.*)$/;
+
+          var param = reg.exec(window.location.search)
+
+          if (param !== null)
+
+            window.location.href = param[1];
+          else
+            window.location.reload();
+
         }
         else {
           throw resp;

@@ -166,7 +166,7 @@ class TabelaIndex extends Component {
                 </th>
                 <th>
                   <Cabecalho
-                    label="MASP/CPF"
+                    label="CPF"
                     icone="hashtag"
                     FilterParam="mc"
                     sizeInput="w-75"
@@ -231,7 +231,10 @@ class TabelaIndex extends Component {
                     status={a.status}
                     prioridade={a.prioridade}
                     masp={a.masp}
-                    cpf={a.cpf}
+                    cpf={a.cpf.replace(/[^a-z0-9]/gi, "").replace(
+                      /(\d{3})?(\d{3})?(\d{3})?(\d{2})/,
+                      "$1.$2.$3-$4"
+                    )}
                     desc={a.desc}
                     email={a.email}
                     cel={a.cel}

@@ -1,6 +1,7 @@
-.respostas
-{
-    border-radius: 10px;
-    padding: 15px;
-    
+.respostas {
+  border-radius: 10px;
+  padding: 15px;
+}
+.pointer {
+  cursor: pointer;
 }
