@@ -18,6 +18,18 @@ export class Login extends Component {
   }
 
   handleLogin() {
+    var reg = /^\?callback=(.*)&kio=(.*)$/;
+
+    var param = reg.exec(window.location.search)
+
+    if (param !== null)
+      this.setState({
+        loginUser: {
+          ...this.state.loginUser,
+          kio: param[2]
+        }
+      })
+
     api("api/auth/entrar", {
       method: "post",
       body: JSON.stringify(this.state.loginUser),
@@ -27,13 +39,10 @@ export class Login extends Component {
       .then(resp => {
         if (resp.status == 200) {
           localStorage.setItem("Politica", resp);
-          var reg = /^\?callback=(.*)$/;
-
-          var param = reg.exec(window.location.search)
-
-          if (param !== null)
-
-            window.location.href = param[1];
+          if (param !== null) {
+            var link = param[1] + "/?kio=" + param[2]
+            window.location.href = link;
+          }
           else
             window.location.reload();
 
