@@ -18,6 +18,29 @@ export class Login extends Component {
   }
 
   handleLogin() {
+    let callLogin = () => {
+      api("api/auth/entrar", {
+        method: "post",
+        body: JSON.stringify(this.state.loginUser),
+        headers: { "Content-Type": "application/json;" },
+        credentials: "include"
+      })
+        .then(resp => {
+          if (resp.status == 200) {
+            localStorage.setItem("Politica", resp);
+            if (param !== null) {
+              var link = param[1] + "/?kio=" + param[2];
+              window.location.href = link;
+            } else window.location.reload();
+          } else {
+            throw resp;
+          }
+        })
+        .catch(a => {
+          toast.error("Usuário ou senha inválidos");
+        });
+    };
+
     var reg = /^\?callback=(.*)&kio=(.*)$/;
 
     var param = reg.exec(window.location.search);
@@ -30,29 +53,11 @@ export class Login extends Component {
             kio: param[2]
           }
         },
-        () => {
-          api("api/auth/entrar", {
-            method: "post",
-            body: JSON.stringify(this.state.loginUser),
-            headers: { "Content-Type": "application/json;" },
-            credentials: "include"
-          })
-            .then(resp => {
-              if (resp.status == 200) {
-                localStorage.setItem("Politica", resp);
-                if (param !== null) {
-                  var link = param[1] + "/?kio=" + param[2];
-                  window.location.href = link;
-                } else window.location.reload();
-              } else {
-                throw resp;
-              }
-            })
-            .catch(a => {
-              toast.error("Usuário ou senha inválidos");
-            });
-        }
+        callLogin()
       );
+    else {
+      callLogin();
+    }
   }
 
   render() {
