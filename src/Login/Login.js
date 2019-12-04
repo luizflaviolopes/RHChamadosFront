@@ -20,51 +20,43 @@ export class Login extends Component {
   handleLogin() {
     var reg = /^\?callback=(.*)&kio=(.*)$/;
 
-    var param = reg.exec(window.location.search)
+    var param = reg.exec(window.location.search);
 
     if (param !== null)
-      this.setState({
-        loginUser: {
-          ...this.state.loginUser,
-          kio: param[2]
-        }
-      })
-
-    api("api/auth/entrar", {
-      method: "post",
-      body: JSON.stringify(this.state.loginUser),
-      headers: { "Content-Type": "application/json;" },
-      credentials: "include"
-    })
-      .then(resp => {
-        if (resp.status == 200) {
-          localStorage.setItem("Politica", resp);
-          if (param !== null) {
-            var link = param[1] + "/?kio=" + param[2]
-            window.location.href = link;
+      this.setState(
+        {
+          loginUser: {
+            ...this.state.loginUser,
+            kio: param[2]
           }
-          else
-            window.location.reload();
-
-        }
-        else {
-          throw resp;
-        }
-      }
-      )
-      .catch(a => {
-        toast.error("Usuário ou senha inválidos");
-      }
-
-      )
+        },
+        api("api/auth/entrar", {
+          method: "post",
+          body: JSON.stringify(this.state.loginUser),
+          headers: { "Content-Type": "application/json;" },
+          credentials: "include"
+        })
+          .then(resp => {
+            if (resp.status == 200) {
+              localStorage.setItem("Politica", resp);
+              if (param !== null) {
+                var link = param[1] + "/?kio=" + param[2];
+                window.location.href = link;
+              } else window.location.reload();
+            } else {
+              throw resp;
+            }
+          })
+          .catch(a => {
+            toast.error("Usuário ou senha inválidos");
+          })
+      );
   }
 
   render() {
     return (
       <Container fluid className="padding-zero">
-        <ToastContainer
-          position="top-center"
-          closeOnClick />
+        <ToastContainer position="top-center" closeOnClick />
         <div className="background-logon">
           <div className="formLogin">
             <div className="apresentacao">
@@ -103,7 +95,6 @@ export class Login extends Component {
                         />
                       )}
                     </InputMask>
-
                   </Form.Group>
                   <Form.Group>
                     <Form.Label>Senha</Form.Label>
@@ -121,9 +112,7 @@ export class Login extends Component {
                       }
                     />
                     <Form.Text className="text-primary link">
-                      <a href="/EsqueciSenha">
-                        Esqueci Minha Senha
-                      </a>
+                      <a href="/EsqueciSenha">Esqueci Minha Senha</a>
                     </Form.Text>
                   </Form.Group>
 
