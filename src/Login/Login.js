@@ -18,10 +18,15 @@ export class Login extends Component {
   }
 
   handleLogin() {
-    let callLogin = () => {
+    var reg = /^\?callback=(.*)&kio=(.*)$/;
+
+    var param = reg.exec(window.location.search);
+    let _this = this;
+
+    let callLogin = user => {
       api("api/auth/entrar", {
         method: "post",
-        body: JSON.stringify(this.state.loginUser),
+        body: JSON.stringify(user),
         headers: { "Content-Type": "application/json;" },
         credentials: "include"
       })
@@ -41,10 +46,6 @@ export class Login extends Component {
         });
     };
 
-    var reg = /^\?callback=(.*)&kio=(.*)$/;
-
-    var param = reg.exec(window.location.search);
-
     if (param !== null)
       this.setState(
         {
@@ -53,10 +54,12 @@ export class Login extends Component {
             kio: param[2]
           }
         },
-        callLogin()
+        () => {
+          callLogin(this.state.loginUser);
+        }
       );
     else {
-      callLogin();
+      callLogin(this.state.loginUser);
     }
   }
 
