@@ -39,15 +39,14 @@ export class ConfirmarSenha extends Component {
             if (resp.status === 200) {
               toast.success("Confirmado.");
               window.location.replace("/");
-            }
-            else throw resp.json();
+            } else throw resp.json();
           })
           .catch(a =>
             a.then(e => {
-              console.log(e)
+              console.log(e);
               toast.error(e.message, {
                 position: toast.POSITION.TOP_CENTER
-              })
+              });
             })
           );
       }
@@ -57,9 +56,7 @@ export class ConfirmarSenha extends Component {
   render() {
     return (
       <Container fluid className="padding-zero">
-        <ToastContainer
-          position="top-center"
-          closeOnClick />
+        <ToastContainer position="top-center" closeOnClick />
         <div className="background-logon">
           <div className="formLogin">
             <div className="apresentacao">
@@ -75,6 +72,18 @@ export class ConfirmarSenha extends Component {
                     this.handlePassword();
                   }}
                 >
+                  <Form.Group className="ttl">
+                    <Form.Label>Padrão da Senha</Form.Label>
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label>A senha deve conter no mínimo:</Form.Label>
+                  </Form.Group>
+                  <Form.Group>• Seis dígitos</Form.Group>
+                  <Form.Group>• Uma letra maiúscula</Form.Group>
+                  <Form.Group>• Um número</Form.Group>
+                  <Form.Group>
+                    • Um caractere especial (ex: !,@,#, etc...)
+                  </Form.Group>
                   <Form.Group className="ttl">
                     <Form.Label>Criar Senha</Form.Label>
                   </Form.Group>

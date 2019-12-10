@@ -23,6 +23,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Filter } from "./ChamadosRH/Filter.js";
 import { GraphicStart } from "./Dashboard/GraphicStart.js";
+import { hostname } from "os";
 
 library.add(fas);
 
@@ -84,7 +85,7 @@ class App extends Component {
             <Can politica="Visualizar Chamado">
               <Link to="/dashboard">
                 <Button className="btn-menu" onClick={this.OnclickHande}>
-                  Início
+                  Dashboard
                 </Button>
               </Link>
             </Can>
@@ -140,6 +141,16 @@ class App extends Component {
               </Button>
             </Can>
             {modalans} */}
+            <Can politica="Administrador">
+              <Button
+                className="btn-menu"
+                onClick={() => {
+                  window.location = "http://10.33.132.120:8080/"
+                }}
+              >
+                Administrativo
+              </Button>
+            </Can>
 
             <Button className="btn-menu logout" onClick={this.handleLogout}>
               Sair.
