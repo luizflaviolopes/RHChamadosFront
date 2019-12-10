@@ -26,6 +26,13 @@
   margin-bottom: 0 !important;
 }
 
-.sidenav---sidenav---_2tBP.sidenav---expanded---1KdUL .sidenav---sidenav-subnav---1EN61 > .sidenav---sidenav-subnavitem---1cD47::before{
-  left:0;
+.sidenav---sidenav---_2tBP.sidenav---expanded---1KdUL
+  .sidenav---sidenav-subnav---1EN61
+  > .sidenav---sidenav-subnavitem---1cD47::before {
+  left: 0;
+}
+
+.filter {
+  padding-left: 1rem;
+  padding-right: 1rem;
 }

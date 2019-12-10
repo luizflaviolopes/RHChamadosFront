@@ -139,7 +139,7 @@ class TabelaIndex extends Component {
               <tr>
                 <th>
                   <Cabecalho
-                    label="Nº"
+                    label="Nª"
                     icone="list-ol"
                     FilterParam="numChamado"
                     sizeInput="w-25"
