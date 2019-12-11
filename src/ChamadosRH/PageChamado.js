@@ -346,12 +346,14 @@ export class PageChamado extends Component {
     return (
       <div className="PageChamados">
         <div className="form-group chamado">
+          {/* 
+          Div para mostra numero de chamado
           <div className="form-group text-center">
             <label>
               <span>Chamado: </span>
               {this.state.numChamado}
             </label>
-          </div>
+          </div> */}
           <div className="form-group text-center">
             <label>
               <span>Protocolo: </span>

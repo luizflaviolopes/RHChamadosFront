@@ -9,6 +9,7 @@ import "../css/Cabecalho.css";
 import ReactPaginate from "react-paginate";
 import "../css/pagination.css";
 import api from "../APIs/DataApi";
+const removeAcentos = require('remove-accents')
 
 class TabelaIndex extends Component {
   constructor(props) {
@@ -31,20 +32,21 @@ class TabelaIndex extends Component {
     let newFilter = this.state.filters;
     newFilter[a.propertie] = a.value;
     window.teste = newFilter;
-    var checkFilter = function(element) {
+    var checkFilter = function (element) {
       let retorno = true;
-      Object.keys(newFilter).forEach(function(p, i) {
+      Object.keys(newFilter).forEach(function (p, i) {
         if (!isNaN(element[p])) {
+
           if (
             newFilter[p] !== "" &&
-            !element[p].toString().includes(newFilter[p].toString())
+            !removeAcentos(element[p].toString()).includes(newFilter[p].toString())
           ) {
             retorno = false;
             return false;
           }
         } else if (
           newFilter[p] !== "" &&
-          !element[p].toLowerCase().includes(newFilter[p])
+          !removeAcentos(element[p].toLowerCase()).includes(newFilter[p])
         ) {
           retorno = false;
           return false;
@@ -52,7 +54,7 @@ class TabelaIndex extends Component {
       });
       return retorno;
     };
-    let newDems = this.state.all.filter(function(a, i) {
+    let newDems = this.state.all.filter(function (a, i) {
       return checkFilter(a);
     });
 
@@ -91,6 +93,9 @@ class TabelaIndex extends Component {
     api("api/values?tipo=" + this.state.tipo, {})
       .then(response => response.json())
       .then(data => {
+
+        data.lista.filter(a => { return !a.protocolo }).forEach(b => { b.protocolo = 'A' + b.numChamado })
+
         this.setState({
           all: data.lista,
           filtered: data.lista
@@ -101,7 +106,7 @@ class TabelaIndex extends Component {
   render() {
     let filterObj = this.state.filters;
     let _this = this;
-    var checkFilter = function(element) {
+    var checkFilter = function (element) {
       for (var p in Object.keys(filterObj)) {
         if (filterObj[p] !== "" && element[p] !== filterObj[p]) return false;
       }
@@ -137,8 +142,8 @@ class TabelaIndex extends Component {
           <Table striped bordered hover className="cabecalho">
             <thead>
               <tr>
-                <th>
-                  {/*
+                {/* <th>
+                
                     Coluna de numero de chamado gerado pelo RHChamados
                   <Cabecalho
                     label="Nª"
@@ -146,8 +151,8 @@ class TabelaIndex extends Component {
                     FilterParam="numChamado"
                     sizeInput="w-25"
                     onFilter={this.handleFiltering}
-                  /> */}
-                </th>
+                  /> 
+                </th>*/}
                 <th>
                   <Cabecalho
                     label="Protocolo"
@@ -223,7 +228,7 @@ class TabelaIndex extends Component {
               </tr>
             </thead>
             <tbody>
-              {getPageDems().map(function(a, i) {
+              {getPageDems().map(function (a, i) {
                 return (
                   <Chamado
                     numChamado={a.numChamado}

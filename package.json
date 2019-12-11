@@ -20,7 +20,8 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "2.1.8",
     "react-toastify": "^5.4.1",
-    "recharts": "^1.8.5"
+    "recharts": "^1.8.5",
+    "remove-accents": "^0.4.2"
   },
   "scripts": {
     "start": "react-scripts start",
