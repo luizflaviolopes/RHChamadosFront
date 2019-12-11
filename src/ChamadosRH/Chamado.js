@@ -71,8 +71,11 @@ class Chamado extends Component {
           ? 'className = "autenticado"'
           : null)}
       >
-        <td title={this.state.numChamado}>{this.state.numChamado}</td>
-        <td title={this.state.protocolo}>{this.state.protocolo}</td>
+        {/* Coluna de numero de chamado gerado pelo RHChamados
+        
+        <td title={this.state.numChamado}>{this.state.numChamado}</td> */}
+
+        <td title={this.state.protocolo}>{this.state.IsAutenticado === null ? ("A" + this.state.numChamado) : this.state.protocolo}</td>
         <td title={this.state.solicitante}>{this.state.solicitante}</td>
         <td title={this.state.cpf}>
           {this.state.cpf !== null ? this.state.cpf : this.state.masp}

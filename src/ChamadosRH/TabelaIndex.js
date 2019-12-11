@@ -138,13 +138,15 @@ class TabelaIndex extends Component {
             <thead>
               <tr>
                 <th>
+                  {/*
+                    Coluna de numero de chamado gerado pelo RHChamados
                   <Cabecalho
                     label="Nª"
                     icone="list-ol"
                     FilterParam="numChamado"
                     sizeInput="w-25"
                     onFilter={this.handleFiltering}
-                  />
+                  /> */}
                 </th>
                 <th>
                   <Cabecalho
