@@ -4,7 +4,7 @@ import { Typeahead } from "react-bootstrap-typeahead";
 import api from "../APIs/DataApi";
 import InputMask from "react-input-mask";
 import { FilterCall } from "./FilterCall";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 export class Filter extends Component {
   constructor(props) {
@@ -40,24 +40,19 @@ export class Filter extends Component {
       body: JSON.stringify(this.state.filter)
     })
       .then(resp => {
-        if (resp.status == 200)
-          return resp.json()
-        else
-          throw resp.json();
+        if (resp.status == 200) return resp.json();
+        else throw resp.json();
       })
       .then(data => {
         this.setState({
           listFilter: data
-        })
+        });
       })
-      .catch(
-        a => a.then(e =>
-          toast.error(
-            e.message,
-            {
-              position: toast.POSITION.TOP_CENTER
-            }
-          )
+      .catch(a =>
+        a.then(e =>
+          toast.error(e.message, {
+            position: toast.POSITION.TOP_CENTER
+          })
         )
       );
   };
@@ -65,11 +60,12 @@ export class Filter extends Component {
     return (
       <div className="">
         <div className="zebraB filter">
-          <Form onSubmit={evt => {
-            evt.preventDefault();
-            this.handleFiltroChamado();
-          }
-          }>
+          <Form
+            onSubmit={evt => {
+              evt.preventDefault();
+              this.handleFiltroChamado();
+            }}
+          >
             <Row>
               <Col sm="6">
                 <Form.Group>
@@ -143,16 +139,19 @@ export class Filter extends Component {
               <Col sm="4">
                 <Form.Group>
                   <Form.Label>Setor</Form.Label>
-                  <Form.Control as="select" onChange={evt =>
-                    this.setState({
-                      filter: {
-                        ...this.state.filter,
-                        Setor: evt.target.value
-                      }
-                    })
-                  }>
+                  <Form.Control
+                    as="select"
+                    onChange={evt =>
+                      this.setState({
+                        filter: {
+                          ...this.state.filter,
+                          Setor: evt.target.value
+                        }
+                      })
+                    }
+                  >
                     <option>Selecione um Setor</option>
-                    {this.state.listaSetor.map(function (a, i) {
+                    {this.state.listaSetor.map(function(a, i) {
                       return <option value={a.id}>{a.setor}</option>;
                     })}
                   </Form.Control>
@@ -174,7 +173,6 @@ export class Filter extends Component {
                   />
                 </Form.Group>
               </Col>
-
             </Row>
             <Row>
               <Col sm="4">
@@ -213,6 +211,25 @@ export class Filter extends Component {
                 </Form.Group>
               </Col>
             </Row>
+            <Row>
+              <Col sm="6">
+                <Form.Group>
+                  <Form.Label>Data</Form.Label>
+                  <Form.Control
+                    type="month"
+                    onChange={evt =>
+                      this.setState({
+                        filter: {
+                          ...this.state.filter,
+                          data: evt.target.value
+                        }
+                      })
+                    }
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+
             <Form.Group>
               <Button variant="primary" type="submit">
                 Filtrar
