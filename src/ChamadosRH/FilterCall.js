@@ -35,7 +35,7 @@ export class FilterCall extends Component {
             </th>
             <th>
               <FontAwesomeIcon icon="hashtag" />
-              MASP/CPF
+              CPF
             </th>
             <th>
               <FontAwesomeIcon icon="comment-dots" />

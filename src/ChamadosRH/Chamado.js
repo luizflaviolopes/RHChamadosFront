@@ -24,7 +24,8 @@ class Chamado extends Component {
       justificativa: props.justificativa,
       atendenteResponsavel: props.atendenteResponsavel,
       protocolo: props.protocolo,
-      alterAssunto: props.alterAssunto
+      alterAssunto: props.alterAssunto,
+      IsAutenticado: props.IsAutenticado
     };
     this.OnclickHande = this.OnclickHande.bind(this);
   }
@@ -47,7 +48,8 @@ class Chamado extends Component {
       justificativa: nextProps.justificativa,
       atendenteResponsavel: nextProps.atendenteResponsavel,
       protocolo: nextProps.protocolo,
-      alterAssunto: nextProps.alterAssunto
+      alterAssunto: nextProps.alterAssunto,
+      IsAutenticado: nextProps.IsAutenticado
     });
   }
   OnclickHande() {
@@ -67,12 +69,15 @@ class Chamado extends Component {
     return (
       <tr
         onClick={this.OnclickHande}
-        {...(this.props.IsAutenticado == true
-          ? 'className = "autenticado"'
-          : null)}
+        className={this.state.IsAutenticado === "true" ? "autenticado" : null}
       >
-        <td title={this.state.numChamado}>{this.state.numChamado}</td>
-        <td title={this.state.protocolo}>{this.state.protocolo}</td>
+        {/* Coluna de numero de chamado gerado pelo RHChamados
+        
+        <td title={this.state.numChamado}>{this.state.numChamado}</td> */}
+
+        <td title={this.state.protocolo}>
+          {this.state.protocolo}
+        </td>
         <td title={this.state.solicitante}>{this.state.solicitante}</td>
         <td title={this.state.cpf}>
           {this.state.cpf !== null ? this.state.cpf : this.state.masp}

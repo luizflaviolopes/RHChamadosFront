@@ -85,7 +85,7 @@ class App extends Component {
             <Can politica="Visualizar Chamado">
               <Link to="/dashboard">
                 <Button className="btn-menu" onClick={this.OnclickHande}>
-                  Início
+                  Dashboard
                 </Button>
               </Link>
             </Can>
@@ -145,7 +145,7 @@ class App extends Component {
               <Button
                 className="btn-menu"
                 onClick={() => {
-                  window.location = "http://" + window.location.hostname + "/admin"
+                  window.location = "http://10.33.132.120:8080/"
                 }}
               >
                 Administrativo

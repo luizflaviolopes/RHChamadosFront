@@ -13,75 +13,139 @@ export class DashDate extends PureComponent {
             tipo: null,
             assuntos: [],
             crosValue: [],
-            executar: true
+            executar: true,
+            DashDate: {}
         };
         this.analiseDosDados = this.analiseDosDados.bind(this);
+        this.attdata = this.attdata.bind(this);
     }
-
+    componentWillUpdate(netxdata) {
+        console.log(netxdata)
+        if (this.state.DashDate !== this.props.DashDate) {
+            this.setState({
+                DashDate: this.props.DashDate
+            })
+        }
+    }
     componentDidMount() {
-        api("api/DashBoard/BuscarChamados", {
-        })
-            .then(
-                response =>
-                    response.json())
-            .then(data => {
-                this.setState({
-                    all: data.map(function (a) {
-                        return {
-                            x: a.propriedade,
-                            y: a.quantidade
-                        };
-                    })
-                });
-            });
-        api("api/DashBoard/BuscarChamadosAbertos", {
-        })
-            .then(
-                response =>
-                    response.json())
-            .then(data => {
-                this.setState({
-                    abertosData: data.map(function (a) {
-                        return {
-                            x: a.propriedade,
-                            y: a.quantidade
-                        };
-                    })
-                });
-            });
-        api("api/DashBoard/BuscarChamadosFechados", {
-        })
-            .then(
-                response =>
-                    response.json())
-            .then(data => {
-                this.setState({
-                    fechadosData: data.map(function (a) {
-                        return {
-                            x: a.propriedade,
-                            y: a.quantidade
-                        };
-                    })
-                });
-            });
 
-        api("api/DashBoard/BuscarChamadosAtendimento", {
-        })
-            .then(
-                response =>
-                    response.json())
-            .then(data => {
-                this.setState({
-                    atendimentoData: data.map(function (a) {
-                        return {
-                            x: a.propriedade,
-                            y: a.quantidade
-                        };
-                    })
-                });
-            });
+
+
+        // api("api/DashBoard/BuscarChamados", {
+        // })
+        //     .then(
+        //         response =>
+        //             response.json())
+        //     .then(data => {
+        //         this.setState({
+        //             all: data.map(function (a) {
+        //                 return {
+        //                     x: a.propriedade,
+        //                     y: a.quantidade
+        //                 };
+        //             })
+        //         });
+        //     });
+        // api("api/DashBoard/BuscarChamadosAbertos", {
+        // })
+        //     .then(
+        //         response =>
+        //             response.json())
+        //     .then(data => {
+        //         this.setState({
+        //             abertosData: data.map(function (a) {
+        //                 return {
+        //                     x: a.propriedade,
+        //                     y: a.quantidade
+        //                 };
+        //             })
+        //         });
+        //     });
+        // api("api/DashBoard/BuscarChamadosFechados", {
+        // })
+        //     .then(
+        //         response =>
+        //             response.json())
+        //     .then(data => {
+        //         this.setState({
+        //             fechadosData: data.map(function (a) {
+        //                 return {
+        //                     x: a.propriedade,
+        //                     y: a.quantidade
+        //                 };
+        //             })
+        //         });
+        //     });
+
+        // api("api/DashBoard/BuscarChamadosAtendimento", {
+        // })
+        //     .then(
+        //         response =>
+        //             response.json())
+        //     .then(data => {
+        //         this.setState({
+        //             atendimentoData: data.map(function (a) {
+        //                 return {
+        //                     x: a.propriedade,
+        //                     y: a.quantidade
+        //                 };
+        //             })
+        //         });
+        //     });
+    }
+    attdata() {
+
+        // this.setState({
+        //     all: this.state.DashDate.all.map(function (a) {
+        //         return {
+        //             x: a.propriedade,
+        //             y: a.quantidade
+        //         };
+        //     }),
+        // })
+
     }
     analiseDosDados() {
+        if (this.state.DashDate) {
+            console.log(this.state.DashDate);
+            this.setState({
+                all: this.state.DashDate.all
+                // .map(function (a) {
+                //     return {
+                //         x: a.propriedade,
+                //         y: a.quantidade
+                //     };
+                // })
+                ,
+                atendimentoData: this.state.DashDate.atendimentoData
+                // .map(function (a) {
+                //     return {
+                //         x: a.propriedade,
+                //         y: a.quantidade
+                //     };
+                // })
+                ,
+                fechadosData: this.state.DashDate.fechadosData
+                // .map(function (a) {
+                //     return {
+                //         x: a.propriedade,
+                //         y: a.quantidade
+                //     };
+                // })
+                ,
+                abertosData: this.state.DashDate.abertosData
+                // .map(function (a) {
+                //     return {
+                //         x: a.propriedade,
+                //         y: a.quantidade
+                //     };
+                // }),
+
+            })
+        }
+
+
+
         let _this = this;
         let fechado;
         let abertos;

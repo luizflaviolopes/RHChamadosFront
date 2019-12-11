@@ -9,6 +9,7 @@ import "../css/Cabecalho.css";
 import ReactPaginate from "react-paginate";
 import "../css/pagination.css";
 import api from "../APIs/DataApi";
+const removeAcentos = require('remove-accents')
 
 class TabelaIndex extends Component {
   constructor(props) {
@@ -35,16 +36,17 @@ class TabelaIndex extends Component {
       let retorno = true;
       Object.keys(newFilter).forEach(function (p, i) {
         if (!isNaN(element[p])) {
+
           if (
             newFilter[p] !== "" &&
-            !element[p].toString().includes(newFilter[p].toString())
+            !removeAcentos(element[p].toString()).includes(newFilter[p].toString())
           ) {
             retorno = false;
             return false;
           }
         } else if (
           newFilter[p] !== "" &&
-          !element[p].toLowerCase().includes(newFilter[p])
+          !removeAcentos(element[p].toLowerCase()).includes(newFilter[p])
         ) {
           retorno = false;
           return false;
@@ -91,6 +93,9 @@ class TabelaIndex extends Component {
     api("api/values?tipo=" + this.state.tipo, {})
       .then(response => response.json())
       .then(data => {
+
+        data.lista.filter(a => { return !a.protocolo }).forEach(b => { b.protocolo = 'A' + b.numChamado })
+
         this.setState({
           all: data.lista,
           filtered: data.lista
@@ -137,15 +142,17 @@ class TabelaIndex extends Component {
           <Table striped bordered hover className="cabecalho">
             <thead>
               <tr>
-                <th>
+                {/* <th>
+                
+                    Coluna de numero de chamado gerado pelo RHChamados
                   <Cabecalho
-                    label="Nº"
+                    label="Nª"
                     icone="list-ol"
                     FilterParam="numChamado"
                     sizeInput="w-25"
                     onFilter={this.handleFiltering}
-                  />
-                </th>
+                  /> 
+                </th>*/}
                 <th>
                   <Cabecalho
                     label="Protocolo"
@@ -168,7 +175,7 @@ class TabelaIndex extends Component {
                   <Cabecalho
                     label="CPF"
                     icone="hashtag"
-                    FilterParam="mc"
+                    FilterParam="cpf"
                     sizeInput="w-75"
                     onFilter={this.handleFiltering}
                   />
@@ -231,10 +238,12 @@ class TabelaIndex extends Component {
                     status={a.status}
                     prioridade={a.prioridade}
                     masp={a.masp}
-                    cpf={a.cpf.replace(/[^a-z0-9]/gi, "").replace(
-                      /(\d{3})?(\d{3})?(\d{3})?(\d{2})/,
-                      "$1.$2.$3-$4"
-                    )}
+                    cpf={a.cpf
+                      .replace(/[^a-z0-9]/gi, "")
+                      .replace(
+                        /(\d{3})?(\d{3})?(\d{3})?(\d{2})/,
+                        "$1.$2.$3-$4"
+                      )}
                     desc={a.desc}
                     email={a.email}
                     cel={a.cel}
