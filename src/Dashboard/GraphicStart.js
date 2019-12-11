@@ -15,6 +15,31 @@ export class GraphicStart extends Component {
             assuntos: []
         };
     }
+    componentDidMount() {
+        api("api/DashBoard/GetDashData", {})
+            .then(response => response.json())
+            .then(data =>
+                this.setState({
+                    data: data,
+                    DashAssunto: {
+                        assuntos: data.assuntos,
+                        assuntosMacros: data.assuntosMacros
+                    },
+                    DashSituacao: {
+                        abertos: data.abertos,
+                        fechados: data.fechados,
+                        emAtendimento: data.emAtendimento
+                    },
+                    DashDate: {
+                        abertosData: data.chamadosDataAbertos,
+                        fechadosData: data.chamadosDataAbertos,
+                        atendimentosData: data.chamadosDataAbertos,
+                        all: data.chamadosPorData
+                    }
+                })
+
+            );
+    }
 
     render() {
 
@@ -23,14 +48,14 @@ export class GraphicStart extends Component {
             <div className="dashboard">
 
                 <div className="">
-                    <DashDate />
+                    <DashDate DashDate={this.state.DashDate} />
                 </div>
 
                 <div className="">
-                    <DashSituacao />
+                    <DashSituacao DashSituacao={this.state.DashSituacao} />
                 </div>
                 <div className="">
-                    <DashAssunto />
+                    <DashAssunto DashAssunto={this.state.DashAssunto} />
                 </div>
 
 
