@@ -17,7 +17,7 @@ export class Filter extends Component {
     };
   }
   componentDidMount() {
-    api("api/assunto", {})
+    api("api/assuntocompleto", {})
       .then(resp => resp.json())
       .then(data =>
         this.setState({
