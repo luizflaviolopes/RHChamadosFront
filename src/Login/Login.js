@@ -81,6 +81,7 @@ export class Login extends Component {
                     event.preventDefault();
                     this.handleLogin();
                   }}
+
                 >
                   <Form.Group className="ttl">
                     <Form.Label>Entrar</Form.Label>
@@ -97,6 +98,7 @@ export class Login extends Component {
                           }
                         })
                       }
+
                     >
                       {inputprop => (
                         <Form.Control

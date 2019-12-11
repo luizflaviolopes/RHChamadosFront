@@ -9,6 +9,7 @@ import api from "../APIs/DataApi";
 import { toast } from "react-toastify";
 import { Typeahead } from "react-bootstrap-typeahead";
 import InputMask from "react-input-mask";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
 export class Formulario extends Component {
@@ -127,6 +128,27 @@ export class Formulario extends Component {
     }
   }
 
+  beforeMaskedValueChange = (newState, oldState, userInput) => {
+    var { value } = newState;
+    var selection = newState.selection;
+    var cursorPosition = selection ? selection.start : null;
+
+    // keep minus if entered by user
+    if (value.endsWith('-') && userInput !== '-' && !this.state.value.endsWith('-')) {
+      if (cursorPosition === value.length) {
+        cursorPosition--;
+        selection = { start: cursorPosition, end: cursorPosition };
+      }
+      value = value.slice(0, -1);
+    }
+
+    return {
+      value,
+      selection
+    };
+  }
+
+
   render() {
     let _this = this;
     return (
@@ -180,7 +202,8 @@ export class Formulario extends Component {
               <Form.Label>Telefone</Form.Label>
 
               <InputMask
-                mask="(99) 99999-9999"
+
+                mask="(99) 9 9999-9999"
                 onChange={evt =>
                   this.setState({
                     newChamado: {
@@ -189,6 +212,7 @@ export class Formulario extends Component {
                     }
                   })
                 }
+                beforeMaskedValueChange={this.beforeMaskedValueChange}
               >
                 {inputprop => (
                   <Form.Control
@@ -218,7 +242,7 @@ export class Formulario extends Component {
                   {({ getRootProps, getInputProps }) => (
                     <div {...getRootProps()}>
                       <input {...getInputProps()} />
-                      <Form.Label>Adicionar Documentos ao Chamado</Form.Label>
+                      <Form.Label className="pointer">Adicionar Documentos ao Chamado <FontAwesomeIcon icon="paperclip" /></Form.Label>
                     </div>
                   )}
                 </Dropzone>
