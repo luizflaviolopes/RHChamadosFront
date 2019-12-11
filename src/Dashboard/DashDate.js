@@ -19,67 +19,78 @@ export class DashDate extends PureComponent {
     }
 
     componentDidMount() {
-        api("api/DashBoard/BuscarChamados", {
-        })
-            .then(
-                response =>
-                    response.json())
-            .then(data => {
-                this.setState({
-                    all: data.map(function (a) {
-                        return {
-                            x: a.propriedade,
-                            y: a.quantidade
-                        };
-                    })
-                });
-            });
-        api("api/DashBoard/BuscarChamadosAbertos", {
-        })
-            .then(
-                response =>
-                    response.json())
-            .then(data => {
-                this.setState({
-                    abertosData: data.map(function (a) {
-                        return {
-                            x: a.propriedade,
-                            y: a.quantidade
-                        };
-                    })
-                });
-            });
-        api("api/DashBoard/BuscarChamadosFechados", {
-        })
-            .then(
-                response =>
-                    response.json())
-            .then(data => {
-                this.setState({
-                    fechadosData: data.map(function (a) {
-                        return {
-                            x: a.propriedade,
-                            y: a.quantidade
-                        };
-                    })
-                });
-            });
 
-        api("api/DashBoard/BuscarChamadosAtendimento", {
+        this.setState({
+            all: this.props.DashDate.all.map(function (a) {
+                return {
+                    x: a.propriedade,
+                    y: a.quantidade
+                };
+            })
         })
-            .then(
-                response =>
-                    response.json())
-            .then(data => {
-                this.setState({
-                    atendimentoData: data.map(function (a) {
-                        return {
-                            x: a.propriedade,
-                            y: a.quantidade
-                        };
-                    })
-                });
-            });
+
+
+        // api("api/DashBoard/BuscarChamados", {
+        // })
+        //     .then(
+        //         response =>
+        //             response.json())
+        //     .then(data => {
+        //         this.setState({
+        //             all: data.map(function (a) {
+        //                 return {
+        //                     x: a.propriedade,
+        //                     y: a.quantidade
+        //                 };
+        //             })
+        //         });
+        //     });
+        // api("api/DashBoard/BuscarChamadosAbertos", {
+        // })
+        //     .then(
+        //         response =>
+        //             response.json())
+        //     .then(data => {
+        //         this.setState({
+        //             abertosData: data.map(function (a) {
+        //                 return {
+        //                     x: a.propriedade,
+        //                     y: a.quantidade
+        //                 };
+        //             })
+        //         });
+        //     });
+        // api("api/DashBoard/BuscarChamadosFechados", {
+        // })
+        //     .then(
+        //         response =>
+        //             response.json())
+        //     .then(data => {
+        //         this.setState({
+        //             fechadosData: data.map(function (a) {
+        //                 return {
+        //                     x: a.propriedade,
+        //                     y: a.quantidade
+        //                 };
+        //             })
+        //         });
+        //     });
+
+        // api("api/DashBoard/BuscarChamadosAtendimento", {
+        // })
+        //     .then(
+        //         response =>
+        //             response.json())
+        //     .then(data => {
+        //         this.setState({
+        //             atendimentoData: data.map(function (a) {
+        //                 return {
+        //                     x: a.propriedade,
+        //                     y: a.quantidade
+        //                 };
+        //             })
+        //         });
+        //     });
     }
     analiseDosDados() {
         let _this = this;
