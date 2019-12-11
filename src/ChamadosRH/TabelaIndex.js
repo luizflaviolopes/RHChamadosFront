@@ -31,9 +31,9 @@ class TabelaIndex extends Component {
     let newFilter = this.state.filters;
     newFilter[a.propertie] = a.value;
     window.teste = newFilter;
-    var checkFilter = function (element) {
+    var checkFilter = function(element) {
       let retorno = true;
-      Object.keys(newFilter).forEach(function (p, i) {
+      Object.keys(newFilter).forEach(function(p, i) {
         if (!isNaN(element[p])) {
           if (
             newFilter[p] !== "" &&
@@ -52,7 +52,7 @@ class TabelaIndex extends Component {
       });
       return retorno;
     };
-    let newDems = this.state.all.filter(function (a, i) {
+    let newDems = this.state.all.filter(function(a, i) {
       return checkFilter(a);
     });
 
@@ -101,7 +101,7 @@ class TabelaIndex extends Component {
   render() {
     let filterObj = this.state.filters;
     let _this = this;
-    var checkFilter = function (element) {
+    var checkFilter = function(element) {
       for (var p in Object.keys(filterObj)) {
         if (filterObj[p] !== "" && element[p] !== filterObj[p]) return false;
       }
@@ -168,7 +168,7 @@ class TabelaIndex extends Component {
                   <Cabecalho
                     label="CPF"
                     icone="hashtag"
-                    FilterParam="mc"
+                    FilterParam="cpf"
                     sizeInput="w-75"
                     onFilter={this.handleFiltering}
                   />
@@ -221,7 +221,7 @@ class TabelaIndex extends Component {
               </tr>
             </thead>
             <tbody>
-              {getPageDems().map(function (a, i) {
+              {getPageDems().map(function(a, i) {
                 return (
                   <Chamado
                     numChamado={a.numChamado}
@@ -231,10 +231,12 @@ class TabelaIndex extends Component {
                     status={a.status}
                     prioridade={a.prioridade}
                     masp={a.masp}
-                    cpf={a.cpf.replace(/[^a-z0-9]/gi, "").replace(
-                      /(\d{3})?(\d{3})?(\d{3})?(\d{2})/,
-                      "$1.$2.$3-$4"
-                    )}
+                    cpf={a.cpf
+                      .replace(/[^a-z0-9]/gi, "")
+                      .replace(
+                        /(\d{3})?(\d{3})?(\d{3})?(\d{2})/,
+                        "$1.$2.$3-$4"
+                      )}
                     desc={a.desc}
                     email={a.email}
                     cel={a.cel}
