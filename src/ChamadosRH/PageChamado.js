@@ -14,7 +14,6 @@ import { toast } from "react-toastify";
 import { Typeahead } from "react-bootstrap-typeahead";
 import "react-bootstrap-typeahead/css/Typeahead.css";
 
-
 export class PageChamado extends Component {
   constructor(props) {
     super(props);
@@ -71,7 +70,9 @@ export class PageChamado extends Component {
       this.setState({ answerOpen: !this.state.answerOpen });
     else {
       this.setState({ answerOpen: false });
-      toast.error("Não é possivel realizar operação, favor alterar assunto para continuar.")
+      toast.error(
+        "Não é possivel realizar operação, favor alterar assunto para continuar."
+      );
     }
   }
 
@@ -90,20 +91,18 @@ export class PageChamado extends Component {
     })
       .then(resp => {
         if (resp.status === 200) {
-
-          toast.success("Assunto Aleterado.");
+          toast.success("Assunto Alterado.");
           this.setState({
             alterAssunto: "true"
-          })
-        }
-        else throw resp.json();
+          });
+        } else throw resp.json();
       })
       .catch(a =>
         a.then(e => {
-          console.log(e)
+          console.log(e);
           toast.error(e.message, {
             position: toast.POSITION.TOP_CENTER
-          })
+          });
         })
       );
   }
@@ -192,13 +191,14 @@ export class PageChamado extends Component {
                   if (this.state.alterAssunto == "true") {
                     this.setState({
                       transferModal: true
-                    })
+                    });
                   } else {
                     this.setState({ transferModal: false });
-                    toast.error("Não é possivel realizar operação, favor alterar assunto para continuar.")
+                    toast.error(
+                      "Não é possivel realizar operação, favor alterar assunto para continuar."
+                    );
                   }
-                }
-                }
+                }}
                 {...(this.state.alterAssunto !== "true" ? "disabled" : null)}
               >
                 <FontAwesomeIcon icon="exchange-alt" /> Redirecionar
@@ -217,7 +217,7 @@ export class PageChamado extends Component {
               <Button
                 variant="success"
                 onClick={this.handleAnswer}
-                {...this.state.alterAssunto !== "true" ? "disabled" : null}
+                {...(this.state.alterAssunto !== "true" ? "disabled" : null)}
               >
                 <FontAwesomeIcon icon="file-alt" /> Responder
               </Button>
@@ -277,7 +277,7 @@ export class PageChamado extends Component {
     var Assuntos;
     if (this.state.listaAssunto.length > 0) {
       Assuntos = (
-        <Can politica={["Encaminhar Chamado"], ["Responder Chamado"]}>
+        <Can politica="Visualizar Chamado">
           <Col sm="10">
             <Typeahead
               onChange={evt => {
@@ -425,7 +425,10 @@ export class PageChamado extends Component {
           <Form.Group>
             <Row>
               {Assuntos}
-              <Can politica={["Encaminhar Chamado"], ["Responder Chamado"]} reverse>
+              <Can
+                politica={(["Encaminhar Chamado"], ["Responder Chamado"])}
+                reverse
+              >
                 <Col sm="1">
                   <Form.Label>Assunto</Form.Label>
                 </Col>
@@ -460,15 +463,15 @@ export class PageChamado extends Component {
                       Assumir Chamado
                     </Button>
                   ) : (
-                      this.state.atendenteResponsavel
-                    )}
+                    this.state.atendenteResponsavel
+                  )}
                 </Can>
               </Col>
             </Row>
           </div>
         </div>
         <div className="anexo row">
-          {this.state.listFile.map(function (a, i) {
+          {this.state.listFile.map(function(a, i) {
             return (
               <Anexo
                 nome={a.textAnexo}
@@ -480,7 +483,7 @@ export class PageChamado extends Component {
           })}
         </div>
 
-        {this.state.answered.map(function (a, i) {
+        {this.state.answered.map(function(a, i) {
           return (
             <div className="form-group">
               <Alert variant="dark">
