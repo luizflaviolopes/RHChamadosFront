@@ -11,7 +11,6 @@ import { Typeahead } from "react-bootstrap-typeahead";
 import InputMask from "react-input-mask";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-
 export class Formulario extends Component {
   constructor(props) {
     super(props);
@@ -30,23 +29,23 @@ export class Formulario extends Component {
   componentDidMount() {
     this.setState({
       desativado: false
-    })
+    });
   }
   handleNovoChamado() {
     if (!this.state.desativado) {
       this.setState({
         desativado: true
-      })
+      });
 
       const formData = new FormData();
       const _this = this;
 
       if (this.state.newChamado !== undefined) {
-        Object.keys(this.state.newChamado).forEach(function (a, i) {
+        Object.keys(this.state.newChamado).forEach(function(a, i) {
           if (a !== undefined) formData.append(a, _this.state.newChamado[a]);
         });
 
-        this.state.listFile.forEach(function (j, r) {
+        this.state.listFile.forEach(function(j, r) {
           formData.append("file" + r, j);
         });
 
@@ -60,18 +59,20 @@ export class Formulario extends Component {
           })
           .then(
             data => toast.success(data.message),
-            this.setState({
-              desativado: false
-            }, this.props.close(this.state.modalName))
+            this.setState(
+              {
+                desativado: false
+              },
+              this.props.close(this.state.modalName)
+            )
           )
           .catch(a =>
             a.then(e =>
-              Object.keys(e).forEach(function (a, i) {
+              Object.keys(e).forEach(function(a, i) {
                 toast.error(e[a][0], {
                   position: toast.POSITION.TOP_CENTER
                 });
-              }),
-
+              })
             )
           );
       }
@@ -127,6 +128,22 @@ export class Formulario extends Component {
       });
     }
   }
+  beforeMaskedStateChange = ({ nextState }) => {
+    let { value } = nextState;
+    if (value.endsWith("/")) {
+      value = value.slice(0, -1);
+    }
+
+    return {
+      ...nextState,
+      value
+    };
+  };
+  // beforeMaskedValueChange = (newState, oldState, userInput) => {
+  //   var { value } = newState;
+  //   var selection = newState.selection;
+  //   var cursorP = selection ? selection.start : null;
+  // };
 
   beforeMaskedValueChange = (newState, oldState, userInput) => {
     var { value } = newState;
@@ -156,7 +173,10 @@ export class Formulario extends Component {
         size="lg"
         show={this.state.show}
         onEnter={this.openModal}
-        onHide={() => { this.props.close(this.state.modalName); this.setState({ desativado: false }); }}
+        onHide={() => {
+          this.props.close(this.state.modalName);
+          this.setState({ desativado: false });
+        }}
         aria-labelledby="Respostas-Chamados"
       >
         <Modal.Header closeButton>
@@ -183,17 +203,16 @@ export class Formulario extends Component {
               <Form.Label>Assunto</Form.Label>
 
               <Typeahead
-                onChange={(evt) => {
+                onChange={evt => {
                   if (evt.length !== 0) {
                     this.setState({
                       newChamado: {
                         ...this.state.newChamado,
                         Assunto: evt[0].id
                       }
-                    })
+                    });
                   }
-                }
-                }
+                }}
                 options={this.state.assuntos}
                 labelKey={option => `${option.assunto}`}
               />
@@ -215,10 +234,7 @@ export class Formulario extends Component {
                 beforeMaskedValueChange={this.beforeMaskedValueChange}
               >
                 {inputprop => (
-                  <Form.Control
-                    type="text"
-                    placeholder="(00) 0 0000-0000"
-                  />
+                  <Form.Control type="text" placeholder="(00) 00000-0000" />
                 )}
               </InputMask>
             </Form.Group>
@@ -249,7 +265,7 @@ export class Formulario extends Component {
 
                 <div className="anexo">
                   <Row>
-                    {this.state.listFile.map(function (a, i) {
+                    {this.state.listFile.map(function(a, i) {
                       return (
                         <Anexos
                           nome={a.name}
@@ -262,10 +278,13 @@ export class Formulario extends Component {
               </div>
             </Form.Group>
 
-            <Button id="criarMenu" className="btn-menu" onClick={this.handleNovoChamado} >
+            <Button
+              id="criarMenu"
+              className="btn-menu"
+              onClick={this.handleNovoChamado}
+            >
               Criar
             </Button>
-
           </Form>
         </Modal.Body>
       </Modal>
