@@ -44,6 +44,8 @@ export class Filter extends Component {
         else throw resp.json();
       })
       .then(data => {
+
+        data.lista.filter(a => { return !a.protocolo }).forEach(b => { b.protocolo = 'A' + b.numChamado })
         this.setState({
           listFilter: data
         });
@@ -151,7 +153,7 @@ export class Filter extends Component {
                     }
                   >
                     <option>Selecione um Setor</option>
-                    {this.state.listaSetor.map(function(a, i) {
+                    {this.state.listaSetor.map(function (a, i) {
                       return <option value={a.id}>{a.setor}</option>;
                     })}
                   </Form.Control>
