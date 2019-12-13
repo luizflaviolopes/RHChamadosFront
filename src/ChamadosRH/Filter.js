@@ -5,6 +5,7 @@ import api from "../APIs/DataApi";
 import InputMask from "react-input-mask";
 import { FilterCall } from "./FilterCall";
 import { toast } from "react-toastify";
+import { Download } from "./ExportExcel";
 
 export class Filter extends Component {
   constructor(props) {
@@ -57,6 +58,10 @@ export class Filter extends Component {
       );
   };
   render() {
+    let Excel;
+    if (this.state.listFilter.length !== 0)
+      Excel = (<Download dados={this.state.listFilter} />);
+
     return (
       <div className="">
         <div className="zebraB filter">
@@ -151,7 +156,7 @@ export class Filter extends Component {
                     }
                   >
                     <option>Selecione um Setor</option>
-                    {this.state.listaSetor.map(function(a, i) {
+                    {this.state.listaSetor.map(function (a, i) {
                       return <option value={a.id}>{a.setor}</option>;
                     })}
                   </Form.Control>
@@ -234,6 +239,7 @@ export class Filter extends Component {
               <Button variant="primary" type="submit">
                 Filtrar
               </Button>
+              {Excel}
             </Form.Group>
           </Form>
         </div>
