@@ -21,50 +21,17 @@ export class DashSituacao extends Component {
         };
     }
 
-    componentDidMount() {
-        api("api/DashBoard/BuscarAbertos", {
+    componentWillUpdate(nextdata) {
+        if (nextdata !== this.props) {
+            this.TratamentoDados(nextdata.DashSituacao);
+        }
+    }
+    TratamentoDados = (data) => {
+        this.setState({
+            fechados: data.fechados,
+            abertos: data.abertos,
+            atendimento: data.emAtendimento
         })
-            .then(
-                response =>
-                    response.json())
-            .then(data => {
-                this.setState({
-                    abertos: {
-                        x: data.propriedade,
-                        y: data.quantidade
-                    }
-                });
-            });
-
-
-
-        api("api/DashBoard/BuscarFechados", {
-        })
-            .then(
-                response =>
-                    response.json())
-            .then(data => {
-                this.setState({
-                    fechados: {
-                        x: data.propriedade,
-                        y: data.quantidade
-                    }
-                });
-            });
-
-        api("api/DashBoard/BuscarAtendimento", {
-        })
-            .then(
-                response =>
-                    response.json())
-            .then(data => {
-                this.setState({
-                    atendimento: {
-                        x: data.propriedade,
-                        y: data.quantidade
-                    }
-                });
-            });
     }
 
     render() {
@@ -80,8 +47,8 @@ export class DashSituacao extends Component {
         let grafic;
 
         if (this.state.fechados && this.state.abertos && this.state.atendimento) {
-            myData = [{ quantidade: this.state.fechados.y, name: this.state.fechados.x, }, { quantidade: this.state.abertos.y, name: this.state.abertos.x }, { quantidade: this.state.atendimento.y, name: this.state.atendimento.x }];
-            all = [{ quantidade: this.state.fechados.y + this.state.abertos.y + this.state.atendimento.y, name: "Total" }];
+            myData = [{ quantidade: this.state.fechados.quantidade, name: this.state.fechados.propriedade, }, { quantidade: this.state.abertos.quantidade, name: this.state.abertos.propriedade }, { quantidade: this.state.atendimento.quantidade, name: this.state.atendimento.propriedade }];
+            all = [{ quantidade: this.state.fechados.quantidade + this.state.abertos.quantidade + this.state.atendimento.quantidade, name: "Total" }];
             grafic = (
                 <PieChart
                     width={window.innerWidth - 90}

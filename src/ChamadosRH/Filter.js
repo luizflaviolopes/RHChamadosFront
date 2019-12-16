@@ -45,6 +45,8 @@ export class Filter extends Component {
         else throw resp.json();
       })
       .then(data => {
+
+        data.lista.filter(a => { return !a.protocolo }).forEach(b => { b.protocolo = 'A' + b.numChamado })
         this.setState({
           listFilter: data
         });

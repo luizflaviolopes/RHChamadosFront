@@ -6,6 +6,7 @@ import { Form } from "react-bootstrap";
 import api from "../APIs/DataApi";
 import InputMask from "react-input-mask";
 import { toast, ToastContainer } from "react-toastify";
+import { sendLogin } from '../APIs/AuthAPI';
 
 export class Login extends Component {
   constructor(props) {
@@ -24,12 +25,7 @@ export class Login extends Component {
     let _this = this;
 
     let callLogin = user => {
-      api("api/auth/entrar", {
-        method: "post",
-        body: JSON.stringify(user),
-        headers: { "Content-Type": "application/json;" },
-        credentials: "include"
-      })
+      sendLogin(user)
         .then(resp => {
           if (resp.status == 200) {
             localStorage.setItem("Politica", resp);
