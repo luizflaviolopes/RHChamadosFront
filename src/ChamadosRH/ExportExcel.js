@@ -16,7 +16,7 @@ export class Download extends React.Component {
     }
     render() {
         return (
-            <ExcelFile element={<Button variant='success'>Download<FontAwesomeIcon icon="arrow-alt-circle-down" /></Button>}>
+            <ExcelFile element={<Button variant='success'>Download <FontAwesomeIcon icon="arrow-alt-circle-down" /></Button>}>
                 <ExcelSheet data={this.state.dados} name="Chamados">
                     <ExcelColumn label="Protocolo" value="protocolo" />
                     <ExcelColumn label="Status" value="status" />
