@@ -128,36 +128,14 @@ export class Formulario extends Component {
       });
     }
   }
-  beforeMaskedStateChange = ({ nextState }) => {
-    let { value } = nextState;
-    if (value.endsWith("/")) {
-      value = value.slice(0, -1);
-    }
 
-    return {
-      ...nextState,
-      value
-    };
-  };
-  // beforeMaskedValueChange = (newState, oldState, userInput) => {
-  //   var { value } = newState;
-  //   var selection = newState.selection;
-  //   var cursorP = selection ? selection.start : null;
-  // };
 
   beforeMaskedValueChange = (newState, oldState, userInput) => {
     var { value } = newState;
     var selection = newState.selection;
     var cursorPosition = selection ? selection.start : null;
 
-    // keep minus if entered by user
-    if (value.endsWith('-') && userInput !== '-' && !this.state.value.endsWith('-')) {
-      if (cursorPosition === value.length) {
-        cursorPosition--;
-        selection = { start: cursorPosition, end: cursorPosition };
-      }
-      value = value.slice(0, -1);
-    }
+
 
     return {
       value,
@@ -223,6 +201,7 @@ export class Formulario extends Component {
               <InputMask
 
                 mask="(99) 99999-9999"
+                maskChar=""
                 onChange={evt =>
                   this.setState({
                     newChamado: {

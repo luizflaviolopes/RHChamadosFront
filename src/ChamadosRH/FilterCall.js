@@ -21,10 +21,7 @@ export class FilterCall extends Component {
       <div>
         <Table>
           <thead>
-            <th>
-              <FontAwesomeIcon icon="list-ol" />
-              Nº
-            </th>
+
             <th>
               <FontAwesomeIcon icon="list-ol" />
               Protocolo

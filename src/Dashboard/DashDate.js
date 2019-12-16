@@ -9,143 +9,56 @@ export class DashDate extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            all: [],
             tipo: null,
             assuntos: [],
             crosValue: [],
             executar: true,
-            DashDate: {}
         };
-        this.analiseDosDados = this.analiseDosDados.bind(this);
-        this.attdata = this.attdata.bind(this);
     }
-    componentWillUpdate(netxdata) {
-        console.log(netxdata)
-        if (this.state.DashDate !== this.props.DashDate) {
-            this.setState({
-                DashDate: this.props.DashDate
-            })
+    componentWillUpdate(nextdata) {
+        if (nextdata !== this.props) {
+            this.TratamentoDados(nextdata.DashDate)
         }
     }
-    componentDidMount() {
+    TratamentoDados = (incomingData) => {
+        this.setState({
+            all: incomingData.all
+                .map(function (a) {
+                    return {
+                        x: a.propriedade,
+                        y: a.quantidade
+                    };
+                })
+            ,
+            atendimentoData: incomingData.atendimentosData
+                .map(function (a) {
+                    return {
+                        x: a.propriedade,
+                        y: a.quantidade
+                    };
+                })
+            ,
+            fechadosData: incomingData.fechadosData
+                .map(function (a) {
+                    return {
+                        x: a.propriedade,
+                        y: a.quantidade
+                    };
+                })
+            ,
+            abertosData: incomingData.abertosData
+                .map(function (a) {
+                    return {
+                        x: a.propriedade,
+                        y: a.quantidade
+                    };
+                }),
 
-
-
-        // api("api/DashBoard/BuscarChamados", {
-        // })
-        //     .then(
-        //         response =>
-        //             response.json())
-        //     .then(data => {
-        //         this.setState({
-        //             all: data.map(function (a) {
-        //                 return {
-        //                     x: a.propriedade,
-        //                     y: a.quantidade
-        //                 };
-        //             })
-        //         });
-        //     });
-        // api("api/DashBoard/BuscarChamadosAbertos", {
-        // })
-        //     .then(
-        //         response =>
-        //             response.json())
-        //     .then(data => {
-        //         this.setState({
-        //             abertosData: data.map(function (a) {
-        //                 return {
-        //                     x: a.propriedade,
-        //                     y: a.quantidade
-        //                 };
-        //             })
-        //         });
-        //     });
-        // api("api/DashBoard/BuscarChamadosFechados", {
-        // })
-        //     .then(
-        //         response =>
-        //             response.json())
-        //     .then(data => {
-        //         this.setState({
-        //             fechadosData: data.map(function (a) {
-        //                 return {
-        //                     x: a.propriedade,
-        //                     y: a.quantidade
-        //                 };
-        //             })
-        //         });
-        //     });
-
-        // api("api/DashBoard/BuscarChamadosAtendimento", {
-        // })
-        //     .then(
-        //         response =>
-        //             response.json())
-        //     .then(data => {
-        //         this.setState({
-        //             atendimentoData: data.map(function (a) {
-        //                 return {
-        //                     x: a.propriedade,
-        //                     y: a.quantidade
-        //                 };
-        //             })
-        //         });
-        //     });
+        })
     }
-    attdata() {
-
-        // this.setState({
-        //     all: this.state.DashDate.all.map(function (a) {
-        //         return {
-        //             x: a.propriedade,
-        //             y: a.quantidade
-        //         };
-        //     }),
-        // })
-
-    }
-    analiseDosDados() {
-        if (this.state.DashDate) {
-            console.log(this.state.DashDate);
-            this.setState({
-                all: this.state.DashDate.all
-                // .map(function (a) {
-                //     return {
-                //         x: a.propriedade,
-                //         y: a.quantidade
-                //     };
-                // })
-                ,
-                atendimentoData: this.state.DashDate.atendimentoData
-                // .map(function (a) {
-                //     return {
-                //         x: a.propriedade,
-                //         y: a.quantidade
-                //     };
-                // })
-                ,
-                fechadosData: this.state.DashDate.fechadosData
-                // .map(function (a) {
-                //     return {
-                //         x: a.propriedade,
-                //         y: a.quantidade
-                //     };
-                // })
-                ,
-                abertosData: this.state.DashDate.abertosData
-                // .map(function (a) {
-                //     return {
-                //         x: a.propriedade,
-                //         y: a.quantidade
-                //     };
-                // }),
-
-            })
-        }
 
 
-
+    RetornarDados = () => {
         let _this = this;
         let fechado;
         let abertos;
@@ -183,7 +96,7 @@ export class DashDate extends PureComponent {
                 var temp = { "name": date, "fechado": fechado, "abertos": abertos, "atendimento": atendimento }
                 tempData.push(temp)
             })
-            _this.setState({ crosValue: tempData, executar: false });
+            return tempData;
 
 
 
@@ -194,12 +107,14 @@ export class DashDate extends PureComponent {
 
     render() {
 
-        const data = this.state.crosValue;
 
+        console.log('teste');
 
-        if (this.state.executar) {
-            this.analiseDosDados();
+        if (!this.state.all) {
+            return <div></div>;
         }
+
+        const data = this.RetornarDados()
         //[{ x: _this.state.fechadosData.x, y: _this.state.fechadosData.y, label: _this.state.fechadosData.y, style: { fontSize: 10 } }]
         return (
 

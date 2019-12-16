@@ -22,19 +22,17 @@ export class DashAssunto extends Component {
     };
   }
 
-  componentDidMount() {
-    api("api/DashBoard/BuscarAssuntos", {})
-      .then(response => response.json())
-      .then(data =>
-        this.setState({
-          assuntos: data.map(function(a) {
-            return {
-              x: a.propriedade,
-              quantidade: a.quantidade
-            };
-          })
+  componentWillUpdate(nextdata) {
+    if (nextdata !== this.props) {
+      this.setState({
+        assuntos: nextdata.DashAssunto.assuntosMacros.map(function(a) {
+          return {
+            x: a.propriedade,
+            quantidade: a.quantidade
+          };
         })
-      );
+      });
+    }
   }
 
   render() {
