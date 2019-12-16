@@ -27,6 +27,12 @@ class MenuIndex extends Component {
             </NavIcon>
             <NavText>Todos</NavText>
           </NavItem>
+          <NavItem eventKey="Atribuidos">
+            <NavIcon>
+              <FontAwesomeIcon icon="user-tag" />
+            </NavIcon>
+            <NavText>Meus Chamados</NavText>
+          </NavItem>
           <NavItem eventKey="Abertos">
             <NavIcon>
               <FontAwesomeIcon icon="folder-open" />
