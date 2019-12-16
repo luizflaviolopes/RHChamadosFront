@@ -1,6 +1,7 @@
 import React from "react";
 import ReactExport from "react-export-excel";
 import { Button } from 'react-bootstrap';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
@@ -15,7 +16,7 @@ export class Download extends React.Component {
     }
     render() {
         return (
-            <ExcelFile element={<Button variant='success'>Download</Button>}>
+            <ExcelFile element={<Button variant='success'>Download <FontAwesomeIcon icon="arrow-alt-circle-down" /></Button>}>
                 <ExcelSheet data={this.state.dados} name="Chamados">
                     <ExcelColumn label="Protocolo" value="protocolo" />
                     <ExcelColumn label="Status" value="status" />
