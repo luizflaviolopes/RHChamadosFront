@@ -24,6 +24,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Filter } from "./ChamadosRH/Filter.js";
 import { GraphicStart } from "./Dashboard/GraphicStart.js";
 import { hostname } from "os";
+import { Inicio } from "./Inicio.js"
 
 library.add(fas);
 
@@ -145,7 +146,7 @@ class App extends Component {
               <Button
                 className="btn-menu"
                 onClick={() => {
-                  window.location = "http://10.33.132.120:8080/"
+                  window.location = "http://homologacao.planejamento.mg.gov.br:8080/"
                 }}
               >
                 Administrativo
@@ -174,7 +175,8 @@ class App extends Component {
                   exact={true}
                   component={GraphicStart}
                 />
-                <Route path="/Chamados" exact={true} component={TabelaIndex} />
+                <Route path="/" exact={true} component={Inicio} />
+                <Route path="/Chamados" component={TabelaIndex} />
                 <Route path="/CallFilter" component={Filter} />
                 <Route path="/Chamados/:tipo" component={TabelaIndex} />
                 <Route path="/DetalhamentoChamado" component={PageChamado} />

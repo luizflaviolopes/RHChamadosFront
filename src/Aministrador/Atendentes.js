@@ -91,7 +91,7 @@ export class Atendentes extends Component {
         <div className="bodyAtendente">
           <Table>
             <tbody>
-              {this.props.obj.atendentes.map(function(a, b) {
+              {this.props.obj.atendentes.map(function (a, b) {
                 return (
                   <tr>
                     <td className="nameUser">{a.nome}</td>
@@ -116,47 +116,18 @@ export class Atendentes extends Component {
                           <Button
                             variant="danger"
                             onClick={() => _this.handleOpenModal(a.id)}
-                            //onClick={() => _this.handleDesativarAtendente(a.id)}
+                          //onClick={() => _this.handleDesativarAtendente(a.id)}
                           >
                             <FontAwesomeIcon icon="times" color="white" />
                           </Button>
                         ) : (
-                          <Button variant="success">
-                            <FontAwesomeIcon icon="check" color="white" />
-                          </Button>
-                        )}
+                            <Button variant="success">
+                              <FontAwesomeIcon icon="check" color="white" />
+                            </Button>
+                          )}
                       </Can>
                     </td>
                   </tr>
-
-                  // <Row>
-                  //   <Col sm="6" className="nameUser"> {a.nome}</Col>
-                  //   <Col sm="3">
-                  //     <Button
-                  //       variant="warning"
-                  //       onClick={() => this.props.openShowModal("editUser", this.state)}
-                  //       disabled={!a.ativo}
-                  //     >
-                  //       <FontAwesomeIcon icon="user-edit" color="white" />
-                  //     </Button>
-                  //   </Col>
-                  //   <Col sm="3">
-                  //     {a.ativo === true ? (
-                  //       <Button
-                  //         variant="danger"
-                  //         onClick={() => this.handleDesativarAtendente(a.id)}
-                  //       >
-                  //         <FontAwesomeIcon icon="times" color="white" />
-                  //       </Button>
-                  //     ) : (
-                  //         <Button
-                  //           variant="success"
-                  //           onClick={() => this.handleDesativarAtendente(a.id)}
-                  //         >
-                  //           <FontAwesomeIcon icon="check" color="white" />
-                  //         </Button>)}
-                  //   </Col>
-                  // </Row>
                 );
               })}
             </tbody>
@@ -164,36 +135,7 @@ export class Atendentes extends Component {
         </div>
       </div>
 
-      // <tr>
-      //   <td>{this.state.Nome}</td>
-      //   <td>{this.state.Masp}</td>
-      //   <td>{this.state.WinUser}</td>
-      //   <td>{this.state.Ativo === true ? ("Ativo") : ("Inativo")}</td>
-      //   <td>{this.state.WinUser}</td>
-      //   <td>
-      //     <Button
-      //       variant="outline-secondary"
-      //       onClick={() => this.props.openShowModal("editUser", this.state)}
-      //       disabled={!this.state.Ativo}
-      //     >
-      //       Editar
-      //     </Button>
-      //     <Link to="/User">
-      //       {this.state.Ativo === true ? (<Button
-      //         variant="outline-danger"
-      //         onClick={() => this.handleDesativarAtendente(this.state.Id)}
-      //       >
-      //         Desativar
-      //     </Button>) : (<Button
-      //           variant="outline-success"
-      //           onClick={() => this.handleDesativarAtendente(this.state.Id)}
-      //         >
-      //           Ativar
-      //     </Button>)}
 
-      //     </Link>
-      //   </td>
-      // </tr>
     );
   }
 }

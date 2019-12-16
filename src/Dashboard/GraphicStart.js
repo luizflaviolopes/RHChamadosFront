@@ -32,8 +32,8 @@ export class GraphicStart extends Component {
                     },
                     DashDate: {
                         abertosData: data.chamadosDataAbertos,
-                        fechadosData: data.chamadosDataAbertos,
-                        atendimentosData: data.chamadosDataAbertos,
+                        fechadosData: data.chamadosDataFechados,
+                        atendimentosData: data.chamadosDataAtendimento,
                         all: data.chamadosPorData
                     }
                 })
