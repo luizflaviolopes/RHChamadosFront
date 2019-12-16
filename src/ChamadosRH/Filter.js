@@ -239,11 +239,11 @@ export class Filter extends Component {
               <Button variant="primary" type="submit">
                 Filtrar
               </Button>
-              {Excel}
             </Form.Group>
           </Form>
         </div>
         <div className="zebraA filter">
+          {Excel}
           <FilterCall listFilter={this.state.listFilter} />
         </div>
       </div>
