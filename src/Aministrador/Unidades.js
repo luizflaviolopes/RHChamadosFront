@@ -61,7 +61,7 @@ export class Unidades extends Component {
         {modalConfirmar}
         <div className="headUni">
           <span className="ttl"> {this.props.text} </span>
-          <Can politica="Gerir Setor">
+          <Can politica="Criar Vínculo">
             <span
               className="vinculo"
               onClick={() => this.props.obj.vinculo(this.props.id)}
@@ -72,7 +72,7 @@ export class Unidades extends Component {
           </Can>
         </div>
         <div className="bodyUni">
-          <Can politica="Gestor Setor">
+          <Can politica="Criar Setor">
             <div>
               <Button
                 variant="success"
@@ -87,7 +87,7 @@ export class Unidades extends Component {
             </div>
           </Can>
           <div className="vinculos">
-            {this.props.obj.SetoresVinculados.map(function (a) {
+            {this.props.obj.SetoresVinculados.map(function(a) {
               return <div className="setVin"> {a.setorDestino} </div>;
             })}
           </div>

@@ -24,7 +24,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Filter } from "./ChamadosRH/Filter.js";
 import { GraphicStart } from "./Dashboard/GraphicStart.js";
 import { hostname } from "os";
-import { Inicio } from "./Inicio.js"
+import { Inicio } from "./Inicio.js";
 
 library.add(fas);
 
@@ -104,14 +104,14 @@ class App extends Component {
                 </Button>
               </Link>
             </Can>
-            <Can politica="Gerir Usuario">
+            <Can politica="Administrar Usuários">
               <Link to="/User">
                 <Button className="btn-menu" onClick={this.OnclickHande}>
                   Atendentes
                 </Button>
               </Link>
             </Can>
-            <Can politica={["Gerir Setor"], ["Gestor Setor"]}>
+            <Can politica={(["Criar Setor"], ["Criar Vínculo"])}>
               <Link to="/ConfiguracaoDeSetores">
                 <Button className="btn-menu" onClick={this.OnclickHande}>
                   Setores
@@ -146,7 +146,8 @@ class App extends Component {
               <Button
                 className="btn-menu"
                 onClick={() => {
-                  window.location = "http://homologacao.planejamento.mg.gov.br:8080/"
+                  window.location =
+                    "http://homologacao.planejamento.mg.gov.br:8080/";
                 }}
               >
                 Administrativo
@@ -182,7 +183,10 @@ class App extends Component {
                 <Route path="/DetalhamentoChamado" component={PageChamado} />
                 <Route path="/User" component={User} />
                 <Route path="/ConfiguracaoDeSetores" component={Setores} />
-                <Route path="/RastreioChamado/:tag" component={RastreioChamado} />
+                <Route
+                  path="/RastreioChamado/:tag"
+                  component={RastreioChamado}
+                />
               </Switch>
             </div>
           </Container>
@@ -192,7 +196,5 @@ class App extends Component {
     );
   }
 }
-
-
 
 export default App;

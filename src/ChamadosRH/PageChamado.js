@@ -278,6 +278,9 @@ export class PageChamado extends Component {
     if (this.state.listaAssunto.length > 0) {
       Assuntos = (
         <Can politica="Visualizar Chamado">
+          <Col sm="1">
+            <span>Assunto:</span>
+          </Col>
           <Col sm="10">
             <Typeahead
               onChange={evt => {
@@ -310,7 +313,7 @@ export class PageChamado extends Component {
     var atribuicao;
     if (this.state.listaResponsavel.length > 0) {
       atribuicao = (
-        <Can politica="Gestor Setor">
+        <Can politica="Atribuir Chamado">
           <Form.Group>
             <Form.Label>Atribuir Chamado</Form.Label>
             <Row>
@@ -454,7 +457,7 @@ export class PageChamado extends Component {
             <Row>
               <Col sm={6}>
                 {atribuicao}
-                <Can politica="Gestor Setor" reverse>
+                <Can politica="Atribuir Chamado" reverse>
                   {this.state.atendenteResponsavel == "Não Atribuído" ? (
                     <Button
                       variant="outline-success"
