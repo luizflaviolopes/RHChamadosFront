@@ -8,8 +8,8 @@ import Dropzone from "react-dropzone";
 import api from "../APIs/DataApi";
 import { toast } from "react-toastify";
 import { Typeahead } from "react-bootstrap-typeahead";
-import InputMask from "react-input-mask";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import MaskedInput from 'react-text-mask'
 
 export class Formulario extends Component {
   constructor(props) {
@@ -19,7 +19,8 @@ export class Formulario extends Component {
       assuntos: [],
       modalName: props.modalName,
       listFile: [],
-      desativado: false
+      desativado: false,
+      mask: "(99) 9999-9999"
     };
     this.openModal = this.openModal.bind(this);
     this.handleNovoChamado = this.handleNovoChamado.bind(this);
@@ -129,18 +130,18 @@ export class Formulario extends Component {
     }
   }
 
+  handleTelefoneChange = (evt) => {
 
-  beforeMaskedValueChange = (newState, oldState, userInput) => {
-    var { value } = newState;
-    var selection = newState.selection;
-    var cursorPosition = selection ? selection.start : null;
+    if (evt.length < 15) {
+
+      return ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+    }
+    else {
+
+      return ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+    }
 
 
-
-    return {
-      value,
-      selection
-    };
   }
 
 
@@ -198,24 +199,22 @@ export class Formulario extends Component {
             <Form.Group>
               <Form.Label>Telefone</Form.Label>
 
-              <InputMask
+              <MaskedInput
 
-                mask="(99) 99999-9999"
-                maskChar=""
-                onChange={evt =>
+                mask={(evt) => {
+                  return this.handleTelefoneChange(evt)
+                }}
+                className="form-control"
+                guide={false}
+                onChange={(evt) => {
                   this.setState({
                     newChamado: {
                       ...this.state.newChamado,
                       Telefone: evt.target.value
                     }
                   })
-                }
-                beforeMaskedValueChange={this.beforeMaskedValueChange}
-              >
-                {inputprop => (
-                  <Form.Control type="text" placeholder="(00) 00000-0000" />
-                )}
-              </InputMask>
+                }}
+              />
             </Form.Group>
             <Form.Group>
               <Form.Label>Descrição</Form.Label>

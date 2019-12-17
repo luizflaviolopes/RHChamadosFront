@@ -6,6 +6,8 @@ import InputMask from "react-input-mask";
 import { FilterCall } from "./FilterCall";
 import { toast } from "react-toastify";
 import { Download } from "./ExportExcel";
+import MaskedInput from 'react-text-mask';
+
 
 export class Filter extends Component {
   constructor(props) {
@@ -34,6 +36,18 @@ export class Filter extends Component {
       );
   }
 
+  handleMaspChange = (evt) => {
+
+    if (evt.length < 9) {
+      return [/\d/, /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/]
+
+    }
+    else {
+      return [/\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/]
+    }
+
+
+  }
   handleFiltroChamado = () => {
     api("api/filter", {
       method: "post",
@@ -115,8 +129,10 @@ export class Filter extends Component {
               <Col sm="3">
                 <Form.Group>
                   <Form.Label>Masp</Form.Label>
-                  <InputMask
-                    mask="9999999-9"
+                  <MaskedInput
+                    guide={false}
+                    className="form-control"
+                    mask={(evt) => { return this.handleMaspChange(evt) }}
                     onChange={evt =>
                       this.setState({
                         filter: {
@@ -125,9 +141,7 @@ export class Filter extends Component {
                         }
                       })
                     }
-                  >
-                    {inputprop => <Form.Control type="text" />}
-                  </InputMask>
+                  />
                 </Form.Group>
               </Col>
             </Row>
