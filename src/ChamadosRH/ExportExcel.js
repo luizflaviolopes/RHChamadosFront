@@ -14,6 +14,16 @@ export class Download extends React.Component {
             dados: this.props.dados
         };
     }
+
+    componentWillUpdate(nextProps){
+        if(nextProps !== this.props)
+        {
+            this.setState({
+                dados: nextProps.dados
+            });
+        }
+    }
+
     render() {
         return (
             <ExcelFile element={<Button variant='success'>Download <FontAwesomeIcon icon="arrow-alt-circle-down" /></Button>}>

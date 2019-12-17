@@ -65,18 +65,26 @@ class TabelaIndex extends Component {
     });
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.match.params.tipo !== this.props.match.params.tipo) {
-      api("api/values?tipo=" + nextProps.match.params.tipo, {})
-        .then(response => response.json())
-        .then(data =>
-          this.setState({
-            dems: data.lista,
-            all: data.lista,
-            filtered: data.lista
-          })
-        );
+  componentDidUpdate(prevProps) {
+    if (prevProps.match.params.tipo !== this.props.match.params.tipo) {
+      this.fetchdata();
     }
+  }
+
+  fetchdata = () =>{
+    api("api/values?tipo=" + this.props.match.params.tipo, {})
+    .then(response => response.json())
+    .then(data =>
+      {data.lista.filter(a => { return !a.protocolo }).forEach(b => { b.protocolo = 'A' + b.numChamado });
+
+      this.setState({
+        dems: data.lista,
+        all: data.lista,
+        filtered: data.lista
+      })
+    }
+    );
+
   }
 
   BuscarNovo() {
@@ -90,17 +98,7 @@ class TabelaIndex extends Component {
   }
 
   componentDidMount() {
-    api("api/values?tipo=" + this.state.tipo, {})
-      .then(response => response.json())
-      .then(data => {
-
-        data.lista.filter(a => { return !a.protocolo }).forEach(b => { b.protocolo = 'A' + b.numChamado })
-
-        this.setState({
-          all: data.lista,
-          filtered: data.lista
-        });
-      });
+    this.fetchdata();
   }
 
   render() {
@@ -207,6 +205,7 @@ class TabelaIndex extends Component {
                     onFilter={this.handleFiltering}
                   />
                 </th>
+                {(this.props.match.params.tipo == 'TodosAtendimento' || this.props.match.params.tipo == 'TodosFechados') ?
                 <th>
                   <Cabecalho
                     label="Setor"
@@ -216,6 +215,17 @@ class TabelaIndex extends Component {
                     onFilter={this.handleFiltering}
                   />
                 </th>
+  :
+  <th>
+                  <Cabecalho
+                    label="Atribuído a"
+                    icone="user"
+                    FilterParam="atendenteResponsavel"
+                    sizeInput="w-75"
+                    onFilter={this.handleFiltering}
+                  />
+                </th>
+  }
                 <th>
                   <Cabecalho
                     label="Prazo"
@@ -255,6 +265,7 @@ class TabelaIndex extends Component {
                     atendenteResponsavel={a.atendenteResponsavel}
                     protocolo={a.protocolo}
                     alterAssunto={a.alterAssunto}
+                    SetorOrSolicitante = {(_this.props.match.params.tipo == 'TodosAtendimento' || _this.props.match.params.tipo == 'TodosFechados')}
                   />
                 );
               })}
