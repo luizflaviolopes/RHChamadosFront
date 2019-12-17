@@ -91,13 +91,13 @@ export class Atendentes extends Component {
         <div className="bodyAtendente">
           <Table>
             <tbody>
-              {this.props.obj.atendentes.map(function (a, b) {
+              {this.props.obj.atendentes.map(function(a, b) {
                 return (
                   <tr>
                     <td className="nameUser">{a.nome}</td>
 
                     <td>
-                      <Can politica={["Gerir Usuario"]}>
+                      <Can politica={["Administrar Usuários"]}>
                         <Button
                           variant="warning"
                           onClick={() =>
@@ -111,20 +111,20 @@ export class Atendentes extends Component {
                     </td>
 
                     <td>
-                      <Can politica="Gerir Usuario">
+                      <Can politica="Administrar Usuários">
                         {a.ativo === true ? (
                           <Button
                             variant="danger"
                             onClick={() => _this.handleOpenModal(a.id)}
-                          //onClick={() => _this.handleDesativarAtendente(a.id)}
+                            //onClick={() => _this.handleDesativarAtendente(a.id)}
                           >
                             <FontAwesomeIcon icon="times" color="white" />
                           </Button>
                         ) : (
-                            <Button variant="success">
-                              <FontAwesomeIcon icon="check" color="white" />
-                            </Button>
-                          )}
+                          <Button variant="success">
+                            <FontAwesomeIcon icon="check" color="white" />
+                          </Button>
+                        )}
                       </Can>
                     </td>
                   </tr>
@@ -134,8 +134,6 @@ export class Atendentes extends Component {
           </Table>
         </div>
       </div>
-
-
     );
   }
 }
