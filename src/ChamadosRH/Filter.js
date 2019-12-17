@@ -6,6 +6,8 @@ import InputMask from "react-input-mask";
 import { FilterCall } from "./FilterCall";
 import { toast } from "react-toastify";
 import { Download } from "./ExportExcel";
+import MaskedInput from 'react-text-mask';
+
 
 export class Filter extends Component {
   constructor(props) {
@@ -34,6 +36,18 @@ export class Filter extends Component {
       );
   }
 
+  handleMaspChange = (evt) => {
+
+    if (evt.length < 9) {
+      return [/\d/, /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/]
+
+    }
+    else {
+      return [/\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/]
+    }
+
+
+  }
   handleFiltroChamado = () => {
     api("api/filter", {
       method: "post",
@@ -45,8 +59,13 @@ export class Filter extends Component {
         else throw resp.json();
       })
       .then(data => {
-
-        data.filter(a => { return !a.protocolo }).forEach(b => { b.protocolo = 'A' + b.numChamado })
+        data
+          .filter(a => {
+            return !a.protocolo;
+          })
+          .forEach(b => {
+            b.protocolo = "A" + b.numChamado;
+          });
         this.setState({
           listFilter: data
         });
@@ -62,7 +81,7 @@ export class Filter extends Component {
   render() {
     let Excel;
     if (this.state.listFilter.length !== 0)
-      Excel = (<Download dados={this.state.listFilter} />);
+      Excel = <Download dados={this.state.listFilter} />;
 
     return (
       <div className="">
@@ -110,8 +129,10 @@ export class Filter extends Component {
               <Col sm="3">
                 <Form.Group>
                   <Form.Label>Masp</Form.Label>
-                  <InputMask
-                    mask="9999999-9"
+                  <MaskedInput
+                    guide={false}
+                    className="form-control"
+                    mask={(evt) => { return this.handleMaspChange(evt) }}
                     onChange={evt =>
                       this.setState({
                         filter: {
@@ -120,9 +141,7 @@ export class Filter extends Component {
                         }
                       })
                     }
-                  >
-                    {inputprop => <Form.Control type="text" />}
-                  </InputMask>
+                  />
                 </Form.Group>
               </Col>
             </Row>
@@ -158,30 +177,12 @@ export class Filter extends Component {
                     }
                   >
                     <option>Selecione um Setor</option>
-                    {this.state.listaSetor.map(function (a, i) {
+                    {this.state.listaSetor.map(function(a, i) {
                       return <option value={a.id}>{a.setor}</option>;
                     })}
                   </Form.Control>
                 </Form.Group>
               </Col>
-              <Col sm="4">
-                <Form.Group>
-                  <Form.Label>Nª Chamado</Form.Label>
-                  <Form.Control
-                    type="text"
-                    onChange={evt =>
-                      this.setState({
-                        filter: {
-                          ...this.state.filter,
-                          NumChamado: evt.target.value
-                        }
-                      })
-                    }
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row>
               <Col sm="4">
                 <Form.Group>
                   <Form.Label>Protocolo</Form.Label>
@@ -192,6 +193,24 @@ export class Filter extends Component {
                         filter: {
                           ...this.state.filter,
                           Protocolo: evt.target.value
+                        }
+                      })
+                    }
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm="4">
+                <Form.Group>
+                  <Form.Label>Data</Form.Label>
+                  <Form.Control
+                    type="month"
+                    onChange={evt =>
+                      this.setState({
+                        filter: {
+                          ...this.state.filter,
+                          data: evt.target.value
                         }
                       })
                     }
@@ -218,25 +237,6 @@ export class Filter extends Component {
                 </Form.Group>
               </Col>
             </Row>
-            <Row>
-              <Col sm="6">
-                <Form.Group>
-                  <Form.Label>Data</Form.Label>
-                  <Form.Control
-                    type="month"
-                    onChange={evt =>
-                      this.setState({
-                        filter: {
-                          ...this.state.filter,
-                          data: evt.target.value
-                        }
-                      })
-                    }
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-
             <Form.Group>
               <Button variant="primary" type="submit">
                 Filtrar
