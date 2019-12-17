@@ -89,17 +89,28 @@ class Chamado extends Component {
         >
           {this.state.prioridade === null ? "N/A" : this.state.prioridade}
         </td>
+        {this.props.SetorOrSolicitante ? 
         <td
           title={
-            this.state.setor === "SEPLAG"
-              ? "RH: " + this.state.setor
-              : this.state.setor
+            this.state.setor
           }
         >
-          {this.state.setor === "SEPLAG"
-            ? "RH: " + this.state.setor
-            : this.state.setor}
+          {this.state.setor}
         </td>
+        :
+        <td
+          title={
+            this.state.atendenteResponsavel == "Não Atribuído" ?
+            "":
+            this.state.atendenteResponsavel
+          }
+        >
+          {
+          this.state.atendenteResponsavel == "Não Atribuído" ?
+          "":
+          this.state.atendenteResponsavel}
+        </td>
+  }
         <td title={this.state.prazo !== null ? this.state.prazo : "1"}>
           {this.state.prazo !== null ? this.state.prazo : "1"}
         </td>

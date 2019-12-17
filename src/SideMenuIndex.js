@@ -58,10 +58,6 @@ class MenuIndex extends Component {
             <NavText>
               Geral
             </NavText>
-            <NavItem eventKey="TodosAbertos">
-
-              <NavText>Abertos</NavText>
-            </NavItem>
             <NavItem eventKey="TodosFechados">
 
               <NavText>Fechados</NavText>
