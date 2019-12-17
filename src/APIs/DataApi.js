@@ -1,4 +1,4 @@
-const api = function (destination, options) {
+const api = function(destination, options) {
   let url = "http://localhost:5000/" + destination;
   //let url = "/" + destination;
 

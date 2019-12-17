@@ -177,9 +177,10 @@ class App extends Component {
                   component={GraphicStart}
                 />
                 <Route path="/" exact={true} component={Inicio} />
-                <Route path="/Chamados" component={TabelaIndex} />
+                
                 <Route path="/CallFilter" component={Filter} />
                 <Route path="/Chamados/:tipo" component={TabelaIndex} />
+                <Route path="/Chamados" component={TabelaIndex} />
                 <Route path="/DetalhamentoChamado" component={PageChamado} />
                 <Route path="/User" component={User} />
                 <Route path="/ConfiguracaoDeSetores" component={Setores} />
