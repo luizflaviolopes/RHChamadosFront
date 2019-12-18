@@ -39,7 +39,7 @@ export class TransferHistory extends Component {
               </Form.Label>
             </Col>
             <Col sm="2">
-              <FontAwesomeIcon icon="exchange-alt" />
+              <div><FontAwesomeIcon icon="exchange-alt" /></div>
               <span className="text-muted">{this.state.horario} </span>
             </Col>
             <Col sm="5">

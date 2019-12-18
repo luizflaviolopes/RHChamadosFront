@@ -7,8 +7,10 @@ import "./css/App.css";
 import "./css/bootstrap.css";
 import "./css/Botoes.css";
 import "./css/Chamados.css";
+import "./css/History.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "./APIs/DataApi.js";
+import { TransferHistory } from "./ChamadosRH/TransferHistory.js";
 
 class AppRastreio extends Component {
   constructor(props) {
@@ -29,7 +31,7 @@ class AppRastreio extends Component {
       )
         .then(rastreio => rastreio.json())
         .then(rastreio =>
-          this.setState({ ...rastreio, ready: true })
+          this.setState({ ...rastreio.data, ready: true })
         ).catch(err => this.setState({ error: true }))
     else
       this.setState({ error: true })
@@ -37,6 +39,8 @@ class AppRastreio extends Component {
   }
 
   render() {
+
+    let _this = this;
     if (this.state.error)
       return (<div className="body">
 
@@ -126,8 +130,8 @@ class AppRastreio extends Component {
                     <p>{this.state.descricao}</p>
                   </div>
                   <div className="resp">
-                    {this.state.respostas.map(function(a,i){
-                       return (
+                    {this.state.respostas.map(function (a, i) {
+                      return (
                         <div className="form-group">
                           <Alert variant="dark">
                             <label>
@@ -142,8 +146,24 @@ class AppRastreio extends Component {
                           </Alert>
                         </div>
                       );
-                   
+
                     })}
+                  </div>
+                  <div>
+                    {this.state.historicos.map(function (a, i) {
+                      return (<TransferHistory
+                        history={_this.state.historicos}
+                        setor={a.id_Setores}
+                        horario={a.horario}
+                        desc={a.descricao}
+                        i={i}
+                        openedDesHistory={true}
+
+
+                      />)
+
+                    })}
+
                   </div>
                 </div>
               </div>
