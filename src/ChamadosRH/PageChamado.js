@@ -337,6 +337,19 @@ export class PageChamado extends Component {
         </Can>
       );
     }
+    var atribuicaoReverse = (
+      <Can politica="Atribuir Chamado" reverse>
+        {this.state.atendenteResponsavel == "Não Atribuído" ? (
+          <Button
+            variant="outline-success"
+            onClick={this.handleAssumirChamado}
+          >
+            Assumir Chamado
+    </Button>
+        ) : (
+            this.state.atendenteResponsavel
+          )}
+      </Can>)
 
     var atribuicao;
     if (this.state.listaResponsavel.length > 0) {
@@ -381,6 +394,7 @@ export class PageChamado extends Component {
             </Row>
           </Form.Group>
         </Can>
+
       );
     }
     return (
@@ -492,21 +506,12 @@ export class PageChamado extends Component {
           ) : null}
           <div className="form-group">
             <Row>
-              <Col sm={6}>
+              {this.state.status !== "Encerrado" ? (<Col sm={6}>
                 {atribuicao}
-                <Can politica="Atribuir Chamado" reverse>
-                  {this.state.atendenteResponsavel == "Não Atribuído" ? (
-                    <Button
-                      variant="outline-success"
-                      onClick={this.handleAssumirChamado}
-                    >
-                      Assumir Chamado
-                    </Button>
-                  ) : (
-                      this.state.atendenteResponsavel
-                    )}
-                </Can>
-              </Col>
+                {atribuicaoReverse}
+
+              </Col>) : null}
+
             </Row>
           </div>
         </div>
