@@ -107,23 +107,51 @@ export class PageChamado extends Component {
       );
   }
   handleAtribuirChamado() {
-    api("api/Responsavel/AtribuirChamado", {
-      method: "post",
-      headers: { "Content-Type": "application/json;" },
-      body: JSON.stringify(this.state.selectedResponsavel)
-    })
-      .then(resp => {
-        if (resp.status == 200) return resp.json();
-        else throw resp.json();
+    if (this.state.selectedResponsavel.id) {
+      api("api/Responsavel/AtribuirChamado", {
+        method: "post",
+        headers: { "Content-Type": "application/json;" },
+        body: JSON.stringify(this.state.selectedResponsavel)
       })
-      .then(a => toast.success("Confirmado"))
-      .catch(a =>
-        a.then(e =>
-          toast.error(e.message, {
-            position: toast.POSITION.TOP_CENTER
-          })
-        )
-      );
+        .then(resp => {
+          if (resp.status == 200) return resp.json();
+          else throw resp.json();
+        })
+        .then(a => toast.success("Confirmado"))
+        .catch(a =>
+          a.then(e =>
+            toast.error(e.message, {
+              position: toast.POSITION.TOP_CENTER
+            })
+          )
+        );
+
+    } else {
+      api("api/Responsavel/RemoveAtribuicao", {
+        method: "put",
+        headers: { "Content-Type": "application/json;" },
+        body: JSON.stringify(this.state.numChamado)
+      })
+        .then(resp => {
+          if (resp.status == 200) return resp.json();
+          else throw resp.json();
+        })
+        .then(a => toast.success("Confirmado"))
+        .catch(a =>
+          a.then(e =>
+            toast.error(e.message, {
+              position: toast.POSITION.TOP_CENTER
+            })
+          )
+        );
+
+    }
+
+
+
+
+
+
   }
 
   handleAssumirChamado() {
@@ -319,14 +347,21 @@ export class PageChamado extends Component {
             <Row>
               <Col sm="9">
                 <Typeahead
-                  onChange={evt =>
-                    this.setState({
-                      selectedResponsavel: {
-                        id: evt[0].id,
-                        name: evt[0].name,
-                        numChamado: this.state.numChamado
-                      }
-                    })
+                  onChange={evt => {
+                    if (evt.length !== 0) {
+                      this.setState({
+                        selectedResponsavel: {
+                          id: evt[0].id,
+                          name: evt[0].name,
+                          numChamado: this.state.numChamado
+                        }
+                      })
+                    } else {
+                      this.setState({
+                        selectedResponsavel: {}
+                      })
+                    }
+                  }
                   }
                   onFocus={evt => {
                     evt.target.select();
@@ -337,29 +372,10 @@ export class PageChamado extends Component {
                 />
               </Col>
               <Col sm="3">
-                {this.state.atendenteResponsavel === "Não Atribuído" ?
-                  (<Button onClick={this.handleAtribuirChamado} variant="success">
-                    Atribuir à
-                </Button>)
-                  :
-                  (<Button variant="danger" onClick={() => {
-                    api("api/Responsavel/RemoveAtribuicao", {
-                      method: "put",
-                      headers: { "Content-Type": "application/json;" },
-                      body: JSON.stringify(_this.state.numChamado)
-                    }).then(resp => {
-                      if (resp.status == 200) return resp.json();
-                      else throw resp.json();
-                    })
-                      .then(a => toast.success("Confirmado"))
-                      .catch(a =>
-                        a.then(e =>
-                          toast.error(e.message, {
-                            position: toast.POSITION.TOP_CENTER
-                          })
-                        )
-                      );
-                  }}>Remover </Button>)}
+
+                <Button onClick={this.handleAtribuirChamado} variant="success">
+                  Atribuir à
+                </Button>
 
               </Col>
             </Row>
