@@ -70,6 +70,7 @@ class Chamado extends Component {
       <tr
         onClick={this.OnclickHande}
         className={this.state.IsAutenticado === "true" ? "autenticado" : null}
+        style={{cursor:'pointer'}}
       >
         {/* Coluna de numero de chamado gerado pelo RHChamados
         

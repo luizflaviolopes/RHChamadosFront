@@ -21,46 +21,52 @@ export class Setores extends Component {
     };
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
-    this.handlAttUnidades = this.handlAttUnidades.bind(this);
     this.handleOpenModalVinculo = this.handleOpenModalVinculo.bind(this);
   }
 
   componentDidMount() {
-    let _this = this;
+    
     api("api/Setores", {})
       .then(response => response.json())
       .then(data =>
-        this.setState({
-          listaSetores: data.map(function (a, i) {
-            if (i == 0) {
-              return {
-                id: a.id,
-                sigla: a.setor,
-                pai: null,
-                delete: _this.handleDesativarUnidade,
-                add: _this.handleOpenModal,
-                vinculo: _this.handleOpenModalVinculo,
-                SetoresVinculados: a.relacaoSetorSetor
-              };
-            }
-            else {
-              return {
-
-                id: a.id,
-                sigla: a.setor,
-                pai: a.hierarquia,
-                delete: _this.handleDesativarUnidade,
-                add: _this.handleOpenModal,
-                vinculo: _this.handleOpenModalVinculo,
-                SetoresVinculados: a.relacaoSetorSetor
-
-              };
-            }
-
-          })
-        })
-      );
+         {this.TratamentoDeDados(data)}
+        );
   }
+
+  TratamentoDeDados = (data, funcaoPosterior = null) => {
+    let _this = this;
+
+    this.setState({
+      listaSetores: data.map(function (a, i) {
+        if (i == 0) {
+          return {
+            id: a.id,
+            sigla: a.setor,
+            pai: null,
+            delete: _this.handleDesativarUnidade,
+            add: _this.handleOpenModal,
+            vinculo: _this.handleOpenModalVinculo,
+            SetoresVinculados: a.relacaoSetorSetor
+          };
+        }
+        else {
+          return {
+
+            id: a.id,
+            sigla: a.setor,
+            pai: a.hierarquia,
+            delete: _this.handleDesativarUnidade,
+            add: _this.handleOpenModal,
+            vinculo: _this.handleOpenModalVinculo,
+            SetoresVinculados: a.relacaoSetorSetor
+
+          };
+        }
+
+      }, funcaoPosterior)
+
+  })
+}
 
   handleDesativarUnidade = id => {
     let _this = this;
@@ -75,23 +81,10 @@ export class Setores extends Component {
       })
       .then(
         data =>
-          this.setState({
-            listaSetores: data.map(function (a) {
-              return {
-                id: a.id,
-                sigla: a.setor,
-                pai: a.hierarquia,
-                delete: _this.handleDesativarUnidade,
-                add: _this.handleOpenModal,
-                vinculo: _this.handleOpenModalVinculo,
-                SetoresVinculados: a.relacaoSetorSetor
-              };
-            })
-          }),
-        toast.success(
-          "Setor Excluido"
-        ),
-        this.handleCloseModal()
+          this.TratamentoDeDados(data, () => {
+            toast.success("Setor Excluido")
+          this.handleCloseModal()})
+        
       )
       .catch(
         a => a.then(e =>
@@ -128,23 +121,6 @@ export class Setores extends Component {
     let setores = [...this.state.listaSetores];
   };
 
-  handlAttUnidades(newUnidade) {
-    let _this = this;
-    this.setState({
-      listaSetores: newUnidade.map(function (a) {
-        return {
-          id: a.id,
-          sigla: a.setor,
-          pai: a.hierarquia,
-          delete: _this.handleDesativarUnidade,
-          add: _this.handleOpenModal,
-          vinculo: _this.handleOpenModalVinculo,
-          SetoresVinculados: a.relacaoSetorSetor
-        };
-      })
-    });
-  }
-
   render() {
     let modalAdd;
     let modalVinculo;
@@ -155,7 +131,7 @@ export class Setores extends Component {
           modalName="VinculoUnidade"
           show={true}
           close={this.handleCloseModal}
-          AttListUndd={this.handlAttUnidades}
+          AttListUndd={this.TratamentoDeDados}
           listaSetores={this.state.listaSetores}
           setor={this.state.setor}
         />
@@ -169,7 +145,7 @@ export class Setores extends Component {
           show={true}
           close={this.handleCloseModal}
           params={this.state.modalAddUnidade}
-          AttListUndd={this.handlAttUnidades}
+          AttListUndd={this.TratamentoDeDados}
           listaSetores={this.state.listaSetores}
 
         />
