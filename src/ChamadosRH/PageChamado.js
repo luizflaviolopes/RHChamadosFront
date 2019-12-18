@@ -337,9 +337,30 @@ export class PageChamado extends Component {
                 />
               </Col>
               <Col sm="3">
-                <Button onClick={this.handleAtribuirChamado} variant="success">
-                  Atribuir à
-                </Button>
+                {this.state.atendenteResponsavel === "Não Atribuído" ?
+                  (<Button onClick={this.handleAtribuirChamado} variant="success">
+                    Atribuir à
+                </Button>)
+                  :
+                  (<Button variant="danger" onClick={() => {
+                    api("api/Responsavel/RemoveAtribuicao", {
+                      method: "put",
+                      headers: { "Content-Type": "application/json;" },
+                      body: JSON.stringify(_this.state.numChamado)
+                    }).then(resp => {
+                      if (resp.status == 200) return resp.json();
+                      else throw resp.json();
+                    })
+                      .then(a => toast.success("Confirmado"))
+                      .catch(a =>
+                        a.then(e =>
+                          toast.error(e.message, {
+                            position: toast.POSITION.TOP_CENTER
+                          })
+                        )
+                      );
+                  }}>Remover </Button>)}
+
               </Col>
             </Row>
           </Form.Group>
@@ -466,15 +487,15 @@ export class PageChamado extends Component {
                       Assumir Chamado
                     </Button>
                   ) : (
-                    this.state.atendenteResponsavel
-                  )}
+                      this.state.atendenteResponsavel
+                    )}
                 </Can>
               </Col>
             </Row>
           </div>
         </div>
         <div className="anexo row">
-          {this.state.listFile.map(function(a, i) {
+          {this.state.listFile.map(function (a, i) {
             return (
               <Anexo
                 nome={a.textAnexo}
@@ -486,7 +507,7 @@ export class PageChamado extends Component {
           })}
         </div>
 
-        {this.state.answered.map(function(a, i) {
+        {this.state.answered.map(function (a, i) {
           return (
             <div className="form-group">
               <Alert variant="dark">
