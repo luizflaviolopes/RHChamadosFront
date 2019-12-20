@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Menu, { Cabecalho, Rodape } from "./Layout/Menu.js";
-import { Col, Row, Alert } from "react-bootstrap";
+import { Col, Row, Alert, Form } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import "@trendmicro/react-sidenav/dist/react-sidenav.css";
 import "./css/App.css";
@@ -11,6 +11,7 @@ import "./css/History.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "./APIs/DataApi.js";
 import { TransferHistory } from "./ChamadosRH/TransferHistory.js";
+import { Anexo } from "./ChamadosRH/Anexos"
 
 class AppRastreio extends Component {
   constructor(props) {
@@ -73,13 +74,25 @@ class AppRastreio extends Component {
             <div className="allScreen">
               <div className="PageChamados">
                 <div className="form-group chamado">
+                  <div className="form-group text-center">
+                    <label>
+                      <span>Protocolo: </span>
+                      {this.state.protocolo}
+                    </label>
+                  </div>
                   <div className="form-group">
                     <Row>
                       <Col sm={6}>
                         <label>
                           <span>Nome: </span>
                         </label>
-                        {this.state.nome}
+                        {this.state.solicitante}
+                      </Col>
+                      <Col sm={3}>
+                        <label>
+                          <span>CPF: </span>
+                        </label>
+                        {this.state.cpf}
                       </Col>
                       <Col sm={3}>
                         <label>
@@ -91,7 +104,12 @@ class AppRastreio extends Component {
                   </div>
                   <div className="form-group">
                     <Row>
-
+                      <Col sm={4}>
+                        <label>
+                          <span>Celular: </span>
+                        </label>
+                        {this.state.cel}
+                      </Col>
                       <Col sm={4}>
                         <label>
                           <span>E-Mail: </span>
@@ -108,64 +126,78 @@ class AppRastreio extends Component {
                   </div>
                   <div className="form-group">
                     <Row>
-
                       <Col sm={4}>
                         <label>
-                          <span>Assunto: </span>
+                          <span>Setor: </span>
                         </label>
-                        {this.state.assunto}
+                        {this.state.setor}
                       </Col>
                       <Col sm={4}>
-                        <label>
-                          <span>Data de Abertura: </span>
-                        </label>
-                        {this.state.horaEnviada}
+                        <Form.Group>
+                          <label>
+                            <span>Data de Abertura: </span>
+                          </label>
+                          {this.state.data}
+                        </Form.Group>
                       </Col>
                     </Row>
                   </div>
+                  <Form.Group>
+                    <Row><Col sm="1">
+                      <Form.Label>Assunto</Form.Label>
+                    </Col>
+                      <Col sm="11">{this.state.assunto}</Col>
+                    </Row>
+                  </Form.Group>
                   <div className="form-group">
                     <label>
                       <span>Descrição: </span>
                     </label>
-                    <p>{this.state.descricao}</p>
-                  </div>
-                  <div className="resp">
-                    {this.state.respostas.map(function (a, i) {
-                      return (
-                        <div className="form-group">
-                          <Alert variant="dark">
-                            <label>
-                              <span>Resposta</span>
-                            </label>
-                            <p>
-                              {a.idRespostasAutomaticas !== null
-                                ? a.idRespostasAutomaticas
-                                : a.resposta}
-                              <p>{a.horaResposta}</p>
-                            </p>
-                          </Alert>
-                        </div>
-                      );
-
-                    })}
-                  </div>
-                  <div>
-                    {this.state.historicos.map(function (a, i) {
-                      return (<TransferHistory
-                        history={_this.state.historicos}
-                        setor={a.id_Setores}
-                        horario={a.horario}
-                        desc={a.descricao}
-                        i={i}
-                        openedDesHistory={true}
-
-
-                      />)
-
-                    })}
-
+                    <p>{this.state.desc}</p>
                   </div>
                 </div>
+                <div className="anexo row">
+                  {this.state.listFile.map(function (a, i) {
+                    return (
+                      <Anexo
+                        nome={a.textAnexo}
+                        eliminar={_this.handleRemoveFile}
+                        num={a.id}
+                        typefile={a.typefile}
+                      />
+                    );
+                  })}
+                </div>
+
+                {this.state.answered.map(function (a, i) {
+                  return (
+                    <div className="form-group">
+                      <Alert variant="dark">
+                        <label>
+                          <span>Resposta</span>
+                        </label>
+                        <p>
+                          {a.respostaAutomatica !== undefined
+                            ? a.respostaAutomatica
+                            : a.resposta}
+                          <p>{a.horaResposta}</p>
+                          {_this.state.answered[i].listFile.map(function (x, i) {
+                            return (
+                              <div className="anexo row">
+                                <Anexo
+                                  nome={x.textAnexo}
+                                  eliminar={_this.handleRemoveFile}
+                                  num={x.id}
+                                  typefile={x.typefile}
+                                />
+                              </div>
+                            );
+                          })}
+                        </p>
+                      </Alert>
+                    </div>
+                  );
+                })}
               </div>
 
             </div>
