@@ -23,6 +23,7 @@ class TabelaIndex extends Component {
       current: 0,
       private: true,
       anexoFile: File
+
     };
     this.handleFiltering = this.handleFiltering.bind(this);
     this.handlePageClick = this.handlePageClick.bind(this);
@@ -59,10 +60,13 @@ class TabelaIndex extends Component {
     });
 
     this.setState({
+      current: 0,
       filters: newFilter,
       filtered: newDems,
-      current: 0
+
     });
+
+
   }
 
   componentDidUpdate(prevProps) {
@@ -71,19 +75,19 @@ class TabelaIndex extends Component {
     }
   }
 
-  fetchdata = () =>{
+  fetchdata = () => {
     api("api/values?tipo=" + this.props.match.params.tipo, {})
-    .then(response => response.json())
-    .then(data =>
-      {data.lista.filter(a => { return !a.protocolo }).forEach(b => { b.protocolo = 'A' + b.numChamado });
+      .then(response => response.json())
+      .then(data => {
+        data.lista.filter(a => { return !a.protocolo }).forEach(b => { b.protocolo = 'A' + b.numChamado });
 
-      this.setState({
-        dems: data.lista,
-        all: data.lista,
-        filtered: data.lista
-      })
-    }
-    );
+        this.setState({
+          dems: data.lista,
+          all: data.lista,
+          filtered: data.lista
+        })
+      }
+      );
 
   }
 
@@ -122,6 +126,8 @@ class TabelaIndex extends Component {
       );
     }
 
+
+
     function getPageDems() {
       let { current, filtered } = _this.state;
 
@@ -134,23 +140,13 @@ class TabelaIndex extends Component {
           <FontAwesomeIcon icon="spinner" pulse />
         </div>
       );
-    else
+    else {
+      const numPages = calcNumPages();
       return (
         <div className="container-app">
           <Table striped bordered hover className="cabecalho">
             <thead>
               <tr>
-                {/* <th>
-                
-                    Coluna de numero de chamado gerado pelo RHChamados
-                  <Cabecalho
-                    label="Nª"
-                    icone="list-ol"
-                    FilterParam="numChamado"
-                    sizeInput="w-25"
-                    onFilter={this.handleFiltering}
-                  /> 
-                </th>*/}
                 <th>
                   <Cabecalho
                     label="Protocolo"
@@ -206,35 +202,27 @@ class TabelaIndex extends Component {
                   />
                 </th>
                 {(this.props.match.params.tipo == 'TodosAtendimento' || this.props.match.params.tipo == 'TodosFechados') ?
-                <th>
-                  <Cabecalho
-                    label="Setor"
-                    icone="building"
-                    FilterParam="setor"
-                    sizeInput="w-75"
-                    onFilter={this.handleFiltering}
-                  />
-                </th>
-  :
-  <th>
-                  <Cabecalho
-                    label="Atribuído a"
-                    icone="user"
-                    FilterParam="atendenteResponsavel"
-                    sizeInput="w-75"
-                    onFilter={this.handleFiltering}
-                  />
-                </th>
-  }
-                <th>
-                  <Cabecalho
-                    label="Prazo"
-                    icone="calendar-day"
-                    FilterParam="prazo"
-                    sizeInput="w-75"
-                    onFilter={this.handleFiltering}
-                  />
-                </th>
+                  <th>
+                    <Cabecalho
+                      label="Setor"
+                      icone="building"
+                      FilterParam="setor"
+                      sizeInput="w-75"
+                      onFilter={this.handleFiltering}
+                    />
+                  </th>
+                  :
+                  <th>
+                    <Cabecalho
+                      label="Atribuído a"
+                      icone="user"
+                      FilterParam="atendenteResponsavel"
+                      sizeInput="w-75"
+                      onFilter={this.handleFiltering}
+                    />
+                  </th>
+                }
+
               </tr>
             </thead>
             <tbody>
@@ -265,18 +253,19 @@ class TabelaIndex extends Component {
                     atendenteResponsavel={a.atendenteResponsavel}
                     protocolo={a.protocolo}
                     alterAssunto={a.alterAssunto}
-                    SetorOrSolicitante = {(_this.props.match.params.tipo == 'TodosAtendimento' || _this.props.match.params.tipo == 'TodosFechados')}
+                    SetorOrSolicitante={(_this.props.match.params.tipo == 'TodosAtendimento' || _this.props.match.params.tipo == 'TodosFechados')}
                   />
                 );
               })}
             </tbody>
           </Table>
           <ReactPaginate
+            key={"paginator" + numPages}
             previousLabel={"<"}
             nextLabel={">"}
             breakLabel={"..."}
             breakClassName={"break-me"}
-            pageCount={calcNumPages()}
+            pageCount={numPages}
             forcePage={0}
             marginPagesDisplayed={2}
             pageRangeDisplayed={5}
@@ -284,9 +273,11 @@ class TabelaIndex extends Component {
             containerClassName={"pagination"}
             subContainerClassName={"pages pagination"}
             activeClassName={"active"}
+
           />
         </div>
       );
+    }
   }
 }
 

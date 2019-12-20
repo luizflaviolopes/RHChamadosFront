@@ -18,7 +18,7 @@ export class PageChamado extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      ...props.location.state,
+      numChamado: props.location.state,
       transferModal: false,
       answerModal: false,
       historyModal: false,
@@ -44,9 +44,9 @@ export class PageChamado extends Component {
   }
 
   componentDidMount() {
-    api("api/Resposta?formulario=" + this.state.numChamado, {})
-      .then(resp => resp.json())
-      .then(resp => this.setState({ ...resp }));
+    // api("api/Resposta?formulario=" + this.state.numChamado, {})
+    //   .then(resp => resp.json())
+    //   .then(resp => this.setState({ ...resp }));
 
     api("api/Responsavel", {})
       .then(resp => resp.json())
@@ -63,10 +63,23 @@ export class PageChamado extends Component {
           listaAssunto: data
         })
       );
+
+    this.handleAtualizarPage();
   }
 
+  handleAtualizarPage = () => {
+    api("api/EndPoint/getChamado?id=" + this.state.numChamado, {})
+      .then(resp => resp.json())
+      .then(data =>
+        this.setState({
+          //answered: data.answere !== null ? data.answered : this.state.answered,
+          ...data
+        })
+      );
+  };
+
   handleAnswer() {
-    if (this.state.alterAssunto == "true")
+    if (this.state.alterAssunto == true)
       this.setState({ answerOpen: !this.state.answerOpen });
     else {
       this.setState({ answerOpen: false });
@@ -92,9 +105,7 @@ export class PageChamado extends Component {
       .then(resp => {
         if (resp.status === 200) {
           toast.success("Assunto Alterado.");
-          this.setState({
-            alterAssunto: "true"
-          });
+          this.handleAtualizarPage();
         } else throw resp.json();
       })
       .catch(a =>
@@ -117,7 +128,10 @@ export class PageChamado extends Component {
           if (resp.status == 200) return resp.json();
           else throw resp.json();
         })
-        .then(a => toast.success("Confirmado"))
+        .then(a => {
+          toast.success("Confirmado");
+          this.handleAtualizarPage();
+        })
         .catch(a =>
           a.then(e =>
             toast.error(e.message, {
@@ -125,7 +139,6 @@ export class PageChamado extends Component {
             })
           )
         );
-
     } else {
       api("api/Responsavel/RemoveAtribuicao", {
         method: "put",
@@ -136,7 +149,10 @@ export class PageChamado extends Component {
           if (resp.status == 200) return resp.json();
           else throw resp.json();
         })
-        .then(a => toast.success("Confirmado"))
+        .then(a => {
+          this.handleAtualizarPage();
+          toast.success("Confirmado");
+        })
         .catch(a =>
           a.then(e =>
             toast.error(e.message, {
@@ -144,14 +160,7 @@ export class PageChamado extends Component {
             })
           )
         );
-
     }
-
-
-
-
-
-
   }
 
   handleAssumirChamado() {
@@ -164,7 +173,10 @@ export class PageChamado extends Component {
         if (resp.status == 200) return resp.json();
         else throw resp.json();
       })
-      .then(a => toast.success("Confirmado"))
+      .then(a => {
+        toast.success("Confirmado");
+        this.handleAtualizarPage();
+      })
       .catch(a =>
         a.then(e =>
           toast.error(e.message, {
@@ -185,6 +197,7 @@ export class PageChamado extends Component {
       headers: { "Content-Type": "application/json;" },
       body: JSON.stringify(reabrirChamado)
     }).then(() => {
+      this.handleAtualizarPage();
       this.setState({ status: "Aberto" });
     });
   }
@@ -216,7 +229,7 @@ export class PageChamado extends Component {
               <Button
                 variant="primary"
                 onClick={() => {
-                  if (this.state.alterAssunto == "true") {
+                  if (this.state.alterAssunto == true) {
                     this.setState({
                       transferModal: true
                     });
@@ -227,7 +240,7 @@ export class PageChamado extends Component {
                     );
                   }
                 }}
-                {...(this.state.alterAssunto !== "true" ? "disabled" : null)}
+                {...(this.state.alterAssunto !== true ? "disabled" : null)}
               >
                 <FontAwesomeIcon icon="exchange-alt" /> Redirecionar
               </Button>
@@ -245,7 +258,7 @@ export class PageChamado extends Component {
               <Button
                 variant="success"
                 onClick={this.handleAnswer}
-                {...(this.state.alterAssunto !== "true" ? "disabled" : null)}
+                {...(this.state.alterAssunto !== true ? "disabled" : null)}
               >
                 <FontAwesomeIcon icon="file-alt" /> Responder
               </Button>
@@ -340,16 +353,14 @@ export class PageChamado extends Component {
     var atribuicaoReverse = (
       <Can politica="Atribuir Chamado" reverse>
         {this.state.atendenteResponsavel == "Não Atribuído" ? (
-          <Button
-            variant="outline-success"
-            onClick={this.handleAssumirChamado}
-          >
+          <Button variant="outline-success" onClick={this.handleAssumirChamado}>
             Assumir Chamado
-    </Button>
+          </Button>
         ) : (
-            this.state.atendenteResponsavel
-          )}
-      </Can>)
+          this.state.atendenteResponsavel
+        )}
+      </Can>
+    );
 
     var atribuicao;
     if (this.state.listaResponsavel.length > 0) {
@@ -368,14 +379,13 @@ export class PageChamado extends Component {
                           name: evt[0].name,
                           numChamado: this.state.numChamado
                         }
-                      })
+                      });
                     } else {
                       this.setState({
                         selectedResponsavel: {}
-                      })
+                      });
                     }
-                  }
-                  }
+                  }}
                   onFocus={evt => {
                     evt.target.select();
                   }}
@@ -385,16 +395,13 @@ export class PageChamado extends Component {
                 />
               </Col>
               <Col sm="3">
-
                 <Button onClick={this.handleAtribuirChamado} variant="success">
                   Atribuir à
                 </Button>
-
               </Col>
             </Row>
           </Form.Group>
         </Can>
-
       );
     }
     return (
@@ -506,17 +513,17 @@ export class PageChamado extends Component {
           ) : null}
           <div className="form-group">
             <Row>
-              {this.state.status !== "Encerrado" ? (<Col sm={6}>
-                {atribuicao}
-                {atribuicaoReverse}
-
-              </Col>) : null}
-
+              {this.state.status !== "Encerrado" ? (
+                <Col sm={6}>
+                  {atribuicao}
+                  {atribuicaoReverse}
+                </Col>
+              ) : null}
             </Row>
           </div>
         </div>
         <div className="anexo row">
-          {this.state.listFile.map(function (a, i) {
+          {this.state.listFile.map(function(a, i) {
             return (
               <Anexo
                 nome={a.textAnexo}
@@ -528,7 +535,7 @@ export class PageChamado extends Component {
           })}
         </div>
 
-        {this.state.answered.map(function (a, i) {
+        {this.state.answered.map(function(a, i) {
           return (
             <div className="form-group">
               <Alert variant="dark">
@@ -536,10 +543,22 @@ export class PageChamado extends Component {
                   <span>Resposta</span>
                 </label>
                 <p>
-                  {a.respostaAutomatica !== null
+                  {a.respostaAutomatica !== undefined
                     ? a.respostaAutomatica
                     : a.resposta}
                   <p>{a.horaResposta}</p>
+                  {_this.state.answered[i].listFile.map(function(x, i) {
+                    return (
+                      <div className="anexo row">
+                        <Anexo
+                          nome={x.textAnexo}
+                          eliminar={_this.handleRemoveFile}
+                          num={x.id}
+                          typefile={x.typefile}
+                        />
+                      </div>
+                    );
+                  })}
                 </p>
               </Alert>
             </div>

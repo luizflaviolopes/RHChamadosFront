@@ -50,10 +50,7 @@ export class FilterCall extends Component {
               <FontAwesomeIcon icon="building" />
               Setor
             </th>
-            <th>
-              <FontAwesomeIcon icon="Calendar-day" />
-              Prazo
-            </th>
+
           </thead>
           <tbody>
             {this.state.listFilter.map((a, i) => {
