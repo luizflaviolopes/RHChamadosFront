@@ -534,7 +534,7 @@ export class PageChamado extends Component {
 
         {/* é aqui o anexo */}
         <div className="anexo row">
-          {/* {this.state.listFile.map(function (a, i) {
+          {this.state.listFile.map(function (a, i) {
             return (
               <Anexo
                 nome={a.textAnexo}
@@ -543,7 +543,7 @@ export class PageChamado extends Component {
                 typefile={a.typefile}
               />
             );
-          })} */}
+          })}
         </div>
 
         {this.state.answered.map(function (a, i) {
@@ -558,6 +558,16 @@ export class PageChamado extends Component {
                     ? a.respostaAutomatica
                     : a.resposta}
                   <p>{a.horaResposta}</p>
+                  {this.state.a.listFile.map(function (x, i) {
+                    return (
+                      <Anexo
+                        nome={x.textAnexo}
+                        eliminar={_this.handleRemoveFile}
+                        num={x.id}
+                        typefile={x.typefile}
+                      />
+                    );
+                  })}
                 </p>
               </Alert>
             </div>
