@@ -32,7 +32,6 @@ export class ModalVinculoUni extends Component {
           ListSetorVinculo: setorV.relacaoSetorSetor
         });
       });
-
   }
 
   AddVinculo = setor => {
@@ -74,7 +73,6 @@ export class ModalVinculoUni extends Component {
       });
     } else {
       list = [{ Destino: 0, Origem: _this.props.setor }];
-
     }
 
     api("api/Setores/NovaRelacao", {
@@ -93,7 +91,6 @@ export class ModalVinculoUni extends Component {
         this.props.AttListUndd(data);
         toast.success("As alterações foram salvas.");
         this.props.close();
-        window.location.reload();
       })
       .catch(a => {
         toast.error(
@@ -124,7 +121,7 @@ export class ModalVinculoUni extends Component {
                 as="select"
               >
                 <option>Escolha um Setor</option>
-                {this.state.setores.map(function (a) {
+                {this.state.setores.map(function(a) {
                   return (
                     <option value={a.id} name={a.setor}>
                       {a.setor}
@@ -134,7 +131,7 @@ export class ModalVinculoUni extends Component {
               </Form.Control>
             </Form.Group>
             <Form.Group>
-              {this.state.ListSetorVinculo.map(function (a) {
+              {this.state.ListSetorVinculo.map(function(a) {
                 return (
                   <Vinculo
                     id={a.id}

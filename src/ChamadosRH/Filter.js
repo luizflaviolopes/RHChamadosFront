@@ -6,8 +6,7 @@ import InputMask from "react-input-mask";
 import { FilterCall } from "./FilterCall";
 import { toast } from "react-toastify";
 import { Download } from "./ExportExcel";
-import MaskedInput from 'react-text-mask';
-
+import MaskedInput from "react-text-mask";
 
 export class Filter extends Component {
   constructor(props) {
@@ -36,18 +35,13 @@ export class Filter extends Component {
       );
   }
 
-  handleMaspChange = (evt) => {
-
+  handleMaspChange = evt => {
     if (evt.length < 9) {
-      return [/\d/, /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/]
-
+      return [/\d/, /\d/, /\d/, /\d/, /\d/, /\d/, "-", /\d/];
+    } else {
+      return [/\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, "-", /\d/];
     }
-    else {
-      return [/\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/]
-    }
-
-
-  }
+  };
   handleFiltroChamado = () => {
     api("api/filter", {
       method: "post",
@@ -132,7 +126,9 @@ export class Filter extends Component {
                   <MaskedInput
                     guide={false}
                     className="form-control"
-                    mask={(evt) => { return this.handleMaspChange(evt) }}
+                    mask={evt => {
+                      return this.handleMaspChange(evt);
+                    }}
                     onChange={evt =>
                       this.setState({
                         filter: {
@@ -176,7 +172,7 @@ export class Filter extends Component {
                       })
                     }
                   >
-                    <option>Selecione um Setor</option>
+                    <option value="0">Selecione um Setor</option>
                     {this.state.listaSetor.map(function(a, i) {
                       return <option value={a.id}>{a.setor}</option>;
                     })}
@@ -221,6 +217,15 @@ export class Filter extends Component {
                 <Form.Group>
                   <Form.Label>Assunto</Form.Label>
                   <Typeahead
+                    onInputChange={evt => {
+                      if (evt === "")
+                        this.setState({
+                          filter: {
+                            ...this.state.filter,
+                            AssuntoId: 0
+                          }
+                        });
+                    }}
                     onChange={evt => {
                       if (evt.length !== 0) {
                         this.setState({
