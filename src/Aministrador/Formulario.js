@@ -164,21 +164,6 @@ export class Formulario extends Component {
         <Modal.Body>
           <Form>
             <Form.Group>
-              <Form.Label>E-Mail</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Digite o E-mail"
-                onChange={evt =>
-                  this.setState({
-                    newChamado: {
-                      ...this.state.newChamado,
-                      Email: evt.target.value
-                    }
-                  })
-                }
-              />
-            </Form.Group>
-            <Form.Group>
               <Form.Label>Assunto</Form.Label>
 
               <Typeahead
