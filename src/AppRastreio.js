@@ -18,7 +18,8 @@ class AppRastreio extends Component {
     super(props);
     this.state = {
       error: false,
-      ready: false
+      ready: false,
+      respostas:[]
     };
 
   }
