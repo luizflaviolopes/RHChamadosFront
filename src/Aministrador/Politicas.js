@@ -15,12 +15,20 @@ export class Politicas extends Component {
   render() {
     return (
       <div>
-        <Form.Check
-          type="checkbox"
-          label={this.props.namePol}
-          onChange={evt => this.props.onChange(evt)}
-          checked={this.props.check}
-        />
+        <div style={{ display: "inline-block" }}>
+          <Form.Check
+            type="checkbox"
+            label={this.props.namePol}
+            onChange={evt => this.props.onChange(evt)}
+            checked={this.props.check}
+          />
+        </div>
+        <Form.Text
+          style={{ display: "inline-block", marginLeft: "5px" }}
+          className="text-muted"
+        >
+          <label>({this.props.descPol})</label>
+        </Form.Text>
       </div>
     );
   }
