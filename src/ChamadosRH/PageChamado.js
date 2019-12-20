@@ -18,7 +18,7 @@ export class PageChamado extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      ...props.location.state,
+      numChamado: props.location.state,
       transferModal: false,
       answerModal: false,
       historyModal: false,
@@ -64,12 +64,17 @@ export class PageChamado extends Component {
         })
       );
 
-    api("api/EndPoint/getChamado?id=" + this.state.protocolo, {})
+    this.handleAtualizarPage()
+  }
+
+
+  handleAtualizarPage = () => {
+    api("api/EndPoint/getChamado?id=" + this.state.numChamado, {})
       .then(resp => resp.json())
       .then(data =>
         this.setState({
-          answered: data.answere !== null ? data.answered : this.state.answered,
-          datas: data
+          //answered: data.answere !== null ? data.answered : this.state.answered,
+          ...data
         })
       );
   }
@@ -518,6 +523,8 @@ export class PageChamado extends Component {
             </Row>
           </div>
         </div>
+
+        {/* é aqui o anexo */}
         <div className="anexo row">
           {this.state.listFile.map(function (a, i) {
             return (

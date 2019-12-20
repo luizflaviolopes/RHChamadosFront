@@ -61,7 +61,7 @@ class Chamado extends Component {
       return (
         <Redirect
           push
-          to={{ pathname: "/DetalhamentoChamado", state: { ...this.state } }}
+          to={{ pathname: "/DetalhamentoChamado", state: this.state.numChamado }}
         />
       );
     }
