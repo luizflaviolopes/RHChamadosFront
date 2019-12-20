@@ -481,6 +481,16 @@ export class PageChamado extends Component {
                   {this.state.data}
                 </Form.Group>
               </Col>
+              {this.state.isAutenticado ? (
+                <Col sm={4}>
+                  <Form.Group>
+                    <label>
+                      <span>Setor de Abertura: </span>
+                    </label>
+                    {this.state.setorAbertura}
+                  </Form.Group>
+                </Col>
+              ) : null}
             </Row>
           </div>
           <Form.Group>
