@@ -61,7 +61,7 @@ class Chamado extends Component {
       return (
         <Redirect
           push
-          to={{ pathname: "/DetalhamentoChamado", state: { ...this.state } }}
+          to={{ pathname: "/DetalhamentoChamado", state: this.state.numChamado }}
         />
       );
     }
@@ -70,6 +70,7 @@ class Chamado extends Component {
       <tr
         onClick={this.OnclickHande}
         className={this.state.IsAutenticado === "true" ? "autenticado" : null}
+        style={{ cursor: 'pointer' }}
       >
         {/* Coluna de numero de chamado gerado pelo RHChamados
         
@@ -89,31 +90,29 @@ class Chamado extends Component {
         >
           {this.state.prioridade === null ? "N/A" : this.state.prioridade}
         </td>
-        {this.props.SetorOrSolicitante ? 
-        <td
-          title={
-            this.state.setor
-          }
-        >
-          {this.state.setor}
-        </td>
-        :
-        <td
-          title={
-            this.state.atendenteResponsavel == "Não Atribuído" ?
-            "":
-            this.state.atendenteResponsavel
-          }
-        >
-          {
-          this.state.atendenteResponsavel == "Não Atribuído" ?
-          "":
-          this.state.atendenteResponsavel}
-        </td>
-  }
-        <td title={this.state.prazo !== null ? this.state.prazo : "1"}>
-          {this.state.prazo !== null ? this.state.prazo : "1"}
-        </td>
+        {this.props.SetorOrSolicitante ?
+          <td
+            title={
+              this.state.setor
+            }
+          >
+            {this.state.setor}
+          </td>
+          :
+          <td
+            title={
+              this.state.atendenteResponsavel == "Não Atribuído" ?
+                "" :
+                this.state.atendenteResponsavel
+            }
+          >
+            {
+              this.state.atendenteResponsavel == "Não Atribuído" ?
+                "" :
+                this.state.atendenteResponsavel}
+          </td>
+        }
+
       </tr>
     );
   }

@@ -20,7 +20,13 @@ class MenuIndex extends Component {
         }}
       >
         <SideNav.Toggle />
-        <SideNav.Nav defaultSelected="Todos">
+        <SideNav.Nav defaultSelected="Abertos">
+          <NavItem eventKey="Abertos">
+            <NavIcon>
+              <FontAwesomeIcon icon="folder-open" />
+            </NavIcon>
+            <NavText>Abertos</NavText>
+          </NavItem>
           <NavItem eventKey="Todos">
             <NavIcon>
               <FontAwesomeIcon icon="folder" />
@@ -32,12 +38,6 @@ class MenuIndex extends Component {
               <FontAwesomeIcon icon="user-tag" />
             </NavIcon>
             <NavText>Meus Chamados</NavText>
-          </NavItem>
-          <NavItem eventKey="Abertos">
-            <NavIcon>
-              <FontAwesomeIcon icon="folder-open" />
-            </NavIcon>
-            <NavText>Abertos</NavText>
           </NavItem>
           <NavItem eventKey="Atendimento">
             <NavIcon>

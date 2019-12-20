@@ -32,22 +32,6 @@ export class ModalVinculoUni extends Component {
           ListSetorVinculo: setorV.relacaoSetorSetor
         });
       });
-    // this.setState(
-    //   {
-    //     setores: data
-    //   },
-    //   () => {
-    //     let setorV = this.state.setores.find(xs => {
-    //       return xs.id == this.props.setor;
-    //     });
-    //     this.setState({
-    //       ListSetorVinculo: this.state.ListSetorVinculo.concat(
-    //         setorV.relacaoSetorSetor
-    //       )
-    //     });
-    //   }
-    // )
-    // );
   }
 
   AddVinculo = setor => {
@@ -59,12 +43,6 @@ export class ModalVinculoUni extends Component {
 
     this.setState({
       ListSetorVinculo: this.state.ListSetorVinculo.concat(newSetorV)
-      //function () {
-      //   return (
-      //     id = setorV.id,
-      //     setorDestino = setorV.setor
-      //   )
-      // })
     });
   };
 
@@ -87,10 +65,15 @@ export class ModalVinculoUni extends Component {
   enviar = evt => {
     evt.preventDefault();
     let _this = this;
+    let list;
 
-    let list = this.state.ListSetorVinculo.map(a => {
-      return { Destino: a.id, Origem: _this.props.setor };
-    });
+    if (this.state.ListSetorVinculo.length !== 0) {
+      list = this.state.ListSetorVinculo.map(a => {
+        return { Destino: a.id, Origem: _this.props.setor };
+      });
+    } else {
+      list = [{ Destino: 0, Origem: _this.props.setor }];
+    }
 
     api("api/Setores/NovaRelacao", {
       method: "post",
@@ -105,10 +88,9 @@ export class ModalVinculoUni extends Component {
         }
       })
       .then(data => {
-        //this.props.AttListUndd(data);
+        this.props.AttListUndd(data);
         toast.success("As alterações foram salvas.");
         this.props.close();
-        window.location.reload();
       })
       .catch(a => {
         toast.error(

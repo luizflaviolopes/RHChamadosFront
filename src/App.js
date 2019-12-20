@@ -61,6 +61,18 @@ class App extends Component {
   }
 
   render() {
+
+    let form;
+    if (this.state.newCallModal) {
+      form = (
+        <Formulario
+          show={this.state.newCallModal}
+          modalName="newCallModal"
+          close={this.handleCloseModal}
+        />
+      )
+    }
+
     let lgClose = () =>
       this.setState({
         answerModal: false,
@@ -91,7 +103,7 @@ class App extends Component {
               </Link>
             </Can>
             <Can politica="Visualizar Chamado">
-              <Link to="/Chamados">
+              <Link to="/Chamados/Abertos">
                 <Button className="btn-menu" onClick={this.OnclickHande}>
                   Chamados
                 </Button>
@@ -127,11 +139,7 @@ class App extends Component {
               </Button>
             </Can>
 
-            <Formulario
-              show={this.state.newCallModal}
-              modalName="newCallModal"
-              close={this.handleCloseModal}
-            />
+            {form}
 
             {/* <Can politica="Gerir Resposta">
               <Button
@@ -177,7 +185,7 @@ class App extends Component {
                   component={GraphicStart}
                 />
                 <Route path="/" exact={true} component={Inicio} />
-                
+
                 <Route path="/CallFilter" component={Filter} />
                 <Route path="/Chamados/:tipo" component={TabelaIndex} />
                 <Route path="/Chamados" component={TabelaIndex} />
