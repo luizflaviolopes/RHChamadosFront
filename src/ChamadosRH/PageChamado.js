@@ -106,9 +106,7 @@ export class PageChamado extends Component {
       .then(resp => {
         if (resp.status === 200) {
           toast.success("Assunto Alterado.");
-          this.setState({
-            alterAssunto: "true"
-          });
+          this.handleAtualizarPage()
         } else throw resp.json();
       })
       .catch(a =>
@@ -131,7 +129,10 @@ export class PageChamado extends Component {
           if (resp.status == 200) return resp.json();
           else throw resp.json();
         })
-        .then(a => toast.success("Confirmado"))
+        .then(a => {
+          toast.success("Confirmado")
+          this.handleAtualizarPage()
+        })
         .catch(a =>
           a.then(e =>
             toast.error(e.message, {
@@ -150,7 +151,10 @@ export class PageChamado extends Component {
           if (resp.status == 200) return resp.json();
           else throw resp.json();
         })
-        .then(a => toast.success("Confirmado"))
+        .then(a => {
+          this.handleAtualizarPage()
+          toast.success("Confirmado")
+        })
         .catch(a =>
           a.then(e =>
             toast.error(e.message, {
@@ -172,7 +176,10 @@ export class PageChamado extends Component {
         if (resp.status == 200) return resp.json();
         else throw resp.json();
       })
-      .then(a => toast.success("Confirmado"))
+      .then(a => {
+        toast.success("Confirmado")
+        this.handleAtualizarPage()
+      })
       .catch(a =>
         a.then(e =>
           toast.error(e.message, {
@@ -193,6 +200,7 @@ export class PageChamado extends Component {
       headers: { "Content-Type": "application/json;" },
       body: JSON.stringify(reabrirChamado)
     }).then(() => {
+      this.handleAtualizarPage()
       this.setState({ status: "Aberto" });
     });
   }
@@ -526,7 +534,7 @@ export class PageChamado extends Component {
 
         {/* é aqui o anexo */}
         <div className="anexo row">
-          {this.state.listFile.map(function (a, i) {
+          {/* {this.state.listFile.map(function (a, i) {
             return (
               <Anexo
                 nome={a.textAnexo}
@@ -535,7 +543,7 @@ export class PageChamado extends Component {
                 typefile={a.typefile}
               />
             );
-          })}
+          })} */}
         </div>
 
         {this.state.answered.map(function (a, i) {
