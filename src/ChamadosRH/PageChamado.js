@@ -64,9 +64,8 @@ export class PageChamado extends Component {
         })
       );
 
-    this.handleAtualizarPage()
+    this.handleAtualizarPage();
   }
-
 
   handleAtualizarPage = () => {
     api("api/EndPoint/getChamado?id=" + this.state.numChamado, {})
@@ -77,10 +76,10 @@ export class PageChamado extends Component {
           ...data
         })
       );
-  }
+  };
 
   handleAnswer() {
-    if (this.state.alterAssunto == "true")
+    if (this.state.alterAssunto == true)
       this.setState({ answerOpen: !this.state.answerOpen });
     else {
       this.setState({ answerOpen: false });
@@ -106,7 +105,7 @@ export class PageChamado extends Component {
       .then(resp => {
         if (resp.status === 200) {
           toast.success("Assunto Alterado.");
-          this.handleAtualizarPage()
+          this.handleAtualizarPage();
         } else throw resp.json();
       })
       .catch(a =>
@@ -130,8 +129,8 @@ export class PageChamado extends Component {
           else throw resp.json();
         })
         .then(a => {
-          toast.success("Confirmado")
-          this.handleAtualizarPage()
+          toast.success("Confirmado");
+          this.handleAtualizarPage();
         })
         .catch(a =>
           a.then(e =>
@@ -140,7 +139,6 @@ export class PageChamado extends Component {
             })
           )
         );
-
     } else {
       api("api/Responsavel/RemoveAtribuicao", {
         method: "put",
@@ -152,8 +150,8 @@ export class PageChamado extends Component {
           else throw resp.json();
         })
         .then(a => {
-          this.handleAtualizarPage()
-          toast.success("Confirmado")
+          this.handleAtualizarPage();
+          toast.success("Confirmado");
         })
         .catch(a =>
           a.then(e =>
@@ -162,7 +160,6 @@ export class PageChamado extends Component {
             })
           )
         );
-
     }
   }
 
@@ -177,8 +174,8 @@ export class PageChamado extends Component {
         else throw resp.json();
       })
       .then(a => {
-        toast.success("Confirmado")
-        this.handleAtualizarPage()
+        toast.success("Confirmado");
+        this.handleAtualizarPage();
       })
       .catch(a =>
         a.then(e =>
@@ -200,7 +197,7 @@ export class PageChamado extends Component {
       headers: { "Content-Type": "application/json;" },
       body: JSON.stringify(reabrirChamado)
     }).then(() => {
-      this.handleAtualizarPage()
+      this.handleAtualizarPage();
       this.setState({ status: "Aberto" });
     });
   }
@@ -232,7 +229,7 @@ export class PageChamado extends Component {
               <Button
                 variant="primary"
                 onClick={() => {
-                  if (this.state.alterAssunto == "true") {
+                  if (this.state.alterAssunto == true) {
                     this.setState({
                       transferModal: true
                     });
@@ -243,7 +240,7 @@ export class PageChamado extends Component {
                     );
                   }
                 }}
-                {...(this.state.alterAssunto !== "true" ? "disabled" : null)}
+                {...(this.state.alterAssunto !== true ? "disabled" : null)}
               >
                 <FontAwesomeIcon icon="exchange-alt" /> Redirecionar
               </Button>
@@ -261,7 +258,7 @@ export class PageChamado extends Component {
               <Button
                 variant="success"
                 onClick={this.handleAnswer}
-                {...(this.state.alterAssunto !== "true" ? "disabled" : null)}
+                {...(this.state.alterAssunto !== true ? "disabled" : null)}
               >
                 <FontAwesomeIcon icon="file-alt" /> Responder
               </Button>
@@ -356,16 +353,14 @@ export class PageChamado extends Component {
     var atribuicaoReverse = (
       <Can politica="Atribuir Chamado" reverse>
         {this.state.atendenteResponsavel == "Não Atribuído" ? (
-          <Button
-            variant="outline-success"
-            onClick={this.handleAssumirChamado}
-          >
+          <Button variant="outline-success" onClick={this.handleAssumirChamado}>
             Assumir Chamado
-    </Button>
+          </Button>
         ) : (
-            this.state.atendenteResponsavel
-          )}
-      </Can>)
+          this.state.atendenteResponsavel
+        )}
+      </Can>
+    );
 
     var atribuicao;
     if (this.state.listaResponsavel.length > 0) {
@@ -384,14 +379,13 @@ export class PageChamado extends Component {
                           name: evt[0].name,
                           numChamado: this.state.numChamado
                         }
-                      })
+                      });
                     } else {
                       this.setState({
                         selectedResponsavel: {}
-                      })
+                      });
                     }
-                  }
-                  }
+                  }}
                   onFocus={evt => {
                     evt.target.select();
                   }}
@@ -401,16 +395,13 @@ export class PageChamado extends Component {
                 />
               </Col>
               <Col sm="3">
-
                 <Button onClick={this.handleAtribuirChamado} variant="success">
                   Atribuir à
                 </Button>
-
               </Col>
             </Row>
           </Form.Group>
         </Can>
-
       );
     }
     return (
@@ -522,19 +513,19 @@ export class PageChamado extends Component {
           ) : null}
           <div className="form-group">
             <Row>
-              {this.state.status !== "Encerrado" ? (<Col sm={6}>
-                {atribuicao}
-                {atribuicaoReverse}
-
-              </Col>) : null}
-
+              {this.state.status !== "Encerrado" ? (
+                <Col sm={6}>
+                  {atribuicao}
+                  {atribuicaoReverse}
+                </Col>
+              ) : null}
             </Row>
           </div>
         </div>
 
         {/* é aqui o anexo */}
         <div className="anexo row">
-          {this.state.listFile.map(function (a, i) {
+          {this.state.listFile.map(function(a, i) {
             return (
               <Anexo
                 nome={a.textAnexo}
@@ -546,7 +537,7 @@ export class PageChamado extends Component {
           })}
         </div>
 
-        {this.state.answered.map(function (a, i) {
+        {this.state.answered.map(function(a, i) {
           return (
             <div className="form-group">
               <Alert variant="dark">
@@ -558,7 +549,7 @@ export class PageChamado extends Component {
                     ? a.respostaAutomatica
                     : a.resposta}
                   <p>{a.horaResposta}</p>
-                  {this.state.a.listFile.map(function (x, i) {
+                  {_this.state.answered[i].listFile.map(function(x, i) {
                     return (
                       <Anexo
                         nome={x.textAnexo}
