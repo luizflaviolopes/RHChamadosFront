@@ -21,7 +21,6 @@ export class FilterCall extends Component {
       <div>
         <Table>
           <thead>
-
             <th>
               <FontAwesomeIcon icon="list-ol" />
               Protocolo
@@ -50,7 +49,6 @@ export class FilterCall extends Component {
               <FontAwesomeIcon icon="building" />
               Setor
             </th>
-
           </thead>
           <tbody>
             {this.state.listFilter.map((a, i) => {
@@ -74,6 +72,8 @@ export class FilterCall extends Component {
                   IsAutenticado={a.IsAutenticado}
                   atendenteResponsavel={a.atendenteResponsavel}
                   protocolo={a.protocolo}
+                  setorAbertura={a.setorAbertura}
+                  SetorOrSolicitante={true}
                 />
               );
             })}
