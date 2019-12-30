@@ -19,7 +19,7 @@ export class Vinculo extends Component {
     render() {
         return (
 
-            <Badge variant="danger">{this.props.nome} <Badge variant="light" onClick={(evt) => { this.props.delete(this.props.id) }}><FontAwesomeIcon icon="times" /></Badge> </Badge>
+            <Badge variant="danger vinculos">{this.props.nome} <Badge variant="light" onClick={(evt) => { this.props.delete(this.props.id) }}><FontAwesomeIcon icon="times" /></Badge> </Badge>
 
 
         );

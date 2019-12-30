@@ -1,7 +1,7 @@
 
 import React, { Component, PureComponent } from "react";
 import api from "../APIs/DataApi.js";
-import { BarChart, XAxis, YAxis, Tooltip, Bar, Legend, CartesianGrid } from "recharts";
+import { BarChart, XAxis, YAxis, Tooltip, Bar, Legend, CartesianGrid, LabelList } from "recharts";
 import { Legenda } from "./Legenda.js";
 
 
@@ -133,9 +133,9 @@ export class DashDate extends PureComponent {
                         <Tooltip />
 
                         <Legend verticalAlign="top" />
-                        <Bar dataKey="fechado" fill="#011C40"></Bar>
-                        <Bar dataKey="abertos" fill="#A60303"></Bar>
-                        <Bar dataKey="atendimento" fill="#F27B13"></Bar>
+                        <Bar dataKey="fechado" fill="#011C40"> <LabelList dataKey="fechado" position="top" /></Bar>
+                        <Bar dataKey="abertos" fill="#A60303"><LabelList dataKey="abertos" position="top" /></Bar>
+                        <Bar dataKey="atendimento" fill="#F27B13"><LabelList dataKey="atendimento" position="top" /></Bar>
 
                     </BarChart>
                 </div>
