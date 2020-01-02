@@ -53,7 +53,7 @@ export class PageChamado extends Component {
       .then(data =>
         this.setState({
           listaResponsavel: data
-        })
+        }, this.handleAtualizarPage())
       );
 
     api("api/assunto", {})
@@ -61,7 +61,7 @@ export class PageChamado extends Component {
       .then(data =>
         this.setState({
           listaAssunto: data
-        })
+        }, this.handleAtualizarPage())
       );
 
     this.handleAtualizarPage();
@@ -357,13 +357,13 @@ export class PageChamado extends Component {
             Assumir Chamado
           </Button>
         ) : (
-          this.state.atendenteResponsavel
-        )}
+            this.state.atendenteResponsavel
+          )}
       </Can>
     );
 
     var atribuicao;
-    if (this.state.listaResponsavel.length > 0) {
+    if (this.state.listaResponsavel.length > 0 && this.state.atendenteResponsavel !== undefined || this.state.listaResponsavel.length > 0 && this.state.atendenteResponsavel === "") {
       atribuicao = (
         <Can politica="Atribuir Chamado">
           <Form.Group>
@@ -391,7 +391,7 @@ export class PageChamado extends Component {
                   }}
                   options={this.state.listaResponsavel}
                   labelKey={option => `${option.name}`}
-                  defaultInputValue={Responsavel}
+                  defaultInputValue={_this.state.atendenteResponsavel}
                 />
               </Col>
               <Col sm="3">
@@ -533,7 +533,7 @@ export class PageChamado extends Component {
           </div>
         </div>
         <div className="anexo row">
-          {this.state.listFile.map(function(a, i) {
+          {this.state.listFile.map(function (a, i) {
             return (
               <Anexo
                 nome={a.textAnexo}
@@ -545,7 +545,7 @@ export class PageChamado extends Component {
           })}
         </div>
 
-        {this.state.answered.map(function(a, i) {
+        {this.state.answered.map(function (a, i) {
           return (
             <div className="form-group">
               <Alert variant="dark">
@@ -557,7 +557,7 @@ export class PageChamado extends Component {
                     ? a.respostaAutomatica
                     : a.resposta}
                   <p>{a.horaResposta}</p>
-                  {_this.state.answered[i].listFile.map(function(x, i) {
+                  {_this.state.answered[i].listFile.map(function (x, i) {
                     return (
                       <div className="anexo row">
                         <Anexo
