@@ -51,3 +51,7 @@ div.headAtendente div.ttl {
   display: inline-block;
   text-align: right;
 }
+
+.vinculos {
+  margin-left: 5px;
+}

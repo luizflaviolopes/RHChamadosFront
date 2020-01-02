@@ -157,6 +157,7 @@ export class NewUser extends Component {
                   return (
                     <Politicas
                       namePol={a.nome}
+                      descPol={a.descricao}
                       onChange={evt => {
                         let politicas = _this.newAtendente.politicas;
 

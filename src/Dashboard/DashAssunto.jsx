@@ -10,7 +10,8 @@ import {
   CartesianGrid,
   PieChart,
   Pie,
-  Cell
+  Cell,
+  LabelList
 } from "recharts";
 
 export class DashAssunto extends Component {
@@ -102,7 +103,10 @@ export class DashAssunto extends Component {
             <Tooltip />
 
             <Legend verticalAlign="top" />
-            <Bar dataKey="quantidade" fill="#011C40"></Bar>
+            <Bar dataKey="quantidade" fill="#011C40">
+              {" "}
+              <LabelList dataKey="quantidade" position="top" />
+            </Bar>
           </BarChart>
         </div>
       </div>
