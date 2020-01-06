@@ -351,7 +351,7 @@ export class PageChamado extends Component {
       );
     }
     var atribuicaoReverse = (
-      <Can politica="Atribuir Chamado" reverse>
+      <Can politica="Responder Chamado" >
         {this.state.atendenteResponsavel == "Não Atribuído" ? (
           <Button variant="outline-success" onClick={this.handleAssumirChamado}>
             Assumir Chamado
