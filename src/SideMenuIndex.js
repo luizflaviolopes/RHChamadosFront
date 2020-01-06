@@ -39,12 +39,12 @@ class MenuIndex extends Component {
             </NavIcon>
             <NavText>Meus Chamados</NavText>
           </NavItem>
-          <NavItem eventKey="Atendimento">
+          {/* <NavItem eventKey="Atendimento">
             <NavIcon>
               <FontAwesomeIcon icon="user" />
             </NavIcon>
             <NavText>Em Atendimento</NavText>
-          </NavItem>
+          </NavItem> */}
           <NavItem eventKey="Fechados">
             <NavIcon>
               <FontAwesomeIcon icon="archive" />
