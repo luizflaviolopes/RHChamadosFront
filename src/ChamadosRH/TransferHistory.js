@@ -12,14 +12,15 @@ export class TransferHistory extends Component {
       history: props.history,
       horario: props.horario,
       id_Setores: props.setor,
-      openedDesHistory: false,
+      openedDesHistory: props.openedDesHistory,
       i: props.i
     };
     this.handleClickHistoryDesc = this.handleClickHistoryDesc.bind(this);
   }
 
   handleClickHistoryDesc() {
-    this.setState({ openedDesHistory: !this.state.openedDesHistory });
+    if (!this.props.rastreio)
+      this.setState({ openedDesHistory: !this.state.openedDesHistory });
   }
 
   render() {
@@ -39,7 +40,9 @@ export class TransferHistory extends Component {
               </Form.Label>
             </Col>
             <Col sm="2">
-              <div><FontAwesomeIcon icon="exchange-alt" /></div>
+              <div>
+                <FontAwesomeIcon icon="exchange-alt" />
+              </div>
               <span className="text-muted">{this.state.horario} </span>
             </Col>
             <Col sm="5">

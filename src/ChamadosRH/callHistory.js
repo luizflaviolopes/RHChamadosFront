@@ -22,7 +22,7 @@ export class History extends Component {
   handleClickHistory() {
     api(
       "api/Historico/HistoricoDetalhado?formulario=" +
-        this.state.numHistory,
+      this.state.numHistory,
       {}
     )
       .then(resp => resp.json())
@@ -46,6 +46,14 @@ export class History extends Component {
           <button type="button" class="close" onClick={this.handleClick}>
             <span>&times;</span>
           </button>
+          <Form.Group>
+            <Row>
+              <Col sm="12">
+                <span>Protocolo</span>
+                {this.props.numChamado}
+              </Col>
+            </Row>
+          </Form.Group>
           <Form.Group>
             <Row>
               <Col sm="6">
@@ -110,7 +118,7 @@ export class History extends Component {
               </Alert>
             </div>
           ) : null}
-          {this.state.history.map(function(a, i) {
+          {this.state.history.map(function (a, i) {
             return (
               <TransferHistory
                 history={propriedades.history}

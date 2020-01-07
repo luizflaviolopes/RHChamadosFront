@@ -51,17 +51,23 @@ export class PageChamado extends Component {
     api("api/Responsavel", {})
       .then(resp => resp.json())
       .then(data =>
-        this.setState({
-          listaResponsavel: data
-        })
+        this.setState(
+          {
+            listaResponsavel: data
+          },
+          this.handleAtualizarPage()
+        )
       );
 
     api("api/assunto", {})
       .then(resp => resp.json())
       .then(data =>
-        this.setState({
-          listaAssunto: data
-        })
+        this.setState(
+          {
+            listaAssunto: data
+          },
+          this.handleAtualizarPage()
+        )
       );
 
     this.handleAtualizarPage();
@@ -351,19 +357,20 @@ export class PageChamado extends Component {
       );
     }
     var atribuicaoReverse = (
-      <Can politica="Atribuir Chamado" reverse>
-        {this.state.atendenteResponsavel == "Não Atribuído" ? (
-          <Button variant="outline-success" onClick={this.handleAssumirChamado}>
-            Assumir Chamado
-          </Button>
-        ) : (
-          this.state.atendenteResponsavel
-        )}
+      <Can politica="Responder Chamado">
+        <Button variant="outline-success" onClick={this.handleAssumirChamado}>
+          Assumir Chamado
+        </Button>
       </Can>
     );
 
     var atribuicao;
-    if (this.state.listaResponsavel.length > 0) {
+    if (
+      (this.state.listaResponsavel.length > 0 &&
+        this.state.atendenteResponsavel !== undefined) ||
+      (this.state.listaResponsavel.length > 0 &&
+        this.state.atendenteResponsavel === "")
+    ) {
       atribuicao = (
         <Can politica="Atribuir Chamado">
           <Form.Group>
@@ -391,7 +398,7 @@ export class PageChamado extends Component {
                   }}
                   options={this.state.listaResponsavel}
                   labelKey={option => `${option.name}`}
-                  defaultInputValue={Responsavel}
+                  defaultInputValue={_this.state.atendenteResponsavel}
                 />
               </Col>
               <Col sm="3">
@@ -526,7 +533,16 @@ export class PageChamado extends Component {
               {this.state.status !== "Encerrado" ? (
                 <Col sm={6}>
                   {atribuicao}
-                  {atribuicaoReverse}
+                  <Can politica="Atribuir Chamado" reverse>
+                    {this.state.atendenteResponsavel === "Não Atribuído" ? (
+                      atribuicaoReverse
+                    ) : (
+                      <span>
+                        Responsavel:{" "}
+                        <span> {this.state.atendenteResponsavel}</span>
+                      </span>
+                    )}
+                  </Can>
                 </Col>
               ) : null}
             </Row>
