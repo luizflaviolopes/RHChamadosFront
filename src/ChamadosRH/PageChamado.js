@@ -51,17 +51,23 @@ export class PageChamado extends Component {
     api("api/Responsavel", {})
       .then(resp => resp.json())
       .then(data =>
-        this.setState({
-          listaResponsavel: data
-        }, this.handleAtualizarPage())
+        this.setState(
+          {
+            listaResponsavel: data
+          },
+          this.handleAtualizarPage()
+        )
       );
 
     api("api/assunto", {})
       .then(resp => resp.json())
       .then(data =>
-        this.setState({
-          listaAssunto: data
-        }, this.handleAtualizarPage())
+        this.setState(
+          {
+            listaAssunto: data
+          },
+          this.handleAtualizarPage()
+        )
       );
 
     this.handleAtualizarPage();
@@ -351,16 +357,20 @@ export class PageChamado extends Component {
       );
     }
     var atribuicaoReverse = (
-      <Can politica="Responder Chamado" >
+      <Can politica="Responder Chamado">
         <Button variant="outline-success" onClick={this.handleAssumirChamado}>
           Assumir Chamado
         </Button>
-
       </Can>
     );
 
     var atribuicao;
-    if (this.state.listaResponsavel.length > 0 && this.state.atendenteResponsavel !== undefined || this.state.listaResponsavel.length > 0 && this.state.atendenteResponsavel === "") {
+    if (
+      (this.state.listaResponsavel.length > 0 &&
+        this.state.atendenteResponsavel !== undefined) ||
+      (this.state.listaResponsavel.length > 0 &&
+        this.state.atendenteResponsavel === "")
+    ) {
       atribuicao = (
         <Can politica="Atribuir Chamado">
           <Form.Group>
@@ -523,15 +533,23 @@ export class PageChamado extends Component {
               {this.state.status !== "Encerrado" ? (
                 <Col sm={6}>
                   {atribuicao}
-
-                  {this.state.atendenteResponsavel === "Não Atribuído" ? atribuicaoReverse : (<span>Responsavel: <span> {this.state.atendenteResponsavel}</span></span>)}
+                  <Can politica="Atribuir Chamado" reverse>
+                    {this.state.atendenteResponsavel === "Não Atribuído" ? (
+                      atribuicaoReverse
+                    ) : (
+                      <span>
+                        Responsavel:{" "}
+                        <span> {this.state.atendenteResponsavel}</span>
+                      </span>
+                    )}
+                  </Can>
                 </Col>
               ) : null}
             </Row>
           </div>
         </div>
         <div className="anexo row">
-          {this.state.listFile.map(function (a, i) {
+          {this.state.listFile.map(function(a, i) {
             return (
               <Anexo
                 nome={a.textAnexo}
@@ -543,7 +561,7 @@ export class PageChamado extends Component {
           })}
         </div>
 
-        {this.state.answered.map(function (a, i) {
+        {this.state.answered.map(function(a, i) {
           return (
             <div className="form-group">
               <Alert variant="dark">
@@ -555,7 +573,7 @@ export class PageChamado extends Component {
                     ? a.respostaAutomatica
                     : a.resposta}
                   <p>{a.horaResposta}</p>
-                  {_this.state.answered[i].listFile.map(function (x, i) {
+                  {_this.state.answered[i].listFile.map(function(x, i) {
                     return (
                       <div className="anexo row">
                         <Anexo
