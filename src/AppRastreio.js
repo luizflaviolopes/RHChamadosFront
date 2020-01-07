@@ -194,7 +194,8 @@ class AppRastreio extends Component {
                         horario={a.horario}
                         desc={a.descricao}
                         i={i}
-                        openedDesHistory={true}
+                        //openedDesHistory={}
+                        rastreio={true}
                       />
                     );
                   })}
