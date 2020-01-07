@@ -352,13 +352,10 @@ export class PageChamado extends Component {
     }
     var atribuicaoReverse = (
       <Can politica="Responder Chamado" >
-        {this.state.atendenteResponsavel == "Não Atribuído" ? (
-          <Button variant="outline-success" onClick={this.handleAssumirChamado}>
-            Assumir Chamado
-          </Button>
-        ) : (
-            this.state.atendenteResponsavel
-          )}
+        <Button variant="outline-success" onClick={this.handleAssumirChamado}>
+          Assumir Chamado
+        </Button>
+
       </Can>
     );
 
@@ -526,7 +523,8 @@ export class PageChamado extends Component {
               {this.state.status !== "Encerrado" ? (
                 <Col sm={6}>
                   {atribuicao}
-                  {atribuicaoReverse}
+
+                  {this.state.atendenteResponsavel === "Não Atribuído" ? atribuicaoReverse : (<span>Responsavel: <span> {this.state.atendenteResponsavel}</span></span>)}
                 </Col>
               ) : null}
             </Row>
