@@ -51,23 +51,17 @@ export class PageChamado extends Component {
     api("api/Responsavel", {})
       .then(resp => resp.json())
       .then(data =>
-        this.setState(
-          {
-            listaResponsavel: data
-          },
-          this.handleAtualizarPage()
-        )
+        this.setState({
+          listaResponsavel: data
+        })
       );
 
     api("api/assunto", {})
       .then(resp => resp.json())
       .then(data =>
-        this.setState(
-          {
-            listaAssunto: data
-          },
-          this.handleAtualizarPage()
-        )
+        this.setState({
+          listaAssunto: data
+        })
       );
 
     this.handleAtualizarPage();
@@ -533,16 +527,17 @@ export class PageChamado extends Component {
               {this.state.status !== "Encerrado" ? (
                 <Col sm={6}>
                   {atribuicao}
-                  <Can politica="Atribuir Chamado" reverse>
-                    {this.state.atendenteResponsavel === "Não Atribuído" ? (
-                      atribuicaoReverse
-                    ) : (
-                      <span>
-                        Responsavel:{" "}
-                        <span> {this.state.atendenteResponsavel}</span>
-                      </span>
-                    )}
-                  </Can>
+
+                  {this.state.atendenteResponsavel === "Não Atribuído" ? (
+                    <Can politica="Atribuir Chamado" reverse>
+                      <React.Fragment>{atribuicaoReverse}</React.Fragment>
+                    </Can>
+                  ) : (
+                    <span>
+                      Responsavel:
+                      <span> {this.state.atendenteResponsavel}</span>
+                    </span>
+                  )}
                 </Col>
               ) : null}
             </Row>
