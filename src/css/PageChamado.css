@@ -60,3 +60,8 @@ div.container-app > table > tbody > tr {
 .input-group-prepend button {
   margin-left: 0;
 }
+
+.r0 {
+  right: 0;
+  top: 0;
+}

@@ -560,14 +560,24 @@ export class PageChamado extends Component {
           return (
             <div className="form-group">
               <Alert variant="dark">
-                <label>
-                  <span>Resposta</span>
-                </label>
-                <p>
-                  {a.respostaAutomatica !== undefined
-                    ? a.respostaAutomatica
-                    : a.resposta}
-                  <p>{a.horaResposta}</p>
+                <div className="position-relative">
+                  <div>
+                    <span>Resposta </span>
+                  </div>
+
+                  <div className="text-monospace position-absolute r0">
+                    <span className=" text-muted">
+                      Respondido por: {a.atendente} - {a.horaResposta}
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  <p>
+                    {a.respostaAutomatica !== undefined
+                      ? a.respostaAutomatica
+                      : a.resposta}
+                  </p>
+
                   {_this.state.answered[i].listFile.map(function(x, i) {
                     return (
                       <div className="anexo row">
@@ -580,7 +590,7 @@ export class PageChamado extends Component {
                       </div>
                     );
                   })}
-                </p>
+                </div>
               </Alert>
             </div>
           );
