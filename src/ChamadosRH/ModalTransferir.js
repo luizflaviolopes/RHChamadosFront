@@ -77,7 +77,7 @@ export class ModalTransferir extends Component {
       >
         <Modal.Header closeButton>
           <Modal.Title id="">
-            Transferir Chamado {this.state.transf.formulario}
+            Transferir Chamado {this.props.protocolo}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
