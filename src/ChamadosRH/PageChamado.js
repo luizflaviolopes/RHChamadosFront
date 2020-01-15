@@ -47,14 +47,14 @@ export class PageChamado extends Component {
     // api("api/Resposta?formulario=" + this.state.numChamado, {})
     //   .then(resp => resp.json())
     //   .then(resp => this.setState({ ...resp }));
-
+    /* 
     api("api/Responsavel", {})
       .then(resp => resp.json())
       .then(data =>
         this.setState({
           listaResponsavel: data
         })
-      );
+      ); */
 
     api("api/assunto", {})
       .then(resp => resp.json())
@@ -73,7 +73,8 @@ export class PageChamado extends Component {
       .then(data =>
         this.setState({
           //answered: data.answere !== null ? data.answered : this.state.answered,
-          ...data
+          ...data.retorno,
+          listaResponsavel: data.listaResponsavel
         })
       );
   };
@@ -391,7 +392,7 @@ export class PageChamado extends Component {
                     evt.target.select();
                   }}
                   options={this.state.listaResponsavel}
-                  labelKey={option => `${option.name}`}
+                  labelKey={option => `${option.nome}`}
                   defaultInputValue={_this.state.atendenteResponsavel}
                 />
               </Col>
