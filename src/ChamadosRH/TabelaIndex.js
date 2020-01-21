@@ -194,9 +194,9 @@ class TabelaIndex extends Component {
                 </th>
                 <th>
                   <Cabecalho
-                    label="Prioridade"
+                    label="Setor Abertura"
                     icone=""
-                    FilterParam="prioridade"
+                    FilterParam="Setor de Abertura"
                     sizeInput="w-50"
                     onFilter={this.handleFiltering}
                   />
@@ -246,6 +246,7 @@ class TabelaIndex extends Component {
                     email={a.email}
                     cel={a.cel}
                     setor={a.setor}
+                    setorAbertura={a.setorAbertura}
                     prazo={a.prazo}
                     anexoFile={_this.handleFile}
                     justificativa={a.justificativa}

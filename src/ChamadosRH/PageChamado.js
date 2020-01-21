@@ -211,8 +211,6 @@ export class PageChamado extends Component {
     let _this = this;
 
     let buttons;
-    let assunto = this.state.assunto;
-    let Responsavel = this.state.atendenteResponsavel;
 
     if (this.state.status !== "Encerrado")
       buttons = (
@@ -534,18 +532,18 @@ export class PageChamado extends Component {
                       <React.Fragment>{atribuicaoReverse}</React.Fragment>
                     </Can>
                   ) : (
-                    <span>
-                      Responsavel:
+                      <span>
+                        Responsavel:
                       <span> {this.state.atendenteResponsavel}</span>
-                    </span>
-                  )}
+                      </span>
+                    )}
                 </Col>
               ) : null}
             </Row>
           </div>
         </div>
         <div className="anexo row">
-          {this.state.listFile.map(function(a, i) {
+          {this.state.listFile.map(function (a, i) {
             return (
               <Anexo
                 nome={a.textAnexo}
@@ -557,7 +555,7 @@ export class PageChamado extends Component {
           })}
         </div>
 
-        {this.state.answered.map(function(a, i) {
+        {this.state.answered.map(function (a, i) {
           return (
             <div className="form-group">
               <Alert variant="dark">
@@ -579,7 +577,7 @@ export class PageChamado extends Component {
                       : a.resposta}
                   </p>
 
-                  {_this.state.answered[i].listFile.map(function(x, i) {
+                  {_this.state.answered[i].listFile.map(function (x, i) {
                     return (
                       <div className="anexo row">
                         <Anexo

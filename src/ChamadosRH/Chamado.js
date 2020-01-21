@@ -25,7 +25,8 @@ class Chamado extends Component {
       atendenteResponsavel: props.atendenteResponsavel,
       protocolo: props.protocolo,
       alterAssunto: props.alterAssunto,
-      IsAutenticado: props.IsAutenticado
+      IsAutenticado: props.IsAutenticado,
+      setorAbertura: props.setorAbertura
     };
     this.OnclickHande = this.OnclickHande.bind(this);
   }
@@ -49,7 +50,8 @@ class Chamado extends Component {
       atendenteResponsavel: nextProps.atendenteResponsavel,
       protocolo: nextProps.protocolo,
       alterAssunto: nextProps.alterAssunto,
-      IsAutenticado: nextProps.IsAutenticado
+      IsAutenticado: nextProps.IsAutenticado,
+      setorAbertura: nextProps.setorAbertura
     });
   }
   OnclickHande() {
@@ -86,9 +88,10 @@ class Chamado extends Component {
         <td title={this.state.assunto}>{this.state.assunto}</td>
         <td title={this.state.data}>{this.state.data}</td>
         <td
-          title={this.state.prioridade === null ? "N/A" : this.state.prioridade}
+          title=
+          {this.state.setorAbertura === null ? "N/A" : this.state.setorAbertura}
         >
-          {this.state.prioridade === null ? "N/A" : this.state.prioridade}
+          {this.state.setorAbertura === null ? "N/A" : this.state.setorAbertura}
         </td>
         {this.props.SetorOrSolicitante ?
           <td

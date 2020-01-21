@@ -5,6 +5,7 @@ import "./css/Botoes.css";
 import SideNav, { NavItem, NavIcon, NavText, Nav } from "@trendmicro/react-sidenav";
 import "@trendmicro/react-sidenav/dist/react-sidenav.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Can } from "./APIs/Can"
 
 class MenuIndex extends Component {
   constructor(props) {
@@ -33,6 +34,14 @@ class MenuIndex extends Component {
             </NavIcon>
             <NavText>Todos</NavText>
           </NavItem>
+
+          <NavItem eventKey="autendicados">
+            <NavIcon>
+              <FontAwesomeIcon icon="user-tag" />
+            </NavIcon>
+            <NavText>Meus Autenticados</NavText>
+          </NavItem>
+
           <NavItem eventKey="Atribuidos">
             <NavIcon>
               <FontAwesomeIcon icon="user-tag" />
