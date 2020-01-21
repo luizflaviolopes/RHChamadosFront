@@ -531,26 +531,28 @@ export class PageChamado extends Component {
               <p>{this.state.justificativa}</p>
             </div>
           ) : null}
-          <div className="form-group">
-            <Row>
-              {this.state.status !== "Encerrado" ? (
-                <Col sm={6}>
-                  {atribuicao}
+          {this.state.tag === null ? (
+            <div className="form-group">
+              <Row>
+                {this.state.status !== "Encerrado" ? (
+                  <Col sm={6}>
+                    {atribuicao}
 
-                  {this.state.atendenteResponsavel === "Não Atribuído" ? (
-                    <Can politica="Atribuir Chamado" reverse>
-                      <React.Fragment>{atribuicaoReverse}</React.Fragment>
-                    </Can>
-                  ) : (
-                    <span>
-                      Responsavel:
-                      <span> {this.state.atendenteResponsavel}</span>
-                    </span>
-                  )}
-                </Col>
-              ) : null}
-            </Row>
-          </div>
+                    {this.state.atendenteResponsavel === "Não Atribuído" ? (
+                      <Can politica="Atribuir Chamado" reverse>
+                        <React.Fragment>{atribuicaoReverse}</React.Fragment>
+                      </Can>
+                    ) : (
+                      <span>
+                        Responsavel:
+                        <span> {this.state.atendenteResponsavel}</span>
+                      </span>
+                    )}
+                  </Col>
+                ) : null}
+              </Row>
+            </div>
+          ) : null}
         </div>
         <div className="anexo row">
           {this.state.listFile.map(function(a, i) {
