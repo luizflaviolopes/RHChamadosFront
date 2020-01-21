@@ -18,7 +18,8 @@ export class PageChamado extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      numChamado: props.location.state,
+      numChamado: props.location.state.numChamado,
+      tag: props.location.state.tag,
       transferModal: false,
       answerModal: false,
       historyModal: false,
@@ -494,18 +495,27 @@ export class PageChamado extends Component {
             </Row>
           </div>
           <Form.Group>
-            <Row>
-              {Assuntos}
-              <Can
-                politica={(["Encaminhar Chamado"], ["Responder Chamado"])}
-                reverse
-              >
+            {this.state.tag === null ? (
+              <Row>
+                {Assuntos}
+                <Can
+                  politica={(["Encaminhar Chamado"], ["Responder Chamado"])}
+                  reverse
+                >
+                  <Col sm="1">
+                    <Form.Label>Assunto</Form.Label>
+                  </Col>
+                  <Col sm="11">{this.state.assunto}</Col>
+                </Can>
+              </Row>
+            ) : (
+              <Row>
                 <Col sm="1">
                   <Form.Label>Assunto</Form.Label>
                 </Col>
                 <Col sm="11">{this.state.assunto}</Col>
-              </Can>
-            </Row>
+              </Row>
+            )}
           </Form.Group>
           <div className="form-group">
             <label>
@@ -532,18 +542,18 @@ export class PageChamado extends Component {
                       <React.Fragment>{atribuicaoReverse}</React.Fragment>
                     </Can>
                   ) : (
-                      <span>
-                        Responsavel:
+                    <span>
+                      Responsavel:
                       <span> {this.state.atendenteResponsavel}</span>
-                      </span>
-                    )}
+                    </span>
+                  )}
                 </Col>
               ) : null}
             </Row>
           </div>
         </div>
         <div className="anexo row">
-          {this.state.listFile.map(function (a, i) {
+          {this.state.listFile.map(function(a, i) {
             return (
               <Anexo
                 nome={a.textAnexo}
@@ -555,7 +565,7 @@ export class PageChamado extends Component {
           })}
         </div>
 
-        {this.state.answered.map(function (a, i) {
+        {this.state.answered.map(function(a, i) {
           return (
             <div className="form-group">
               <Alert variant="dark">
@@ -577,7 +587,7 @@ export class PageChamado extends Component {
                       : a.resposta}
                   </p>
 
-                  {_this.state.answered[i].listFile.map(function (x, i) {
+                  {_this.state.answered[i].listFile.map(function(x, i) {
                     return (
                       <div className="anexo row">
                         <Anexo
@@ -596,7 +606,20 @@ export class PageChamado extends Component {
         })}
 
         <div className="form-group">
-          {buttons}
+          {this.state.tag === null ? (
+            buttons
+          ) : (
+            <Row className="row text-center">
+              <Col sm={3} key={"b1"}>
+                <Link to="/Chamados">
+                  <Button variant="outline-danger">
+                    <FontAwesomeIcon icon="chevron-circle-left" /> Voltar
+                  </Button>
+                </Link>
+              </Col>
+            </Row>
+          )}
+
           {this.state.answerOpen ? (
             <Respostas
               closeAnswer={this.handleAnswer}

@@ -9,7 +9,7 @@ import "../css/Cabecalho.css";
 import ReactPaginate from "react-paginate";
 import "../css/pagination.css";
 import api from "../APIs/DataApi";
-const removeAcentos = require('remove-accents')
+const removeAcentos = require("remove-accents");
 
 class TabelaIndex extends Component {
   constructor(props) {
@@ -23,7 +23,6 @@ class TabelaIndex extends Component {
       current: 0,
       private: true,
       anexoFile: File
-
     };
     this.handleFiltering = this.handleFiltering.bind(this);
     this.handlePageClick = this.handlePageClick.bind(this);
@@ -33,14 +32,15 @@ class TabelaIndex extends Component {
     let newFilter = this.state.filters;
     newFilter[a.propertie] = a.value;
     window.teste = newFilter;
-    var checkFilter = function (element) {
+    var checkFilter = function(element) {
       let retorno = true;
-      Object.keys(newFilter).forEach(function (p, i) {
+      Object.keys(newFilter).forEach(function(p, i) {
         if (!isNaN(element[p])) {
-
           if (
             newFilter[p] !== "" &&
-            !removeAcentos(element[p].toString()).includes(newFilter[p].toString())
+            !removeAcentos(element[p].toString()).includes(
+              newFilter[p].toString()
+            )
           ) {
             retorno = false;
             return false;
@@ -55,18 +55,15 @@ class TabelaIndex extends Component {
       });
       return retorno;
     };
-    let newDems = this.state.all.filter(function (a, i) {
+    let newDems = this.state.all.filter(function(a, i) {
       return checkFilter(a);
     });
 
     this.setState({
       current: 0,
       filters: newFilter,
-      filtered: newDems,
-
+      filtered: newDems
     });
-
-
   }
 
   componentDidUpdate(prevProps) {
@@ -79,17 +76,21 @@ class TabelaIndex extends Component {
     api("api/values?tipo=" + this.props.match.params.tipo, {})
       .then(response => response.json())
       .then(data => {
-        data.lista.filter(a => { return !a.protocolo }).forEach(b => { b.protocolo = 'A' + b.numChamado });
+        data.lista
+          .filter(a => {
+            return !a.protocolo;
+          })
+          .forEach(b => {
+            b.protocolo = "A" + b.numChamado;
+          });
 
         this.setState({
           dems: data.lista,
           all: data.lista,
           filtered: data.lista
-        })
-      }
-      );
-
-  }
+        });
+      });
+  };
 
   BuscarNovo() {
     api("api/values", {})
@@ -108,7 +109,7 @@ class TabelaIndex extends Component {
   render() {
     let filterObj = this.state.filters;
     let _this = this;
-    var checkFilter = function (element) {
+    var checkFilter = function(element) {
       for (var p in Object.keys(filterObj)) {
         if (filterObj[p] !== "" && element[p] !== filterObj[p]) return false;
       }
@@ -125,8 +126,6 @@ class TabelaIndex extends Component {
           : filtered.length / 10
       );
     }
-
-
 
     function getPageDems() {
       let { current, filtered } = _this.state;
@@ -196,12 +195,13 @@ class TabelaIndex extends Component {
                   <Cabecalho
                     label="Setor Abertura"
                     icone=""
-                    FilterParam="Setor de Abertura"
+                    FilterParam="setorAbertura"
                     sizeInput="w-50"
                     onFilter={this.handleFiltering}
                   />
                 </th>
-                {(this.props.match.params.tipo == 'TodosAtendimento' || this.props.match.params.tipo == 'TodosFechados') ?
+                {this.props.match.params.tipo == "TodosAtendimento" ||
+                this.props.match.params.tipo == "TodosFechados" ? (
                   <th>
                     <Cabecalho
                       label="Setor"
@@ -211,7 +211,7 @@ class TabelaIndex extends Component {
                       onFilter={this.handleFiltering}
                     />
                   </th>
-                  :
+                ) : (
                   <th>
                     <Cabecalho
                       label="Atribuído a"
@@ -221,14 +221,14 @@ class TabelaIndex extends Component {
                       onFilter={this.handleFiltering}
                     />
                   </th>
-                }
-
+                )}
               </tr>
             </thead>
             <tbody>
-              {getPageDems().map(function (a, i) {
+              {getPageDems().map(function(a, i) {
                 return (
                   <Chamado
+                    tag={a.tag === undefined ? null : a.tag}
                     numChamado={a.numChamado}
                     solicitante={a.solicitante}
                     assunto={a.assunto}
@@ -254,7 +254,10 @@ class TabelaIndex extends Component {
                     atendenteResponsavel={a.atendenteResponsavel}
                     protocolo={a.protocolo}
                     alterAssunto={a.alterAssunto}
-                    SetorOrSolicitante={(_this.props.match.params.tipo == 'TodosAtendimento' || _this.props.match.params.tipo == 'TodosFechados')}
+                    SetorOrSolicitante={
+                      _this.props.match.params.tipo == "TodosAtendimento" ||
+                      _this.props.match.params.tipo == "TodosFechados"
+                    }
                   />
                 );
               })}
@@ -274,7 +277,6 @@ class TabelaIndex extends Component {
             containerClassName={"pagination"}
             subContainerClassName={"pages pagination"}
             activeClassName={"active"}
-
           />
         </div>
       );
