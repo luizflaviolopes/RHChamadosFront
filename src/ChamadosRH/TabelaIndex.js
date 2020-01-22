@@ -126,11 +126,8 @@ class TabelaIndex extends Component {
       );
     }
 
-
-
     function getPageDems() {
       let { current, filtered } = _this.state;
-
       return filtered.slice(current * 10, current * 10 + 10);
     }
 
@@ -222,7 +219,6 @@ class TabelaIndex extends Component {
                     />
                   </th>
                 }
-
               </tr>
             </thead>
             <tbody>
@@ -274,12 +270,10 @@ class TabelaIndex extends Component {
             containerClassName={"pagination"}
             subContainerClassName={"pages pagination"}
             activeClassName={"active"}
-
           />
         </div>
       );
     }
   }
 }
-
 export default TabelaIndex;
