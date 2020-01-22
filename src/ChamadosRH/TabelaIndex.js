@@ -9,7 +9,7 @@ import "../css/Cabecalho.css";
 import ReactPaginate from "react-paginate";
 import "../css/pagination.css";
 import api from "../APIs/DataApi";
-const removeAcentos = require('remove-accents')
+const removeAcentos = require("remove-accents");
 
 class TabelaIndex extends Component {
   constructor(props) {
@@ -23,7 +23,6 @@ class TabelaIndex extends Component {
       current: 0,
       private: true,
       anexoFile: File
-
     };
     this.handleFiltering = this.handleFiltering.bind(this);
     this.handlePageClick = this.handlePageClick.bind(this);
@@ -37,10 +36,11 @@ class TabelaIndex extends Component {
       let retorno = true;
       Object.keys(newFilter).forEach(function (p, i) {
         if (!isNaN(element[p])) {
-
           if (
             newFilter[p] !== "" &&
-            !removeAcentos(element[p].toString()).includes(newFilter[p].toString())
+            !removeAcentos(element[p].toString()).includes(
+              newFilter[p].toString()
+            )
           ) {
             retorno = false;
             return false;
@@ -62,11 +62,8 @@ class TabelaIndex extends Component {
     this.setState({
       current: 0,
       filters: newFilter,
-      filtered: newDems,
-
+      filtered: newDems
     });
-
-
   }
 
   componentDidUpdate(prevProps) {
@@ -79,17 +76,21 @@ class TabelaIndex extends Component {
     api("api/values?tipo=" + this.props.match.params.tipo, {})
       .then(response => response.json())
       .then(data => {
-        data.lista.filter(a => { return !a.protocolo }).forEach(b => { b.protocolo = 'A' + b.numChamado });
+        data.lista
+          .filter(a => {
+            return !a.protocolo;
+          })
+          .forEach(b => {
+            b.protocolo = "A" + b.numChamado;
+          });
 
         this.setState({
           dems: data.lista,
           all: data.lista,
           filtered: data.lista
-        })
-      }
-      );
-
-  }
+        });
+      });
+  };
 
   BuscarNovo() {
     api("api/values", {})
@@ -193,38 +194,40 @@ class TabelaIndex extends Component {
                   <Cabecalho
                     label="Setor Abertura"
                     icone=""
-                    FilterParam="Setor de Abertura"
+                    FilterParam="setorAbertura"
                     sizeInput="w-50"
                     onFilter={this.handleFiltering}
                   />
                 </th>
-                {(this.props.match.params.tipo == 'TodosAtendimento' || this.props.match.params.tipo == 'TodosFechados') ?
-                  <th>
-                    <Cabecalho
-                      label="Setor"
-                      icone="building"
-                      FilterParam="setor"
-                      sizeInput="w-75"
-                      onFilter={this.handleFiltering}
-                    />
-                  </th>
-                  :
-                  <th>
-                    <Cabecalho
-                      label="Atribuído a"
-                      icone="user"
-                      FilterParam="atendenteResponsavel"
-                      sizeInput="w-75"
-                      onFilter={this.handleFiltering}
-                    />
-                  </th>
-                }
+                {this.props.match.params.tipo == "TodosAtendimento" ||
+                  this.props.match.params.tipo == "TodosFechados" ? (
+                    <th>
+                      <Cabecalho
+                        label="Setor"
+                        icone="building"
+                        FilterParam="setor"
+                        sizeInput="w-75"
+                        onFilter={this.handleFiltering}
+                      />
+                    </th>
+                  ) : (
+                    <th>
+                      <Cabecalho
+                        label="Atribuído a"
+                        icone="user"
+                        FilterParam="atendenteResponsavel"
+                        sizeInput="w-75"
+                        onFilter={this.handleFiltering}
+                      />
+                    </th>
+                  )}
               </tr>
             </thead>
             <tbody>
               {getPageDems().map(function (a, i) {
                 return (
                   <Chamado
+                    tag={a.tag === undefined ? null : a.tag}
                     numChamado={a.numChamado}
                     solicitante={a.solicitante}
                     assunto={a.assunto}
@@ -250,7 +253,10 @@ class TabelaIndex extends Component {
                     atendenteResponsavel={a.atendenteResponsavel}
                     protocolo={a.protocolo}
                     alterAssunto={a.alterAssunto}
-                    SetorOrSolicitante={(_this.props.match.params.tipo == 'TodosAtendimento' || _this.props.match.params.tipo == 'TodosFechados')}
+                    SetorOrSolicitante={
+                      _this.props.match.params.tipo == "TodosAtendimento" ||
+                      _this.props.match.params.tipo == "TodosFechados"
+                    }
                   />
                 );
               })}

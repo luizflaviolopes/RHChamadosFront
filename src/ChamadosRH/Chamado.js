@@ -26,7 +26,8 @@ class Chamado extends Component {
       protocolo: props.protocolo,
       alterAssunto: props.alterAssunto,
       IsAutenticado: props.IsAutenticado,
-      setorAbertura: props.setorAbertura
+      setorAbertura: props.setorAbertura,
+      tag: props.tag
     };
     this.OnclickHande = this.OnclickHande.bind(this);
   }
@@ -51,7 +52,8 @@ class Chamado extends Component {
       protocolo: nextProps.protocolo,
       alterAssunto: nextProps.alterAssunto,
       IsAutenticado: nextProps.IsAutenticado,
-      setorAbertura: nextProps.setorAbertura
+      setorAbertura: nextProps.setorAbertura,
+      tag: nextProps.tag
     });
   }
   OnclickHande() {
@@ -59,11 +61,19 @@ class Chamado extends Component {
   }
 
   render() {
+    let numtag = {
+      numChamado: this.state.numChamado,
+      tag: this.state.tag
+    };
+
     if (this.state.redirect) {
       return (
         <Redirect
           push
-          to={{ pathname: "/DetalhamentoChamado", state: this.state.numChamado }}
+          to={{
+            pathname: "/DetalhamentoChamado",
+            state: numtag
+          }}
         />
       );
     }
@@ -72,15 +82,13 @@ class Chamado extends Component {
       <tr
         onClick={this.OnclickHande}
         className={this.state.IsAutenticado === "true" ? "autenticado" : null}
-        style={{ cursor: 'pointer' }}
+        style={{ cursor: "pointer" }}
       >
         {/* Coluna de numero de chamado gerado pelo RHChamados
         
         <td title={this.state.numChamado}>{this.state.numChamado}</td> */}
 
-        <td title={this.state.protocolo}>
-          {this.state.protocolo}
-        </td>
+        <td title={this.state.protocolo}>{this.state.protocolo}</td>
         <td title={this.state.solicitante}>{this.state.solicitante}</td>
         <td title={this.state.cpf}>
           {this.state.cpf !== null ? this.state.cpf : this.state.masp}
@@ -88,34 +96,27 @@ class Chamado extends Component {
         <td title={this.state.assunto}>{this.state.assunto}</td>
         <td title={this.state.data}>{this.state.data}</td>
         <td
-          title=
-          {this.state.setorAbertura === null ? "N/A" : this.state.setorAbertura}
+          title={
+            this.state.setorAbertura === null ? "N/A" : this.state.setorAbertura
+          }
         >
           {this.state.setorAbertura === null ? "N/A" : this.state.setorAbertura}
         </td>
-        {this.props.SetorOrSolicitante ?
+        {this.props.SetorOrSolicitante ? (
+          <td title={this.state.setor}>{this.state.setor}</td>
+        ) : (
           <td
             title={
-              this.state.setor
+              this.state.atendenteResponsavel == "Não Atribuído"
+                ? ""
+                : this.state.atendenteResponsavel
             }
           >
-            {this.state.setor}
+            {this.state.atendenteResponsavel == "Não Atribuído"
+              ? ""
+              : this.state.atendenteResponsavel}
           </td>
-          :
-          <td
-            title={
-              this.state.atendenteResponsavel == "Não Atribuído" ?
-                "" :
-                this.state.atendenteResponsavel
-            }
-          >
-            {
-              this.state.atendenteResponsavel == "Não Atribuído" ?
-                "" :
-                this.state.atendenteResponsavel}
-          </td>
-        }
-
+        )}
       </tr>
     );
   }
