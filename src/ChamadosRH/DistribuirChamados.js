@@ -16,12 +16,6 @@ export class DistribuirChamados extends Component {
     }
 
     componentDidMount() {
-
-
-        this.setState({
-            listAtendente: [{ id: 1, nome: "teste" }, { id: 2, nome: "teste" }, { id: 3, nome: "teste" }, { id: 4, nome: "teste" }, { id: 5, nome: "teste" }, { id: 6, nome: "teste" }, { id: 7, nome: "teste" },]
-
-        })
         api("api/Responsavel/atendentes", {})
             .then(response => response.json())
             .then(data => this.setState({
