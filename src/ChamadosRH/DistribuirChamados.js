@@ -39,7 +39,8 @@ export class DistribuirChamados extends Component {
         }
       })
       .then(data => {
-        toast.success("Chamdos distribuidos.").then(window.location.reload());
+        toast.success(data.message);
+        this.props.close(this.state.modalName);
       })
       .catch(a =>
         a.then(e =>
