@@ -391,6 +391,7 @@ export class PageChamado extends Component {
                     evt.target.select();
                   }}
                   options={this.state.listaResponsavel}
+                  placeholder={"Não atribuído"}
                   labelKey={option => `${option.nome}`}
                   defaultInputValue={_this.state.atendenteResponsavel}
                 />
@@ -538,7 +539,7 @@ export class PageChamado extends Component {
                   <Col sm={6}>
                     {atribuicao}
 
-                    {this.state.atendenteResponsavel === "Não Atribuído" ? (
+                    {this.state.atendenteResponsavel === "" ? (
                       <Can politica="Atribuir Chamado" reverse>
                         <React.Fragment>{atribuicaoReverse}</React.Fragment>
                       </Can>
