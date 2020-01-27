@@ -71,7 +71,10 @@ export class DistribuirChamados extends Component {
         </Modal.Header>
         <Modal.Body>
           <Form.Group>
-            <Form.Label>Atendentes Para Distribuir Chamados:</Form.Label>
+            <Form.Label>
+              Selecione os atendentes para distribuir os chamados que ainda
+              estão sem atribuição
+            </Form.Label>
           </Form.Group>
 
           <Form.Group>
