@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "../css/PageChamado.css";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { Button, Col, Row, Alert, Form } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Respostas } from "./Respostas.js";
@@ -35,7 +35,8 @@ export class PageChamado extends Component {
       selectedResponsavel: {},
       assuntoEnviado: {},
       openedDesHistory: false,
-      historicos: []
+      historicos: [],
+      redirect: false
     };
     this.handleBack = this.handleBack.bind(this);
     this.handleAssumirChamado = this.handleAssumirChamado.bind(this);
@@ -73,13 +74,27 @@ export class PageChamado extends Component {
 
   handleAtualizarPage = () => {
     api("api/EndPoint/getChamado?id=" + this.state.numChamado, {})
-      .then(resp => resp.json())
+      .then(resp => {
+        if (resp.status === 200) return resp.json();
+        else throw resp.json();
+      })
       .then(data =>
         this.setState({
           //answered: data.answere !== null ? data.answered : this.state.answered,
           ...data.retorno,
           listaResponsavel: data.listaResponsavel
         })
+      )
+      .catch(a =>
+        a.then(
+          e =>
+            toast.error(e.message, {
+              position: toast.POSITION.TOP_CENTER
+            }),
+          this.setState({
+            redirect: true
+          })
+        )
       );
   };
 
@@ -213,6 +228,17 @@ export class PageChamado extends Component {
 
   render() {
     let _this = this;
+
+    if (this.state.redirect) {
+      return (
+        <Redirect
+          push
+          to={{
+            pathname: "/Chamados/Abertos"
+          }}
+        />
+      );
+    }
 
     let buttons;
 
@@ -513,13 +539,13 @@ export class PageChamado extends Component {
                 </Can>
               </Row>
             ) : (
-                <Row>
-                  <Col sm="1">
-                    <Form.Label>Assunto</Form.Label>
-                  </Col>
-                  <Col sm="11">{this.state.assunto}</Col>
-                </Row>
-              )}
+              <Row>
+                <Col sm="1">
+                  <Form.Label>Assunto</Form.Label>
+                </Col>
+                <Col sm="11">{this.state.assunto}</Col>
+              </Row>
+            )}
           </Form.Group>
           <div className="form-group">
             <label>
@@ -547,24 +573,22 @@ export class PageChamado extends Component {
                         <React.Fragment>{atribuicaoReverse}</React.Fragment>
                       </Can>
                     ) : (
-                        <span>
-                          Responsavel:
+                      <span>
+                        Responsavel:
                         <span> {this.state.atendenteResponsavel}</span>
-                        </span>
-                      )}
+                      </span>
+                    )}
                   </Col>
-
                 ) : null}
 
                 <Col sm="6">
-                  <span> Chamado Retornado: </span>  {this.state.isReturn}
-
+                  <span> Chamado Retornado: </span> {this.state.isReturn}
                 </Col>
               </Row>
             </div>
           ) : null}
           <Form.Group>
-            {this.state.historicos.map(function (a, i) {
+            {this.state.historicos.map(function(a, i) {
               return (
                 <TransferHistory
                   history={_this.state.historicos}
@@ -577,12 +601,10 @@ export class PageChamado extends Component {
                 />
               );
             })}
-
-
           </Form.Group>
         </div>
         <div className="anexo row">
-          {this.state.listFile.map(function (a, i) {
+          {this.state.listFile.map(function(a, i) {
             return (
               <Anexo
                 nome={a.textAnexo}
@@ -594,7 +616,7 @@ export class PageChamado extends Component {
           })}
         </div>
 
-        {this.state.answered.map(function (a, i) {
+        {this.state.answered.map(function(a, i) {
           return (
             <div className="form-group">
               <Alert variant="dark">
@@ -616,7 +638,7 @@ export class PageChamado extends Component {
                       : a.resposta}
                   </p>
 
-                  {_this.state.answered[i].listFile.map(function (x, i) {
+                  {_this.state.answered[i].listFile.map(function(x, i) {
                     return (
                       <div className="anexo row">
                         <Anexo
@@ -638,16 +660,16 @@ export class PageChamado extends Component {
           {this.state.tag === null ? (
             buttons
           ) : (
-              <Row className="row text-center">
-                <Col sm={3} key={"b1"}>
-                  <Link to="/Chamados">
-                    <Button variant="outline-danger">
-                      <FontAwesomeIcon icon="chevron-circle-left" /> Voltar
+            <Row className="row text-center">
+              <Col sm={3} key={"b1"}>
+                <Link to="/Chamados">
+                  <Button variant="outline-danger">
+                    <FontAwesomeIcon icon="chevron-circle-left" /> Voltar
                   </Button>
-                  </Link>
-                </Col>
-              </Row>
-            )}
+                </Link>
+              </Col>
+            </Row>
+          )}
 
           {this.state.answerOpen ? (
             <Respostas
