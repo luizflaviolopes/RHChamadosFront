@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "../css/PageChamado.css";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { Button, Col, Row, Alert, Form } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Respostas } from "./Respostas.js";
@@ -32,7 +32,8 @@ export class PageChamado extends Component {
       selectedAssunto: {},
       listaResponsavel: [],
       selectedResponsavel: {},
-      assuntoEnviado: {}
+      assuntoEnviado: {},
+      redirect: false
     };
     this.handleBack = this.handleBack.bind(this);
     this.handleAssumirChamado = this.handleAssumirChamado.bind(this);
@@ -70,13 +71,27 @@ export class PageChamado extends Component {
 
   handleAtualizarPage = () => {
     api("api/EndPoint/getChamado?id=" + this.state.numChamado, {})
-      .then(resp => resp.json())
+      .then(resp => {
+        if (resp.status === 200) return resp.json();
+        else throw resp.json();
+      })
       .then(data =>
         this.setState({
           //answered: data.answere !== null ? data.answered : this.state.answered,
           ...data.retorno,
           listaResponsavel: data.listaResponsavel
         })
+      )
+      .catch(a =>
+        a.then(
+          e =>
+            toast.error(e.message, {
+              position: toast.POSITION.TOP_CENTER
+            }),
+          this.setState({
+            redirect: true
+          })
+        )
       );
   };
 
@@ -210,6 +225,17 @@ export class PageChamado extends Component {
 
   render() {
     let _this = this;
+
+    if (this.state.redirect) {
+      return (
+        <Redirect
+          push
+          to={{
+            pathname: "/Chamados/Abertos"
+          }}
+        />
+      );
+    }
 
     let buttons;
 
