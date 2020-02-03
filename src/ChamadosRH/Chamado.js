@@ -27,7 +27,8 @@ class Chamado extends Component {
       alterAssunto: props.alterAssunto,
       IsAutenticado: props.IsAutenticado,
       setorAbertura: props.setorAbertura,
-      tag: props.tag
+      tag: props.tag,
+      isReturn: props.isReturn
     };
     this.OnclickHande = this.OnclickHande.bind(this);
   }
@@ -53,7 +54,8 @@ class Chamado extends Component {
       alterAssunto: nextProps.alterAssunto,
       IsAutenticado: nextProps.IsAutenticado,
       setorAbertura: nextProps.setorAbertura,
-      tag: nextProps.tag
+      tag: nextProps.tag,
+      isReturn: nextProps.isReturn
     });
   }
   OnclickHande() {
@@ -78,10 +80,23 @@ class Chamado extends Component {
       );
     }
 
+    const handleColor = () => {
+      let classColor = null;
+
+      if (this.state.IsAutenticado === "true")
+        classColor = "autenticado"
+
+      else if (this.state.isReturn === "true")
+        classColor = "isReturn"
+
+      return classColor;
+
+    }
+
     return (
       <tr
         onClick={this.OnclickHande}
-        className={this.state.IsAutenticado === "true" ? "autenticado" : null}
+        className={handleColor()}
         style={{ cursor: "pointer" }}
       >
         {/* Coluna de numero de chamado gerado pelo RHChamados
@@ -105,18 +120,18 @@ class Chamado extends Component {
         {this.props.SetorOrSolicitante ? (
           <td title={this.state.setor}>{this.state.setor}</td>
         ) : (
-          <td
-            title={
-              this.state.atendenteResponsavel == "Não Atribuído"
+            <td
+              title={
+                this.state.atendenteResponsavel == "Não Atribuído"
+                  ? ""
+                  : this.state.atendenteResponsavel
+              }
+            >
+              {this.state.atendenteResponsavel == "Não Atribuído"
                 ? ""
-                : this.state.atendenteResponsavel
-            }
-          >
-            {this.state.atendenteResponsavel == "Não Atribuído"
-              ? ""
-              : this.state.atendenteResponsavel}
-          </td>
-        )}
+                : this.state.atendenteResponsavel}
+            </td>
+          )}
       </tr>
     );
   }

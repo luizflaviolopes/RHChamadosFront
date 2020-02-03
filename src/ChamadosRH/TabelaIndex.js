@@ -257,6 +257,7 @@ class TabelaIndex extends Component {
                       _this.props.match.params.tipo == "TodosAtendimento" ||
                       _this.props.match.params.tipo == "TodosFechados"
                     }
+                    isReturn={a.isReturn}
                   />
                 );
               })}
