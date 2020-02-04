@@ -83,11 +83,13 @@ class Chamado extends Component {
     const handleColor = () => {
       let classColor = null;
 
-      if (this.state.IsAutenticado === "true")
-        classColor = "autenticado"
+      if (this.state.isReturn === "true") {
+        classColor = "isReturn";
+      }
+      else if (this.state.IsAutenticado === "true") {
+        classColor = "autenticado";
+      }
 
-      else if (this.state.isReturn === "true")
-        classColor = "isReturn"
 
       return classColor;
 

@@ -539,13 +539,13 @@ export class PageChamado extends Component {
                 </Can>
               </Row>
             ) : (
-              <Row>
-                <Col sm="1">
-                  <Form.Label>Assunto</Form.Label>
-                </Col>
-                <Col sm="11">{this.state.assunto}</Col>
-              </Row>
-            )}
+                <Row>
+                  <Col sm="1">
+                    <Form.Label>Assunto</Form.Label>
+                  </Col>
+                  <Col sm="11">{this.state.assunto}</Col>
+                </Row>
+              )}
           </Form.Group>
           <div className="form-group">
             <label>
@@ -573,22 +573,23 @@ export class PageChamado extends Component {
                         <React.Fragment>{atribuicaoReverse}</React.Fragment>
                       </Can>
                     ) : (
-                      <span>
-                        Responsavel:
+                        <span>
+                          Responsavel:
                         <span> {this.state.atendenteResponsavel}</span>
-                      </span>
-                    )}
+                        </span>
+                      )}
                   </Col>
                 ) : null}
+                {this.state.isReturn === "true" ? (<Col sm="6">
+                  <span> Chamado Retornado</span>
+                </Col>) : null
+                }
 
-                <Col sm="6">
-                  <span> Chamado Retornado: </span> {this.state.isReturn}
-                </Col>
               </Row>
             </div>
           ) : null}
           <Form.Group>
-            {this.state.historicos.map(function(a, i) {
+            {this.state.historicos.map(function (a, i) {
               return (
                 <TransferHistory
                   history={_this.state.historicos}
@@ -604,7 +605,7 @@ export class PageChamado extends Component {
           </Form.Group>
         </div>
         <div className="anexo row">
-          {this.state.listFile.map(function(a, i) {
+          {this.state.listFile.map(function (a, i) {
             return (
               <Anexo
                 nome={a.textAnexo}
@@ -616,7 +617,7 @@ export class PageChamado extends Component {
           })}
         </div>
 
-        {this.state.answered.map(function(a, i) {
+        {this.state.answered.map(function (a, i) {
           return (
             <div className="form-group">
               <Alert variant="dark">
@@ -638,7 +639,7 @@ export class PageChamado extends Component {
                       : a.resposta}
                   </p>
 
-                  {_this.state.answered[i].listFile.map(function(x, i) {
+                  {_this.state.answered[i].listFile.map(function (x, i) {
                     return (
                       <div className="anexo row">
                         <Anexo
@@ -660,16 +661,16 @@ export class PageChamado extends Component {
           {this.state.tag === null ? (
             buttons
           ) : (
-            <Row className="row text-center">
-              <Col sm={3} key={"b1"}>
-                <Link to="/Chamados">
-                  <Button variant="outline-danger">
-                    <FontAwesomeIcon icon="chevron-circle-left" /> Voltar
+              <Row className="row text-center">
+                <Col sm={3} key={"b1"}>
+                  <Link to="/Chamados">
+                    <Button variant="outline-danger">
+                      <FontAwesomeIcon icon="chevron-circle-left" /> Voltar
                   </Button>
-                </Link>
-              </Col>
-            </Row>
-          )}
+                  </Link>
+                </Col>
+              </Row>
+            )}
 
           {this.state.answerOpen ? (
             <Respostas

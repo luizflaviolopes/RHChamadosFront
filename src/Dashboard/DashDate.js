@@ -100,6 +100,7 @@ export class DashDate extends PureComponent {
         }
 
         const data = this.RetornarDados()
+        console.log(data);
         //[{ x: _this.state.fechadosData.x, y: _this.state.fechadosData.y, label: _this.state.fechadosData.y, style: { fontSize: 10 } }]
         return (
 
