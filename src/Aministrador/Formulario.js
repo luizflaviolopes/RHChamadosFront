@@ -59,7 +59,7 @@ export class Formulario extends Component {
             else throw resp.json();
           })
           .then(
-            data => toast.success(data.message),
+            data => toast.success("Chamado Criado!"),
             this.setState(
               {
                 desativado: false
