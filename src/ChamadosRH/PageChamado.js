@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "../css/PageChamado.css";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { Button, Col, Row, Alert, Form } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Respostas } from "./Respostas.js";
@@ -18,7 +18,8 @@ export class PageChamado extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      numChamado: props.location.state,
+      numChamado: props.location.state.numChamado,
+      tag: props.location.state.tag,
       transferModal: false,
       answerModal: false,
       historyModal: false,
@@ -31,7 +32,8 @@ export class PageChamado extends Component {
       selectedAssunto: {},
       listaResponsavel: [],
       selectedResponsavel: {},
-      assuntoEnviado: {}
+      assuntoEnviado: {},
+      redirect: false
     };
     this.handleBack = this.handleBack.bind(this);
     this.handleAssumirChamado = this.handleAssumirChamado.bind(this);
@@ -69,13 +71,27 @@ export class PageChamado extends Component {
 
   handleAtualizarPage = () => {
     api("api/EndPoint/getChamado?id=" + this.state.numChamado, {})
-      .then(resp => resp.json())
+      .then(resp => {
+        if (resp.status === 200) return resp.json();
+        else throw resp.json();
+      })
       .then(data =>
         this.setState({
           //answered: data.answere !== null ? data.answered : this.state.answered,
           ...data.retorno,
           listaResponsavel: data.listaResponsavel
         })
+      )
+      .catch(a =>
+        a.then(
+          e =>
+            toast.error(e.message, {
+              position: toast.POSITION.TOP_CENTER
+            }),
+          this.setState({
+            redirect: true
+          })
+        )
       );
   };
 
@@ -210,9 +226,18 @@ export class PageChamado extends Component {
   render() {
     let _this = this;
 
+    if (this.state.redirect) {
+      return (
+        <Redirect
+          push
+          to={{
+            pathname: "/Chamados/Abertos"
+          }}
+        />
+      );
+    }
+
     let buttons;
-    let assunto = this.state.assunto;
-    let Responsavel = this.state.atendenteResponsavel;
 
     if (this.state.status !== "Encerrado")
       buttons = (
@@ -393,6 +418,7 @@ export class PageChamado extends Component {
                     evt.target.select();
                   }}
                   options={this.state.listaResponsavel}
+                  placeholder={"Não atribuído"}
                   labelKey={option => `${option.nome}`}
                   defaultInputValue={_this.state.atendenteResponsavel}
                 />
@@ -497,18 +523,27 @@ export class PageChamado extends Component {
             </Row>
           </div>
           <Form.Group>
-            <Row>
-              {Assuntos}
-              <Can
-                politica={(["Encaminhar Chamado"], ["Responder Chamado"])}
-                reverse
-              >
+            {this.state.tag === null ? (
+              <Row>
+                {Assuntos}
+                <Can
+                  politica={(["Encaminhar Chamado"], ["Responder Chamado"])}
+                  reverse
+                >
+                  <Col sm="1">
+                    <Form.Label>Assunto</Form.Label>
+                  </Col>
+                  <Col sm="11">{this.state.assunto}</Col>
+                </Can>
+              </Row>
+            ) : (
+              <Row>
                 <Col sm="1">
                   <Form.Label>Assunto</Form.Label>
                 </Col>
                 <Col sm="11">{this.state.assunto}</Col>
-              </Can>
-            </Row>
+              </Row>
+            )}
           </Form.Group>
           <div className="form-group">
             <label>
@@ -524,26 +559,28 @@ export class PageChamado extends Component {
               <p>{this.state.justificativa}</p>
             </div>
           ) : null}
-          <div className="form-group">
-            <Row>
-              {this.state.status !== "Encerrado" ? (
-                <Col sm={6}>
-                  {atribuicao}
+          {this.state.tag === null ? (
+            <div className="form-group">
+              <Row>
+                {this.state.status !== "Encerrado" ? (
+                  <Col sm={6}>
+                    {atribuicao}
 
-                  {this.state.atendenteResponsavel === "Não Atribuído" ? (
-                    <Can politica="Atribuir Chamado" reverse>
-                      <React.Fragment>{atribuicaoReverse}</React.Fragment>
-                    </Can>
-                  ) : (
-                    <span>
-                      Responsavel:
-                      <span> {this.state.atendenteResponsavel}</span>
-                    </span>
-                  )}
-                </Col>
-              ) : null}
-            </Row>
-          </div>
+                    {this.state.atendenteResponsavel === "" ? (
+                      <Can politica="Atribuir Chamado" reverse>
+                        <React.Fragment>{atribuicaoReverse}</React.Fragment>
+                      </Can>
+                    ) : (
+                      <span>
+                        Responsavel:
+                        <span> {this.state.atendenteResponsavel}</span>
+                      </span>
+                    )}
+                  </Col>
+                ) : null}
+              </Row>
+            </div>
+          ) : null}
         </div>
         <div className="anexo row">
           {this.state.listFile.map(function(a, i) {
@@ -599,7 +636,20 @@ export class PageChamado extends Component {
         })}
 
         <div className="form-group">
-          {buttons}
+          {this.state.tag === null ? (
+            buttons
+          ) : (
+            <Row className="row text-center">
+              <Col sm={3} key={"b1"}>
+                <Link to="/Chamados">
+                  <Button variant="outline-danger">
+                    <FontAwesomeIcon icon="chevron-circle-left" /> Voltar
+                  </Button>
+                </Link>
+              </Col>
+            </Row>
+          )}
+
           {this.state.answerOpen ? (
             <Respostas
               closeAnswer={this.handleAnswer}

@@ -27,31 +27,31 @@ export class Anexos extends Component {
             {(() => {
               switch (this.state.extencao) {
                 case 'pdf':
-                  return <FontAwesomeIcon icon="file-pdf" size="3x" onClick={() => this.props.eliminar(this.state.nameFile)} />;
+                  return <FontAwesomeIcon icon="file-pdf" size="3x" />;
                 case 'PDF':
-                  return <FontAwesomeIcon icon="file-pdf" size="3x" onClick={() => this.props.eliminar(this.state.nameFile)} />;
+                  return <FontAwesomeIcon icon="file-pdf" size="3x" />;
                 case 'png':
-                  return <FontAwesomeIcon icon="file-image" size="3x" onClick={() => this.props.eliminar(this.state.nameFile)} />;
+                  return <FontAwesomeIcon icon="file-image" size="3x" />;
                 case 'PNG':
-                  return <FontAwesomeIcon icon="file-image" size="3x" onClick={() => this.props.eliminar(this.state.nameFile)} />;
+                  return <FontAwesomeIcon icon="file-image" size="3x" />;
                 case 'jpg':
-                  return <FontAwesomeIcon icon="file-image" size="3x" onClick={() => this.props.eliminar(this.state.nameFile)} />;
+                  return <FontAwesomeIcon icon="file-image" size="3x" />;
                 case 'JPG':
-                  return <FontAwesomeIcon icon="file-image" size="3x" onClick={() => this.props.eliminar(this.state.nameFile)} />;
+                  return <FontAwesomeIcon icon="file-image" size="3x" />;
                 case 'jpge':
-                  return <FontAwesomeIcon icon="file-image" size="3x" onClick={() => this.props.eliminar(this.state.nameFile)} />;
+                  return <FontAwesomeIcon icon="file-image" size="3x" />;
                 case 'xls':
-                  return <FontAwesomeIcon icon="file-excel" size="3x" onClick={() => this.props.eliminar(this.state.nameFile)} />;
+                  return <FontAwesomeIcon icon="file-excel" size="3x" />;
                 case 'xlsx':
-                  return <FontAwesomeIcon icon="file-excel" size="3x" onClick={() => this.props.eliminar(this.state.nameFile)} />;
+                  return <FontAwesomeIcon icon="file-excel" size="3x" />;
                 case 'docx':
-                  return <FontAwesomeIcon icon="file-word" size="3x" onClick={() => this.props.eliminar(this.state.nameFile)} />;
+                  return <FontAwesomeIcon icon="file-word" size="3x" />;
                 case 'doc':
-                  return <FontAwesomeIcon icon="file-word" size="3x" onClick={() => this.props.eliminar(this.state.nameFile)} />;
+                  return <FontAwesomeIcon icon="file-word" size="3x" />;
 
 
                 default:
-                  return <FontAwesomeIcon icon="file" size="3x" onClick={() => this.props.eliminar(this.state.nameFile)} />;
+                  return <FontAwesomeIcon icon="file" size="3x" />;
               }
             })()}
 

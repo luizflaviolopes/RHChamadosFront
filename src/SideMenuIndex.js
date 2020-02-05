@@ -2,9 +2,15 @@ import React, { Component } from "react";
 import "./css/App.css";
 import "./css/bootstrap.css";
 import "./css/Botoes.css";
-import SideNav, { NavItem, NavIcon, NavText, Nav } from "@trendmicro/react-sidenav";
+import SideNav, {
+  NavItem,
+  NavIcon,
+  NavText,
+  Nav
+} from "@trendmicro/react-sidenav";
 import "@trendmicro/react-sidenav/dist/react-sidenav.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Can } from "./APIs/Can";
 
 class MenuIndex extends Component {
   constructor(props) {
@@ -33,6 +39,14 @@ class MenuIndex extends Component {
             </NavIcon>
             <NavText>Todos</NavText>
           </NavItem>
+
+          <NavItem eventKey="autenticados">
+            <NavIcon>
+              <FontAwesomeIcon icon="user-check" />
+            </NavIcon>
+            <NavText>Meus Autenticados</NavText>
+          </NavItem>
+
           <NavItem eventKey="Atribuidos">
             <NavIcon>
               <FontAwesomeIcon icon="user-tag" />
@@ -55,21 +69,14 @@ class MenuIndex extends Component {
             <NavIcon>
               <FontAwesomeIcon icon="building" />
             </NavIcon>
-            <NavText>
-              Geral
-            </NavText>
+            <NavText>Geral</NavText>
             <NavItem eventKey="TodosFechados">
-
               <NavText>Fechados</NavText>
             </NavItem>
             <NavItem eventKey="TodosAtendimento">
-
               <NavText>Em Atendimento</NavText>
             </NavItem>
           </NavItem>
-
-
-
         </SideNav.Nav>
       </SideNav>
     );

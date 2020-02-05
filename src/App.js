@@ -25,6 +25,7 @@ import { Filter } from "./ChamadosRH/Filter.js";
 import { GraphicStart } from "./Dashboard/GraphicStart.js";
 import { hostname } from "os";
 import { Inicio } from "./Inicio.js";
+import { DistribuirChamados } from "./ChamadosRH/DistribuirChamados";
 
 library.add(fas);
 
@@ -34,7 +35,8 @@ class App extends Component {
     this.state = {
       redirect: false,
       answerModal: false,
-      newCallModal: false
+      newCallModal: false,
+      distriChamadosModal: false
     };
     this.OnclickHande = this.OnclickHande.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
@@ -62,6 +64,17 @@ class App extends Component {
 
   render() {
 
+    let distri;
+    if (this.state.distriChamadosModal) {
+      distri = (
+        <DistribuirChamados
+          show={this.state.distriChamadosModal}
+          modalName="distriChamadosModal"
+          close={this.handleCloseModal}
+        />
+      )
+    }
+
     let form;
     if (this.state.newCallModal) {
       form = (
@@ -76,7 +89,8 @@ class App extends Component {
     let lgClose = () =>
       this.setState({
         answerModal: false,
-        newCallModal: false
+        newCallModal: false,
+        distriChamadosModal: false
       });
 
     let modalans;
@@ -109,6 +123,12 @@ class App extends Component {
                 </Button>
               </Link>
             </Can>
+            <Can politica="Atribuir Chamado">
+              <Button className="btn-menu" onClick={() => this.setState({ distriChamadosModal: true })}>
+                Distribuir Chamados
+              </Button>
+            </Can>
+            {distri}
             <Can politica="Visualizar Chamado">
               <Link to="/CallFilter">
                 <Button className="btn-menu" onClick={this.OnclickHande}>
