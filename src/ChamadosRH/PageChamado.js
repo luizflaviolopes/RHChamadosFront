@@ -13,6 +13,7 @@ import { Can } from "../APIs/Can";
 import { toast } from "react-toastify";
 import { Typeahead } from "react-bootstrap-typeahead";
 import "react-bootstrap-typeahead/css/Typeahead.css";
+import { TransferHistory } from "./TransferHistory";
 
 export class PageChamado extends Component {
   constructor(props) {
@@ -33,6 +34,8 @@ export class PageChamado extends Component {
       listaResponsavel: [],
       selectedResponsavel: {},
       assuntoEnviado: {},
+      openedDesHistory: false,
+      historicos: [],
       redirect: false
     };
     this.handleBack = this.handleBack.bind(this);
@@ -577,9 +580,33 @@ export class PageChamado extends Component {
                     )}
                   </Col>
                 ) : null}
+                {this.state.isReturn === "true" ? (
+                  <Col sm="6">
+                    <span>
+                      {" "}
+                      <FontAwesomeIcon icon="sync-alt" /> Chamado Retornado
+                    </span>
+                  </Col>
+                ) : null}
               </Row>
             </div>
           ) : null}
+          <Form.Group>
+            {this.state.historicos.map(function(a, i) {
+              return (
+                <TransferHistory
+                  history={_this.state.historicos}
+                  setor={a.id_Setores}
+                  horario={a.horario}
+                  desc={a.descricao}
+                  i={i}
+                  setorOrigem={a.setorOrigem}
+                  openedDesHistory={_this.openedDesHistory}
+                  rastreio={false}
+                />
+              );
+            })}
+          </Form.Group>
         </div>
         <div className="anexo row">
           {this.state.listFile.map(function(a, i) {

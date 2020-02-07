@@ -121,6 +121,7 @@ export class History extends Component {
           {this.state.history.map(function (a, i) {
             return (
               <TransferHistory
+                setorOrigem ={a.setorOrigem}
                 history={propriedades.history}
                 setor={a.id_Setores}
                 horario={a.horario}

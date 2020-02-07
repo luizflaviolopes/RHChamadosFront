@@ -47,6 +47,13 @@ class MenuIndex extends Component {
             <NavText>Meus Autenticados</NavText>
           </NavItem>
 
+          <NavItem eventKey="isReturn">
+            <NavIcon>
+              <FontAwesomeIcon icon="sync-alt" />
+            </NavIcon>
+            <NavText>Chamados Retornados</NavText>
+          </NavItem>
+
           <NavItem eventKey="Atribuidos">
             <NavIcon>
               <FontAwesomeIcon icon="user-tag" />
