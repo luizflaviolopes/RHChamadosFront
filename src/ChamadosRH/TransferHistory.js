@@ -25,7 +25,7 @@ export class TransferHistory extends Component {
   }
 
   render() {
-    let l=0;
+    let l = 0;
     return (
       <Alert
         variant="light"
@@ -36,8 +36,7 @@ export class TransferHistory extends Component {
           <Row>
             <Col sm="5">
               <Form.Label column={true}>
-
-               {/* {this.state.setorOrigem === null || this.state.setorOrigem[l].setor === undefined ?"Não existe no banco":this.state.setorOrigem[l].setor}
+                {/* {this.state.setorOrigem === null || this.state.setorOrigem[l].setor === undefined ?"Não existe no banco":this.state.setorOrigem[l].setor}
                  {
                   this.state.history === [] || this.state.history[this.state.i].setorOrigem === null || this.state.history[this.state.i].setorOrigem.setor === undefined 
                   ?
@@ -47,7 +46,7 @@ export class TransferHistory extends Component {
                 }*/}
                 {this.state.i > 0
                   ? this.state.history[this.state.i - 1].id_Setores
-                  : "RHResponde"} 
+                  : "RHResponde"}
               </Form.Label>
             </Col>
             <Col sm="2">
@@ -63,7 +62,7 @@ export class TransferHistory extends Component {
               <Col sm="12">
                 <Form.Label column={true}>
                   <span>Descricão:</span>
-                  <p>{this.state.desc}</p>
+                  <div className="text-center">{this.state.desc}</div>
                 </Form.Label>
               </Col>
             ) : null}

@@ -598,8 +598,9 @@ export class PageChamado extends Component {
                   history={_this.state.historicos}
                   setor={a.id_Setores}
                   horario={a.horario}
-                  desc={a.desc}
+                  desc={a.descricao}
                   i={i}
+                  setorOrigem={a.setorOrigem}
                   openedDesHistory={_this.openedDesHistory}
                   rastreio={false}
                 />
