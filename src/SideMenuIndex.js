@@ -49,7 +49,7 @@ class MenuIndex extends Component {
 
           <NavItem eventKey="isReturn">
             <NavIcon>
-              <FontAwesomeIcon icon="exchange-alt" />
+              <FontAwesomeIcon icon="sync-alt" />
             </NavIcon>
             <NavText>Chamados Retornados</NavText>
           </NavItem>
