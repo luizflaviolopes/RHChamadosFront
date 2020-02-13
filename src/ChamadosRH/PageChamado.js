@@ -280,7 +280,7 @@ export class PageChamado extends Component {
               modalName="transferModal"
               close={this.handleCloseModal}
               numChamado={this.state.numChamado}
-              protocolo= {this.state.protocolo}
+              protocolo={this.state.protocolo}
             />
           </Col>
           <Col sm={3} key={"b3"}>
@@ -633,7 +633,12 @@ export class PageChamado extends Component {
 
                   <div className="text-monospace position-absolute r0">
                     <span className=" text-muted">
-                      Respondido por: {a.atendente} - {a.horaResposta}
+                      Respondido por: {a.atendente} - {a.horaResposta}{" "}
+                      {a.finalResp === true ? (
+                        <FontAwesomeIcon icon="check-double" color="blue" />
+                      ) : (
+                        <FontAwesomeIcon icon="check" color="green" />
+                      )}
                     </span>
                   </div>
                 </div>
