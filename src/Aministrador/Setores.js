@@ -25,18 +25,18 @@ export class Setores extends Component {
   }
 
   componentDidMount() {
-
     api("api/Setores", {})
       .then(response => response.json())
-      .then(data => { this.TratamentoDeDados(data) }
-      );
+      .then(data => {
+        this.TratamentoDeDados(data);
+      });
   }
 
   TratamentoDeDados = (data, funcaoPosterior = null) => {
     let _this = this;
 
     this.setState({
-      listaSetores: data.map(function (a, i) {
+      listaSetores: data.map(function(a, i) {
         if (i == 0) {
           return {
             list: data,
@@ -48,8 +48,7 @@ export class Setores extends Component {
             vinculo: _this.handleOpenModalVinculo,
             SetoresVinculados: a.relacaoSetorSetor
           };
-        }
-        else {
+        } else {
           return {
             list: data,
             id: a.id,
@@ -59,14 +58,11 @@ export class Setores extends Component {
             add: _this.handleOpenModal,
             vinculo: _this.handleOpenModalVinculo,
             SetoresVinculados: a.relacaoSetorSetor
-
           };
         }
-
       }, funcaoPosterior)
-
-    })
-  }
+    });
+  };
 
   handleDesativarUnidade = (id, idSetorDestino) => {
     let _this = this;
@@ -74,27 +70,20 @@ export class Setores extends Component {
       method: "delete"
     })
       .then(resp => {
-        if (resp.status == 200)
-          return resp.json()
-        else
-          throw resp.json();
+        if (resp.status == 200) return resp.json();
+        else throw resp.json();
       })
-      .then(
-        data =>
-          this.TratamentoDeDados(data, () => {
-            toast.success("Setor Excluido")
-            this.handleCloseModal()
-          })
-
+      .then(data =>
+        this.TratamentoDeDados(data, () => {
+          toast.success("Setor Excluido");
+          this.handleCloseModal();
+        })
       )
-      .catch(
-        a => a.then(e =>
-          toast.error(
-            e.message,
-            {
-              position: toast.POSITION.TOP_CENTER
-            }
-          )
+      .catch(a =>
+        a.then(e =>
+          toast.error(e.message, {
+            position: toast.POSITION.TOP_CENTER
+          })
         )
       );
   };
@@ -104,7 +93,6 @@ export class Setores extends Component {
   }
 
   handleOpenModalVinculo(idSetor) {
-
     this.setState({
       setor: idSetor,
       modalVinculoUni: true
@@ -148,7 +136,6 @@ export class Setores extends Component {
           params={this.state.modalAddUnidade}
           AttListUndd={this.TratamentoDeDados}
           listaSetores={this.state.listaSetores}
-
         />
       );
     }

@@ -33,7 +33,7 @@ export class ReabrirChamado extends Component {
             if (resp.status == 200) return resp.json();
             else throw resp.json();
           })
-          .then(data => toast.success(data.message))
+          .then(data => toast.success(data.message), window.location.reload())
           .catch(a =>
             a.then(e =>
               toast.error(e.message, {
