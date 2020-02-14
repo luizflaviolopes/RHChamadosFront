@@ -25,12 +25,11 @@ export class Setores extends Component {
   }
 
   componentDidMount() {
-    
+
     api("api/Setores", {})
       .then(response => response.json())
-      .then(data =>
-         {this.TratamentoDeDados(data)}
-        );
+      .then(data => { this.TratamentoDeDados(data) }
+      );
   }
 
   TratamentoDeDados = (data, funcaoPosterior = null) => {
@@ -40,6 +39,7 @@ export class Setores extends Component {
       listaSetores: data.map(function (a, i) {
         if (i == 0) {
           return {
+            list: data,
             id: a.id,
             sigla: a.setor,
             pai: null,
@@ -51,7 +51,7 @@ export class Setores extends Component {
         }
         else {
           return {
-
+            list: data,
             id: a.id,
             sigla: a.setor,
             pai: a.hierarquia,
@@ -65,12 +65,12 @@ export class Setores extends Component {
 
       }, funcaoPosterior)
 
-  })
-}
+    })
+  }
 
-  handleDesativarUnidade = id => {
+  handleDesativarUnidade = (id, idSetorDestino) => {
     let _this = this;
-    api("api/Setores?Id=" + id, {
+    api("api/Setores?Id=" + id + "&idSetorDestino=" + idSetorDestino, {
       method: "delete"
     })
       .then(resp => {
@@ -83,8 +83,9 @@ export class Setores extends Component {
         data =>
           this.TratamentoDeDados(data, () => {
             toast.success("Setor Excluido")
-          this.handleCloseModal()})
-        
+            this.handleCloseModal()
+          })
+
       )
       .catch(
         a => a.then(e =>

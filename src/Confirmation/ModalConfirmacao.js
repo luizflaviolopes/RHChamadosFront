@@ -23,13 +23,15 @@ export class ModalConfirmacao extends Component {
         </Modal.Header>
         <Modal.Body>
           <div>{this.state.message}</div>
+        </Modal.Body>
+        <Modal.Footer>
           <div>
             <Button variant="danger">Cancelar</Button>
             <Button onClick={() => this.props.confirmar()} variant="success">
               Confirmar
             </Button>
           </div>
-        </Modal.Body>
+        </Modal.Footer>
       </Modal>
     );
   }

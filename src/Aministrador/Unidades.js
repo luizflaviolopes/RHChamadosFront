@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "../APIs/DataApi";
 import { Can } from "../APIs/Can";
 import { ModalConfirmacao } from "../Confirmation/ModalConfirmacao";
+import ModalExcluirSetor from "./ModalExcluirSetor";
 
 export class Unidades extends Component {
   constructor(props) {
@@ -26,8 +27,8 @@ export class Unidades extends Component {
       .then(data => this.setState({ listaSetores: data.setores }));
   }*/
 
-  handleDesativarUnidade = () => {
-    this.props.obj.delete(this.props.id);
+  handleDesativarUnidade = (idSetorDestino) => {
+    this.props.obj.delete(this.props.id, idSetorDestino);
   };
 
   handleOpenModal() {
@@ -47,8 +48,7 @@ export class Unidades extends Component {
 
     if (this.state.modalConfirmar) {
       modalConfirmar = (
-        <ModalConfirmacao
-          message="Deseja excluir o setor?"
+        <ModalExcluirSetor
           show={true}
           close={this.handleCloseModal}
           confirmar={this.handleDesativarUnidade}
@@ -57,7 +57,7 @@ export class Unidades extends Component {
     }
 
     return (
-      <div className="unidades" idSetor={this.props.id}>
+      <div className="unidades" idsetor={this.props.id}>
         {modalConfirmar}
         <div className="headUni">
           <span className="ttl"> {this.props.text} </span>
@@ -87,7 +87,7 @@ export class Unidades extends Component {
             </div>
           </Can>
           <div className="vinculos">
-            {this.props.obj.SetoresVinculados.map(function(a) {
+            {this.props.obj.SetoresVinculados.map(function (a) {
               return <div className="setVin"> {a.setorDestino} </div>;
             })}
           </div>

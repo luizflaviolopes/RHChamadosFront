@@ -92,13 +92,16 @@ export class ModalAddUnidade extends Component {
               />
             </Form.Group>
 
-            <Form.Group>
-              <Button variant="primary" type="submit">
-                Enviar
-              </Button>
-            </Form.Group>
+
           </Form>
         </Modal.Body>
+        <Modal.Footer>
+          <Form.Group>
+            <Button variant="primary" type="submit">
+              Enviar
+              </Button>
+          </Form.Group>
+        </Modal.Footer>
       </Modal>
     );
   }
