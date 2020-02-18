@@ -87,7 +87,8 @@ class TabelaIndex extends Component {
         this.setState({
           dems: data.lista,
           all: data.lista,
-          filtered: data.lista
+          filtered: data.lista,
+          current: 0
         });
       });
   };
