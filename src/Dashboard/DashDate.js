@@ -63,11 +63,11 @@ export class DashDate extends PureComponent {
         if (this.state.fechadosData && this.state.abertosData && this.state.atendimentoData) {
             var tempData = []
             this.state.all.forEach(function (a, i) {
-
+                console.log(a)
                 abertos = 0;
                 fechado = 0;
                 atendimento = 0;
-                date = String(a.x);
+                date = new Date(a.x);
 
                 _this.state.fechadosData.find(function (e, j) {
                     if (e.x === a.x) {
@@ -86,8 +86,11 @@ export class DashDate extends PureComponent {
                         atendimento = e.y
                     }
                 })
-                var temp = { "name": date, "fechado": fechado, "abertos": abertos, "atendimento": atendimento }
+                var temp = { "name": (date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear()), "fechado": fechado, "abertos": abertos, "atendimento": atendimento, data: date }
                 tempData.push(temp)
+            })
+            tempData.sort((e1, e2) => {
+                return e1.data > e2.data ? 1 : -1
             })
             return tempData;
         }
@@ -100,7 +103,7 @@ export class DashDate extends PureComponent {
         }
 
         const data = this.RetornarDados()
-        console.log(data);
+
         //[{ x: _this.state.fechadosData.x, y: _this.state.fechadosData.y, label: _this.state.fechadosData.y, style: { fontSize: 10 } }]
         return (
 
