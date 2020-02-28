@@ -175,7 +175,7 @@ class App extends Component {
                 className="btn-menu"
                 onClick={() => {
                   window.location =
-                    "http://homologacao.planejamento.mg.gov.br:8080/";
+                    "http://adm.rhresponde.mg.gov.br/";
                 }}
               >
                 Administrativo

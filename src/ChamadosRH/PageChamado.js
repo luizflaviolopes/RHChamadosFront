@@ -280,7 +280,8 @@ export class PageChamado extends Component {
               modalName="transferModal"
               close={this.handleCloseModal}
               numChamado={this.state.numChamado}
-              protocolo={this.state.protocolo}
+              protocolo = {this.state.protocolo}
+
             />
           </Col>
           <Col sm={3} key={"b3"}>
