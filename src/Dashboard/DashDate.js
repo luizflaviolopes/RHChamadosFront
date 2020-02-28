@@ -1,9 +1,7 @@
-
 import React, { Component, PureComponent } from "react";
 import api from "../APIs/DataApi.js";
 import { BarChart, XAxis, YAxis, Tooltip, Bar, Legend, CartesianGrid, LabelList } from "recharts";
 import { Legenda } from "./Legenda.js";
-
 
 export class DashDate extends PureComponent {
     constructor(props) {
@@ -53,10 +51,8 @@ export class DashDate extends PureComponent {
                         y: a.quantidade
                     };
                 }),
-
         })
     }
-
 
     RetornarDados = () => {
         let _this = this;
@@ -67,25 +63,22 @@ export class DashDate extends PureComponent {
         if (this.state.fechadosData && this.state.abertosData && this.state.atendimentoData) {
             var tempData = []
             this.state.all.forEach(function (a, i) {
-
+                console.log(a)
                 abertos = 0;
                 fechado = 0;
                 atendimento = 0;
-                date = String(a.x);
-
+                date = new Date(a.x);
 
                 _this.state.fechadosData.find(function (e, j) {
                     if (e.x === a.x) {
                         fechado = e.y
                     }
-
                 })
 
                 _this.state.abertosData.find(function (e, j) {
                     if (e.x === a.x) {
                         abertos = e.y
                     }
-
                 })
 
                 _this.state.atendimentoData.find(function (e, j) {
@@ -93,28 +86,24 @@ export class DashDate extends PureComponent {
                         atendimento = e.y
                     }
                 })
-                var temp = { "name": date, "fechado": fechado, "abertos": abertos, "atendimento": atendimento }
+                var temp = { "name": (date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear()), "fechado": fechado, "abertos": abertos, "atendimento": atendimento, data: date }
                 tempData.push(temp)
             })
+            tempData.sort((e1, e2) => {
+                return e1.data > e2.data ? 1 : -1
+            })
             return tempData;
-
-
-
         }
-
     }
 
-
     render() {
-
-
-        console.log('teste');
 
         if (!this.state.all) {
             return <div></div>;
         }
 
         const data = this.RetornarDados()
+
         //[{ x: _this.state.fechadosData.x, y: _this.state.fechadosData.y, label: _this.state.fechadosData.y, style: { fontSize: 10 } }]
         return (
 

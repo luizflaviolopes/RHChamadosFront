@@ -87,7 +87,8 @@ class TabelaIndex extends Component {
         this.setState({
           dems: data.lista,
           all: data.lista,
-          filtered: data.lista
+          filtered: data.lista,
+          current: 0
         });
       });
   };
@@ -257,6 +258,7 @@ class TabelaIndex extends Component {
                       _this.props.match.params.tipo == "TodosAtendimento" ||
                       _this.props.match.params.tipo == "TodosFechados"
                     }
+                    isReturn={a.isReturn}
                   />
                 );
               })}
