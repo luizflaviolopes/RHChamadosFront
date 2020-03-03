@@ -189,7 +189,10 @@ export class NewUser extends Component {
                 })}
               </Form.Group>
 
-              <Button variant="primary" onClick={this.handleNovoAtendente}>
+              <Button
+                variant="primary"
+                onClick={() => this.handleNovoAtendente()}
+              >
                 Enviar
               </Button>
             </Col>
