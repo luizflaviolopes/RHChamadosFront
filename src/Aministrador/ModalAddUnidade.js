@@ -1,11 +1,10 @@
-
 import React, { Component } from "react";
 import "../css/bootstrap.css";
 import "../css/Botoes.css";
 import "../css/User.css";
 import { Modal, Button, Form } from "react-bootstrap";
 import api from "../APIs/DataApi";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 export class ModalAddUnidade extends Component {
   constructor(props) {
@@ -16,7 +15,6 @@ export class ModalAddUnidade extends Component {
       newSet: {},
       idSetor: this.props.params.id || null,
       attList: {}
-
     };
     this.handleNovaUnidade = this.handleNovaUnidade.bind(this);
   }
@@ -28,26 +26,19 @@ export class ModalAddUnidade extends Component {
       body: JSON.stringify(this.state.newSet)
     })
       .then(resp => {
-        if (resp.status == 200)
-          return resp.json()
-        else
-          throw resp.json();
+        if (resp.status == 200) return resp.json();
+        else throw resp.json();
       })
       .then(data => {
         this.props.AttListUndd(data);
         this.props.close(this.state.modalName);
-        toast.success(
-          "Unidade Criada"
-        )
+        toast.success("Unidade Criada");
       })
-      .catch(
-        a => a.then(e =>
-          toast.error(
-            e.message,
-            {
-              position: toast.POSITION.TOP_CENTER
-            }
-          )
+      .catch(a =>
+        a.then(e =>
+          toast.error(e.message, {
+            position: toast.POSITION.TOP_CENTER
+          })
         )
       );
   }
@@ -59,9 +50,7 @@ export class ModalAddUnidade extends Component {
       });
   }
 
-  selectUnidades = () => {
-
-  }
+  selectUnidades = () => {};
 
   render() {
     return (
@@ -91,15 +80,13 @@ export class ModalAddUnidade extends Component {
                 }
               />
             </Form.Group>
-
-
           </Form>
         </Modal.Body>
         <Modal.Footer>
           <Form.Group>
-            <Button variant="primary" type="submit">
+            <Button variant="primary" onClick={() => this.handleNovaUnidade()}>
               Enviar
-              </Button>
+            </Button>
           </Form.Group>
         </Modal.Footer>
       </Modal>
