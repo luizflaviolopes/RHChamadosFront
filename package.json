@@ -23,7 +23,8 @@
     "react-text-mask": "^5.4.3",
     "react-toastify": "^5.4.1",
     "recharts": "^1.8.5",
-    "remove-accents": "^0.4.2"
+    "remove-accents": "^0.4.2",
+    "xlsx": "^0.15.5"
   },
   "scripts": {
     "start": "react-scripts start",
