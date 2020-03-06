@@ -24,7 +24,7 @@ export class ModalEditarAntende extends Component {
       .then(response => response.json())
       .then(data =>
         this.setState({
-          listSetores: data.map(function (a, i) {
+          listSetores: data.map(function(a, i) {
             return {
               id: a.id,
               setor: a.setor
@@ -49,7 +49,7 @@ export class ModalEditarAntende extends Component {
           cpf: cpfFormatado
         }
       },
-      function () {
+      function() {
         console.log(this.state.updateAtendente);
         api("api/Atendente/AtualizarAtendente", {
           method: "put",
@@ -141,10 +141,10 @@ export class ModalEditarAntende extends Component {
                   <Form.Label>E-mail</Form.Label>
                   <Form.Control
                     type="text"
-                    // value={this.state.updateAtendente.email}
                     placeholder="E-mail"
                     value={this.state.updateAtendente.email}
                     title="Email para login"
+                    readOnly
                     onChange={evt =>
                       this.setState({
                         updateAtendente: {
@@ -172,7 +172,7 @@ export class ModalEditarAntende extends Component {
                     }
                   >
                     <option>Selecione um Setor</option>
-                    {this.state.listSetores.map(function (a, i) {
+                    {this.state.listSetores.map(function(a, i) {
                       return <option value={a.id}>{a.setor}</option>;
                     })}
                   </Form.Control>
@@ -182,7 +182,7 @@ export class ModalEditarAntende extends Component {
               <Col sm="12">
                 <Form.Group>
                   <Form.Label>Permissões</Form.Label>
-                  {this.state.listaPol.map(function (a, i) {
+                  {this.state.listaPol.map(function(a, i) {
                     return (
                       <Politicas
                         namePol={a.nome}
@@ -193,7 +193,7 @@ export class ModalEditarAntende extends Component {
                           if (politicas == null) {
                             politicas = [];
                           }
-                          let exist = politicas.find(function (j, h) {
+                          let exist = politicas.find(function(j, h) {
                             return j.id === a.id;
                           });
                           if (exist) {
