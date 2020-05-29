@@ -15,10 +15,10 @@ class TabelaIndex extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dems: null, //data
+      ready: false,
       tipo: this.props.match.params.tipo,
       filters: {},
-      all: null,
+      all: [],
       filtered: null,
       current: 0,
       private: true,
@@ -31,7 +31,17 @@ class TabelaIndex extends Component {
   handleFiltering(a) {
     let newFilter = this.state.filters;
     newFilter[a.propertie] = a.value;
-    window.teste = newFilter;
+
+    this.setState({
+      current: 0,
+      filters: newFilter,
+    });
+  }
+
+  getFiltered = () => {
+
+    const newFilter = this.state.filters;
+
     var checkFilter = function (element) {
       let retorno = true;
       Object.keys(newFilter).forEach(function (p, i) {
@@ -55,25 +65,27 @@ class TabelaIndex extends Component {
       });
       return retorno;
     };
+
     let newDems = this.state.all.filter(function (a, i) {
       return checkFilter(a);
     });
 
-    this.setState({
-      current: 0,
-      filters: newFilter,
-      filtered: newDems
-    });
+    return newDems;
+
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.match.params.tipo !== this.props.match.params.tipo) {
+      this.setState({all:[], ready:false})
       this.fetchdata();
     }
   }
 
-  fetchdata = () => {
-    api("api/values?tipo=" + this.props.match.params.tipo, {})
+  fetchdata = (lastId) => {
+
+    const tipo = this.props.match.params.tipo
+
+    api("api/values?tipo=" + tipo+"&lastId="+(lastId||0), {})
       .then(response => response.json())
       .then(data => {
         data.lista
@@ -83,21 +95,38 @@ class TabelaIndex extends Component {
           .forEach(b => {
             b.protocolo = "A" + b.numChamado;
           });
+        
+          if(this.props.match.params.tipo == tipo)
+          {
+          this.addReceivedData(data.lista);
 
-        this.setState({
-          dems: data.lista,
-          all: data.lista,
-          filtered: data.lista,
-          current: 0
-        });
+          if(data.lista.length > 0)
+          this.fetchdata(Math.min(...data.lista.map(item => item.numChamado)))
+
+          this.setState({ready: true})
+          }
+
       });
   };
 
-  BuscarNovo() {
-    api("api/values", {})
-      .then(response => response.json())
-      .then(data => this.setState({ dems: [...this.state.dems, data.lista] }));
+  addReceivedData = (data) => {
+
+    console.log('dados recebidos = ', data)
+    let currentData = [...this.state.all];
+    currentData = [...currentData, ...data];
+
+    this.setState({
+      all: currentData,
+      current: 0
+    });
+
   }
+
+  // BuscarNovo() {
+  //   api("api/values", {})
+  //     .then(response => response.json())
+  //     .then(data => this.setState({ dems: [...this.state.dems, data.lista] }));
+  // }
 
   handlePageClick(a) {
     this.setState({ current: a.selected });
@@ -108,6 +137,8 @@ class TabelaIndex extends Component {
   }
 
   render() {
+    const filteredElements = this.getFiltered();
+
     let filterObj = this.state.filters;
     let _this = this;
     var checkFilter = function (element) {
@@ -119,7 +150,7 @@ class TabelaIndex extends Component {
     };
 
     function calcNumPages() {
-      let { filtered } = _this.state;
+      let filtered = filteredElements;
 
       return Math.floor(
         filtered.length % 10 > 0
@@ -130,10 +161,10 @@ class TabelaIndex extends Component {
 
     function getPageDems() {
       let { current, filtered } = _this.state;
-      return filtered.slice(current * 10, current * 10 + 10);
+      return filteredElements.slice(current * 10, current * 10 + 10);
     }
 
-    if (this.state.filtered == null)
+    if (!this.state.ready)
       return (
         <div className="carregando">
           <FontAwesomeIcon icon="spinner" pulse />
