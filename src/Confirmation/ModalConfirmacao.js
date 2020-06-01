@@ -26,7 +26,7 @@ export class ModalConfirmacao extends Component {
         </Modal.Body>
         <Modal.Footer>
           <div>
-            <Button variant="danger">Cancelar</Button>
+            <Button variant="danger" onClick={()=>this.props.close(this.state.modalName)}>Cancelar</Button>
             <Button onClick={() => this.props.confirmar()} variant="success">
               Confirmar
             </Button>
